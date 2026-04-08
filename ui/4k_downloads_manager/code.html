@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@700;800;900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#192540",
+                    "tertiary-fixed": "#fd8bcc",
+                    "on-primary-fixed": "#000000",
+                    "surface-bright": "#1f2b49",
+                    "on-surface": "#dee5ff",
+                    "tertiary-container": "#fd8bcc",
+                    "error-dim": "#d73357",
+                    "surface-container-highest": "#192540",
+                    "secondary": "#ffd709",
+                    "on-secondary": "#5b4b00",
+                    "tertiary-fixed-dim": "#ed7ebe",
+                    "on-tertiary-fixed": "#350025",
+                    "surface-container-low": "#091328",
+                    "inverse-surface": "#faf8ff",
+                    "secondary-dim": "#efc900",
+                    "secondary-fixed": "#ffd709",
+                    "error-container": "#a70138",
+                    "tertiary-dim": "#ed7ebe",
+                    "surface-container-lowest": "#000000",
+                    "on-tertiary-container": "#610246",
+                    "surface-container-high": "#141f38",
+                    "primary-fixed-dim": "#8686ff",
+                    "surface-tint": "#a5a5ff",
+                    "on-secondary-container": "#fff7e6",
+                    "on-secondary-fixed": "#453900",
+                    "background": "#060e20",
+                    "surface-container": "#0f1930",
+                    "outline": "#6d758c",
+                    "on-error-container": "#ffb2b9",
+                    "on-secondary-fixed-variant": "#665500",
+                    "on-tertiary-fixed-variant": "#6c104f",
+                    "secondary-container": "#705d00",
+                    "surface": "#060e20",
+                    "primary-fixed": "#9695ff",
+                    "surface-dim": "#060e20",
+                    "outline-variant": "#40485d",
+                    "secondary-fixed-dim": "#efc900",
+                    "on-primary": "#19059d",
+                    "error": "#ff6e84",
+                    "tertiary": "#ffa1d4",
+                    "on-primary-container": "#10007f",
+                    "on-tertiary": "#6e1150",
+                    "inverse-primary": "#4f4dcd",
+                    "on-error": "#490013",
+                    "primary-dim": "#9392ff",
+                    "on-surface-variant": "#a3aac4",
+                    "inverse-on-surface": "#4d556b",
+                    "on-primary-fixed-variant": "#16009a",
+                    "primary-container": "#9695ff",
+                    "primary": "#a5a5ff",
+                    "on-background": "#dee5ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #060e20; }
+        .glass-panel {
+            background: rgba(25, 37, 64, 0.6);
+            backdrop-filter: blur(20px);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #a5a5ff 0%, #9695ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #a5a5ff 0%, #9695ff 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background antialiased pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#060e20]/60 backdrop-blur-xl flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#a5a5ff] hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform">menu</button>
+<span class="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#a5a5ff] to-[#9695ff] font-['Manrope']">MOVIEVERSE</span>
+</div>
+<button class="material-symbols-outlined text-[#a5a5ff] hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform">search</button>
+</header>
+<main class="pt-24 px-6 max-w-7xl mx-auto">
+<!-- Header Section -->
+<section class="mb-12">
+<h1 class="font-headline text-5xl font-extrabold tracking-tight mb-2">Offline Downloads</h1>
+<p class="text-on-surface-variant text-lg">Manage your cinematic library for the road.</p>
+</section>
+<!-- Storage Status Bento -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<!-- Storage Card -->
+<div class="md:col-span-2 bg-surface-container-low p-8 rounded-xl flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-end mb-4">
+<span class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Storage Analysis</span>
+<span class="font-headline text-2xl font-bold">128.4 GB <span class="text-on-surface-variant font-normal text-sm">/ 512 GB</span></span>
+</div>
+<div class="h-3 w-full bg-surface-container-highest rounded-full overflow-hidden flex">
+<div class="h-full primary-gradient w-[25%] rounded-full"></div>
+<div class="h-full bg-secondary-dim w-[10%] opacity-80 rounded-r-full"></div>
+</div>
+</div>
+<div class="flex gap-6 mt-8">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full primary-gradient"></div>
+<span class="text-sm font-medium">Movies (84.2 GB)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary-dim"></div>
+<span class="text-sm font-medium">System (44.2 GB)</span>
+</div>
+</div>
+</div>
+<!-- Action Card -->
+<div class="bg-surface-bright p-8 rounded-xl flex flex-col items-center justify-center text-center gap-4">
+<div class="w-16 h-16 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">download_for_offline</span>
+</div>
+<h3 class="font-headline text-xl font-bold">Expand Library</h3>
+<button class="primary-gradient text-on-primary-fixed px-8 py-3 rounded-full font-bold text-sm hover:opacity-90 transition-all scale-100 active:scale-95">
+                    Download More
+                </button>
+</div>
+</div>
+<!-- Settings Section -->
+<section class="mb-12">
+<div class="bg-surface-container-low p-6 rounded-xl">
+<div class="flex items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-bold text-lg">Smart Downloads</h4>
+<p class="text-sm text-on-surface-variant">Automatically download recommended titles based on your taste.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-14 h-8 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Movie List -->
+<section>
+<div class="flex items-center justify-between mb-8">
+<h2 class="font-headline text-2xl font-bold">Downloaded Titles</h2>
+<div class="flex gap-2">
+<span class="bg-surface-container-high px-4 py-1.5 rounded-full text-xs font-bold text-secondary-dim">4K HDR</span>
+<span class="bg-surface-container-high px-4 py-1.5 rounded-full text-xs font-bold text-on-surface-variant">RECENT</span>
+</div>
+</div>
+<div class="space-y-4">
+<!-- Movie Item 1 -->
+<div class="group relative bg-surface-container-low hover:bg-surface-container p-4 rounded-xl flex items-center gap-6 transition-all border border-transparent hover:border-outline-variant/20">
+<div class="w-24 h-36 rounded-lg overflow-hidden flex-shrink-0 shadow-2xl relative">
+<img class="w-full h-full object-cover" data-alt="Dark dramatic movie poster featuring a silhouette of a hero against a glowing neon cyberpunk city skyline" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh6yXfVewwzsC_DsjasHfz7gBlvJs_IkOVGxH9Y7BZyfeOuAsJpz8EvuYvuqeL_fakQK4jP2m-UjZ9s05MuzqYTl2-C8mqaZluZCa-SD5YB9929j-FhbdO5iPaUX5KZX1adn-lgVPQoRWHmrbD-MyJXR3mF-X-87r3sVCle7Ok5g_OyMXAB0fpkxr5coPIsgVDGCqF0Axc6bgOVNTkUcglcyUcmwaSChib-mpx5vo1xRF_fHkRont9GFEjHvx1hjbRB8JHSm-lXqY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-2 left-2 flex gap-1">
+<span class="text-[8px] bg-secondary text-on-secondary px-1 rounded-sm font-bold uppercase">4K</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-xl font-bold mb-1">Neon Drift: 2049</h3>
+<div class="flex items-center gap-3 text-xs text-on-surface-variant font-label uppercase tracking-widest">
+<span>Sci-Fi</span>
+<span>•</span>
+<span>2h 44m</span>
+<span>•</span>
+<span class="text-secondary-dim">10.4 GB</span>
+</div>
+</div>
+<button class="p-2 rounded-full hover:bg-error-container/20 group-hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="mt-4 flex items-center gap-4">
+<button class="flex items-center gap-2 bg-surface-variant px-4 py-2 rounded-full text-sm font-bold hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-lg">play_arrow</span>
+                                Play Offline
+                            </button>
+<span class="text-xs text-on-surface-variant/60 font-medium">Last watched 2 days ago</span>
+</div>
+</div>
+</div>
+<!-- Movie Item 2 -->
+<div class="group relative bg-surface-container-low hover:bg-surface-container p-4 rounded-xl flex items-center gap-6 transition-all border border-transparent hover:border-outline-variant/20">
+<div class="w-24 h-36 rounded-lg overflow-hidden flex-shrink-0 shadow-2xl relative">
+<img class="w-full h-full object-cover" data-alt="Epic cinematic scene of a space vessel orbiting a giant glowing gas planet with rings and nebula stars" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp1U6GSstwlOqy6cnaMFRdrsB0HF_l4I2f1OSTDR2Y6fXgLI05vNR6iiQtfN5X6v3X_9ZRmYN6zwah8DaIb-n9aAg947JhGyHVDgbsmfGoJltJYMskQv-C8RoQFzH1awFtVmjqks0vBtXnmYny4B4yw-zoDyYVojHFRJlHqpsdHe3dyCKw9Z70PzrDN7IzvNgbSCnqaMV5viy9ZTOH4bAzHv6SQQLP9FNRD4CudMXv0TBISSzPYCtJM9Zbkx93cuzBON34I5f1Wyo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-2 left-2 flex gap-1">
+<span class="text-[8px] bg-secondary text-on-secondary px-1 rounded-sm font-bold uppercase">4K</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-xl font-bold mb-1">Stellar Horizon</h3>
+<div class="flex items-center gap-3 text-xs text-on-surface-variant font-label uppercase tracking-widest">
+<span>Documentary</span>
+<span>•</span>
+<span>1h 12m</span>
+<span>•</span>
+<span class="text-secondary-dim">6.2 GB</span>
+</div>
+</div>
+<button class="p-2 rounded-full hover:bg-error-container/20 group-hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="mt-4 flex items-center gap-4">
+<button class="flex items-center gap-2 bg-surface-variant px-4 py-2 rounded-full text-sm font-bold hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-lg">play_arrow</span>
+                                Play Offline
+                            </button>
+<span class="text-xs text-on-surface-variant/60 font-medium">Never watched</span>
+</div>
+</div>
+</div>
+<!-- Movie Item 3 -->
+<div class="group relative bg-surface-container-low hover:bg-surface-container p-4 rounded-xl flex items-center gap-6 transition-all border border-transparent hover:border-outline-variant/20">
+<div class="w-24 h-36 rounded-lg overflow-hidden flex-shrink-0 shadow-2xl relative">
+<img class="w-full h-full object-cover" data-alt="Classic black and white cinema photography of a vintage projector casting a beam of light in a dark smoky room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-S1A1YIQNEntWhN_ppdmV5i6lsaTTGt8G-m5Wae72Mx7g7yn46nsYYBqnvGdyEP7cJvcGLZuwd3lLD6nYrpRCElStlLyNzylCH6uGDGAUdORA3sRkO3KgJsBcWN6HtIeApuXLb5kf8Ujg28a3hdc0T8RpDgi6VThWhVvtq3p1G3GnSbL2IBqFadJyEeY2prSXOjIElAt2Ho5Jkx0zTLHJw00UCGcvRyoFJD7H9be4p2XT2YOLlDC4vnfGmwXohcbqnNa95Q_SxNY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-2 left-2 flex gap-1">
+<span class="text-[8px] bg-surface-variant text-on-surface px-1 rounded-sm font-bold uppercase">HD</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-xl font-bold mb-1">The Director's Cut</h3>
+<div class="flex items-center gap-3 text-xs text-on-surface-variant font-label uppercase tracking-widest">
+<span>Biography</span>
+<span>•</span>
+<span>2h 05m</span>
+<span>•</span>
+<span class="text-secondary-dim">2.8 GB</span>
+</div>
+</div>
+<button class="p-2 rounded-full hover:bg-error-container/20 group-hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="mt-4 flex items-center gap-4">
+<button class="flex items-center gap-2 bg-surface-variant px-4 py-2 rounded-full text-sm font-bold hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-lg">play_arrow</span>
+                                Play Offline
+                            </button>
+<span class="text-xs text-on-surface-variant/60 font-medium">Downloaded yesterday</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-[2rem] bg-[#192540]/60 backdrop-blur-xl flex justify-around items-center px-4 pt-3 pb-6 w-full shadow-[0_-4px_20px_rgba(0,0,0,0.4)]">
+<div class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase">Discovery</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase">Social</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#ffd709] drop-shadow-[0_0_8px_rgba(255,215,9,0.3)] scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">download</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase">Downloads</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase">Profile</span>
+</div>
+</nav>
+</body></html>

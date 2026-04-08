@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#192540",
+                        "primary-dim": "#9392ff",
+                        "on-surface-variant": "#a3aac4",
+                        "inverse-on-surface": "#4d556b",
+                        "on-background": "#dee5ff",
+                        "secondary-fixed-dim": "#efc900",
+                        "on-error": "#490013",
+                        "surface": "#060e20",
+                        "surface-tint": "#a5a5ff",
+                        "surface-bright": "#1f2b49",
+                        "secondary-fixed": "#ffd709",
+                        "on-primary-fixed-variant": "#16009a",
+                        "on-tertiary-fixed-variant": "#6c104f",
+                        "on-error-container": "#ffb2b9",
+                        "on-secondary-fixed-variant": "#665500",
+                        "surface-container-lowest": "#000000",
+                        "secondary-container": "#705d00",
+                        "tertiary": "#ffa1d4",
+                        "outline-variant": "#40485d",
+                        "surface-container-low": "#091328",
+                        "inverse-surface": "#faf8ff",
+                        "tertiary-container": "#fd8bcc",
+                        "primary": "#a5a5ff",
+                        "on-tertiary-container": "#610246",
+                        "outline": "#6d758c",
+                        "surface-variant": "#192540",
+                        "surface-container-high": "#141f38",
+                        "tertiary-fixed": "#fd8bcc",
+                        "inverse-primary": "#4f4dcd",
+                        "error": "#ff6e84",
+                        "error-dim": "#d73357",
+                        "secondary-dim": "#efc900",
+                        "on-secondary": "#5b4b00",
+                        "error-container": "#a70138",
+                        "on-primary": "#19059d",
+                        "tertiary-dim": "#ed7ebe",
+                        "background": "#060e20",
+                        "on-secondary-container": "#fff7e6",
+                        "surface-container": "#0f1930",
+                        "primary-fixed": "#9695ff",
+                        "on-secondary-fixed": "#453900",
+                        "on-primary-container": "#10007f",
+                        "tertiary-fixed-dim": "#ed7ebe",
+                        "primary-fixed-dim": "#8686ff",
+                        "secondary": "#ffd709",
+                        "on-surface": "#dee5ff",
+                        "primary-container": "#9695ff",
+                        "on-tertiary-fixed": "#350025",
+                        "on-tertiary": "#6e1150",
+                        "surface-dim": "#060e20",
+                        "on-primary-fixed": "#000000"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .cinematic-shadow {
+            box-shadow: 0 32px 64px -12px rgba(6, 14, 32, 0.8);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-background font-body min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-[#060e20]/60 backdrop-blur-xl fixed top-0 w-full z-50 flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="text-[#a5a5ff] hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<span class="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#a5a5ff] to-[#9695ff] font-['Manrope']">MOVIEVERSE</span>
+</div>
+<button class="text-[#a5a5ff] hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<!-- Hero Backdrop Section -->
+<div class="relative w-full h-[618px] overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent z-10"></div>
+<img alt="" class="w-full h-full object-cover" data-alt="wide cinematic landscape of a futuristic neon city at night with dark clouds and dramatic atmospheric lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRSCXbwRLQ0QXp8F5QkqluCchh9PxZ_RsT6C1M-rhItvWERYr10T2B-2ZuV4ZjNdO3Sn7vGQVcsDvtrdNzcjrhr3gjXNeM88buw0qmQIkh8CBeg_8xkBKX1yWrej5PeMt3F5jpibEXQ1XP3YXnmNWrNr6Wpm1j7_VJ_pP9jY2dKi8NTTNolYkqotpzHehx6ffgyBqgGjvJ6Vh6KgSaBr1vj_INP7Q-GhCMqZpVPuHqr0ZK-bzwwfCDb1kfBsLgVH6ngcEIhgBAflI"/>
+<!-- Hero Content Overlay -->
+<div class="absolute bottom-0 left-0 w-full z-20 px-6 md:px-12 pb-12 flex flex-col md:flex-row md:items-end gap-8">
+<!-- Poster Breakout -->
+<div class="relative w-40 md:w-64 aspect-[2/3] flex-shrink-0 cinematic-shadow -mb-6 md:mb-0">
+<img alt="" class="w-full h-full object-cover rounded-xl border border-white/10" data-alt="vertical movie poster showing a lone silhouette standing against a massive glowing portal in a deep blue space nebula" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMSbSkXqyQxS8bFT2uCL_ZqvRz2QDzrVGSRM015vHbOAQcj8_Ek7qU5a7XwPWzhHQoMFxahKEFEjs2givlz7I40WGnEr1s8M58OLBT8Ul5hAqhdJWZmIIj8LNz2qQUAfckMuiuPzJrlfptbGcFM_CfJRBNiQev-kCDO8S1Afpz1IHQ1oV8yp-Jt7NmEPOubRqiIFrYL3vscBIuNN-RMaKVuHCMaQUw3nhPt4SvLxfK_pmQHYFrGa_5sysIj3Chg0xCkJZBLvw7eos"/>
+<div class="absolute top-4 right-4 bg-surface-container-highest/80 backdrop-blur-md px-2 py-1 rounded-lg text-secondary font-bold text-xs">
+                    4K HDR
+                </div>
+</div>
+<div class="flex-grow space-y-4">
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">SCI-FI</span>
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">ADVENTURE</span>
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">142 MIN</span>
+</div>
+<h1 class="font-headline font-black text-4xl md:text-6xl lg:text-7xl tracking-tighter leading-none">THE SILENT<br/>VOYAGER</h1>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary-fixed-dim" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xl font-bold">8.9</span>
+<span class="text-on-surface-variant text-sm font-medium">/ 10</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="text-sm font-medium tracking-wide">2024</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<section class="px-6 md:px-12 py-8 flex flex-wrap gap-4">
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed font-bold py-4 px-8 rounded-full flex items-center gap-3 scale-100 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+            Watch Trailer
+        </button>
+<button class="bg-surface-variant/60 backdrop-blur-xl border border-outline-variant/20 text-on-background font-bold py-4 px-8 rounded-full flex items-center gap-3 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="bookmark_add">bookmark_add</span>
+            Add to Watchlist
+        </button>
+<button class="w-14 h-14 rounded-full bg-surface-container-highest flex items-center justify-center hover:bg-surface-bright transition-colors text-on-background">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</button>
+</section>
+<!-- Main Content Grid -->
+<main class="px-6 md:px-12 grid grid-cols-1 lg:grid-cols-3 gap-12 mt-8">
+<!-- Left Column: Synopsis & Details -->
+<div class="lg:col-span-2 space-y-10">
+<section>
+<h3 class="font-headline font-bold text-xl mb-4 text-on-background tracking-tight">Overview</h3>
+<p class="text-on-surface-variant leading-relaxed text-lg font-normal max-w-3xl">
+                    In the year 2142, a solitary deep-space explorer discovers a dormant alien vessel on the edge of the known galaxy. As she awakens the ship's ancient AI, she uncovers a secret that challenges the very foundation of human history and the impending fate of Earth. A visual masterpiece exploring isolation, curiosity, and the vast unknown.
+                </p>
+</section>
+<!-- Cast Section -->
+<section>
+<div class="flex justify-between items-end mb-6">
+<h3 class="font-headline font-bold text-xl text-on-background tracking-tight">Cast</h3>
+<button class="text-primary text-sm font-semibold hover:underline">View All</button>
+</div>
+<div class="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+<div class="flex-shrink-0 w-32 group">
+<div class="aspect-square rounded-2xl overflow-hidden mb-3">
+<img alt="" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="portrait of a man with short hair and a leather jacket, moody shadows and cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWQIglub9KUw7EqKAod-X3mbNeBg8oFBdHgsCGrm1axJMbDpW155rI_yok75XXmp5xDx77EL0Q2QuO-FRV6WoF5SEB1dg-6pW1ZZDc76M_uDVzyOmAOv4V-oAW-74-ne8V5HNnlTYmJq2xvoaxk4_V_GoA4TJ4N4duRHWSIk-oXlk0uQLgd2XezZcoD7FCeKqqrHgAnx-aGGMO2R3B-j4q4odO4V_IPFCLqNpGzXc7gj4QtuwPdAVcchROIniZM3pV87zRXgW_TGI"/>
+</div>
+<p class="font-bold text-sm text-on-background truncate">Marcus Thorne</p>
+<p class="text-xs text-on-surface-variant truncate">Cpt. Elias Vance</p>
+</div>
+<div class="flex-shrink-0 w-32 group">
+<div class="aspect-square rounded-2xl overflow-hidden mb-3">
+<img alt="" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="portrait of a woman with intense gaze, artistic dark background and soft rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj2Cee9B3W34Tm8bxu1_5pCvypcVy1LmP7NnWeKpqhyv1SKjy0vJRYMM8U-D43PWfs9ecDkNd_O_G54yQbAfMHhyrZ38scDG0Axq9e4OEKQcm0pmXIjXNhFm7XgkYyo5-AVk1fQT7c_nXO_uJAcxAATRsh9TWUGUhnGh5qALMD_4AK-_QM6lKrMvIB1odTTnMMOVr798vNggUGXh4lASpxIJ19bm-WE5lcCPU4_oeHG_iOxE6TVNb3dASaHkDtdDdkE7i57Y4DJlw"/>
+</div>
+<p class="font-bold text-sm text-on-background truncate">Elena Rossi</p>
+<p class="text-xs text-on-surface-variant truncate">Dr. Aris Nova</p>
+</div>
+<div class="flex-shrink-0 w-32 group">
+<div class="aspect-square rounded-2xl overflow-hidden mb-3">
+<img alt="" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="headshot of a middle-aged man with grey beard and expressive eyes, cinematic high contrast" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrjMezQqKksvkmM6QUQUH1wscNL-rkHpBpFEMx1uOj-CX5Umb71lnwT4u10yUguUYNaCXeO1nDr9FGFG3s92wS8zpDrPMUqBdEIDmk0nKxXHpGmo_VSGIdeaKEh4PIKj4JQnZYp16VAaHcp9myJo2tSFwul_5sLtlP8vq4AHIq9W2KvGRS_FrBsm9gtSAK_3RRsp3qzyUXhUiS9bD_lvLQheZ_mkQQk9abzhnNwri58VIfTLwqM9Au_BY82SKa9tSGQOM49khCvjI"/>
+</div>
+<p class="font-bold text-sm text-on-background truncate">John Sterling</p>
+<p class="text-xs text-on-surface-variant truncate">The Architect</p>
+</div>
+<div class="flex-shrink-0 w-32 group">
+<div class="aspect-square rounded-2xl overflow-hidden mb-3">
+<img alt="" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="portrait of a young woman with curly hair, vibrant cinematic lighting on one side and deep shadow on the other" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCua6v8RWLFZpi_mUIh3P7Xla_4SgEZ5_qT5RyGvZE6xqeM9X_gXdJw1ism0Q8Y01pgKTKp2gCBl7dTaeg_JJ0wxQ_HeN_Fmven0nleLVmDdzcNxV-Q5OHVITByuhPmKVbvlDpwRC5ohTXCj-poac0Cy9U9IEh_Rou333q9ye9oJkBt--pqxvhsIW7qs9JpSCwKEz9aVjvn-Jex4gKKgxcx8v54wQPcorWg50FWUHFkv5QPOceYHKObq9tZEdUZBRv8fh79PiDjqVc"/>
+</div>
+<p class="font-bold text-sm text-on-background truncate">Sasha Kim</p>
+<p class="text-xs text-on-surface-variant truncate">Echo Unit 7</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Sidebar Info -->
+<div class="space-y-8">
+<div class="bg-surface-container-low rounded-3xl p-8 space-y-6">
+<div class="space-y-1">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Director</p>
+<p class="text-on-background font-bold text-lg">Denis Villeneuve</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Writer</p>
+<p class="text-on-background font-bold text-lg">Hampton Fancher</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Studio</p>
+<p class="text-on-background font-bold text-lg">Warp Vision Pictures</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Budget</p>
+<p class="text-on-background font-bold text-lg">$165,000,000</p>
+</div>
+</div>
+<!-- Bento Mini Grid for Related -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-highest rounded-2xl p-4 flex flex-col justify-between aspect-square">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Rotten Tomatoes</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error" data-icon="sentiment_very_satisfied">sentiment_very_satisfied</span>
+<span class="text-2xl font-black">94%</span>
+</div>
+</div>
+<div class="bg-surface-container-highest rounded-2xl p-4 flex flex-col justify-between aspect-square">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Metascore</p>
+<div class="flex items-center gap-2">
+<span class="bg-secondary text-on-secondary px-1.5 py-0.5 rounded font-black text-sm">82</span>
+<span class="text-sm font-bold">Universal Acclaim</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-[#192540]/60 backdrop-blur-xl fixed bottom-0 w-full z-50 rounded-t-[2rem] flex justify-around items-center px-4 pt-3 pb-6 w-full shadow-[0_-4px_20px_rgba(0,0,0,0.4)]">
+<div class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Discovery</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#ffd709] drop-shadow-[0_0_8px_rgba(255,215,9,0.3)] hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="bookmarks" style="font-variation-settings: 'FILL' 1;">bookmarks</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Watchlist</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Profile</span>
+</div>
+</nav>
+</body></html>

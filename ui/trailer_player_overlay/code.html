@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MOVIEVERSE - Now Playing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#192540",
+                    "tertiary-fixed": "#fd8bcc",
+                    "on-primary-fixed": "#000000",
+                    "surface-bright": "#1f2b49",
+                    "on-surface": "#dee5ff",
+                    "tertiary-container": "#fd8bcc",
+                    "error-dim": "#d73357",
+                    "surface-container-highest": "#192540",
+                    "secondary": "#ffd709",
+                    "on-secondary": "#5b4b00",
+                    "tertiary-fixed-dim": "#ed7ebe",
+                    "on-tertiary-fixed": "#350025",
+                    "surface-container-low": "#091328",
+                    "inverse-surface": "#faf8ff",
+                    "secondary-dim": "#efc900",
+                    "secondary-fixed": "#ffd709",
+                    "error-container": "#a70138",
+                    "tertiary-dim": "#ed7ebe",
+                    "surface-container-lowest": "#000000",
+                    "on-tertiary-container": "#610246",
+                    "surface-container-high": "#141f38",
+                    "primary-fixed-dim": "#8686ff",
+                    "surface-tint": "#a5a5ff",
+                    "on-secondary-container": "#fff7e6",
+                    "on-secondary-fixed": "#453900",
+                    "background": "#060e20",
+                    "surface-container": "#0f1930",
+                    "outline": "#6d758c",
+                    "on-error-container": "#ffb2b9",
+                    "on-secondary-fixed-variant": "#665500",
+                    "on-tertiary-fixed-variant": "#6c104f",
+                    "secondary-container": "#705d00",
+                    "surface": "#060e20",
+                    "primary-fixed": "#9695ff",
+                    "surface-dim": "#060e20",
+                    "outline-variant": "#40485d",
+                    "secondary-fixed-dim": "#efc900",
+                    "on-primary": "#19059d",
+                    "error": "#ff6e84",
+                    "tertiary": "#ffa1d4",
+                    "on-primary-container": "#10007f",
+                    "on-tertiary": "#6e1150",
+                    "inverse-primary": "#4f4dcd",
+                    "on-error": "#490013",
+                    "primary-dim": "#9392ff",
+                    "on-surface-variant": "#a3aac4",
+                    "inverse-on-surface": "#4d556b",
+                    "on-primary-fixed-variant": "#16009a",
+                    "primary-container": "#9695ff",
+                    "primary": "#a5a5ff",
+                    "on-background": "#dee5ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .video-gradient-overlay {
+            background: linear-gradient(to top, #060e20 0%, transparent 100%);
+        }
+        .glass-panel {
+            background: rgba(25, 37, 64, 0.6);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen overflow-hidden selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Bar (Suppressed Shell logic: Back button priority) -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-6">
+<button class="flex items-center gap-2 group transition-transform active:scale-95">
+<div class="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<span class="font-label text-label-sm uppercase tracking-[0.1em] text-on-surface-variant group-hover:text-primary transition-colors">Back to Details</span>
+</button>
+<div class="text-right">
+<h1 class="font-headline font-black tracking-tighter text-2xl text-transparent bg-clip-text bg-gradient-to-br from-primary to-primary-container">MOVIEVERSE</h1>
+</div>
+</header>
+<main class="relative h-screen flex flex-col">
+<!-- Video Player Section (Top Half) -->
+<section class="relative h-1/2 w-full overflow-hidden">
+<img alt="The Silent Voyager Cinematography" class="w-full h-full object-cover" data-alt="Cinematic wide shot of a solitary spacecraft orbiting a glowing nebula with vibrant violet and deep blue gas clouds in high detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-5K8oZ42BDtfhhQXzHjbIirQX5v4KoB3plKV_PFIOfFjy1r3Wekg0KP89In8N7SQs2EYBr35gvlIABbVOJUGakehynrsMPqL4Womwn3yZefQjBiu8hbqLjcA_9S3tPCaU2SsfURCk0I_y3q8R8G1hwn-0LwvtYLxJ6LrlHF7Lw4V_5-Bi_-rfLuMX1Cf5kRArfUoqiK48pb7tv7cueihS_F9nkkKxc63Wu-lIM-SyeL_uwvacu8CFNrzGIdHOeIIl4ebIhVqwWgk"/>
+<div class="absolute inset-0 video-gradient-overlay"></div>
+<!-- Contextual Playback Overlay -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-24 h-24 rounded-full bg-primary/20 backdrop-blur-md flex items-center justify-center border border-white/10 group cursor-pointer transition-all hover:scale-110 active:scale-90">
+<span class="material-symbols-outlined text-5xl text-primary" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</section>
+<!-- Controls Section (Bottom Half) -->
+<section class="h-1/2 flex flex-col justify-end px-6 pb-12 pt-4">
+<!-- Metadata Area -->
+<div class="mb-10 text-center md:text-left">
+<span class="font-label text-[10px] font-bold tracking-[0.2em] text-secondary uppercase bg-secondary/10 px-3 py-1 rounded-full inline-block mb-3">Now Playing</span>
+<h2 class="font-headline font-extrabold text-4xl md:text-6xl tracking-tight text-on-surface leading-none">The Silent Voyager</h2>
+<div class="flex items-center justify-center md:justify-start gap-4 mt-4 text-on-surface-variant font-label text-xs tracking-widest uppercase">
+<span>Sci-Fi / Thriller</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>2h 14m</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-on-surface font-bold">8.9</span>
+</div>
+</div>
+</div>
+<!-- Interaction Controls Container -->
+<div class="w-full max-w-4xl mx-auto space-y-8">
+<!-- Seek Bar -->
+<div class="relative group">
+<div class="flex justify-between text-[10px] font-label text-on-surface-variant tracking-widest uppercase mb-2">
+<span>42:18</span>
+<span>-1:31:42</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden relative">
+<!-- Progress -->
+<div class="absolute left-0 top-0 h-full w-[35%] bg-gradient-to-r from-primary to-primary-container shadow-[0_0_12px_rgba(165,165,255,0.5)]"></div>
+<!-- Scrub Handle -->
+<div class="absolute left-[35%] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-on-surface border-4 border-primary-container shadow-xl"></div>
+</div>
+</div>
+<!-- Main Transport Controls -->
+<div class="flex items-center justify-between">
+<!-- Volume/Settings (Left) -->
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">volume_up</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<!-- Center Controls -->
+<div class="flex items-center gap-8">
+<button class="text-on-surface-variant hover:text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined text-3xl">replay_10</span>
+</button>
+<button class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary-fixed shadow-2xl hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined text-3xl">forward_10</span>
+</button>
+</div>
+<!-- Secondary Options (Right) -->
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">subtitles</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">fullscreen</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Contextual "Coming Up" Glass Card -->
+<aside class="hidden xl:flex fixed right-8 top-1/2 -translate-y-1/2 flex-col gap-4 w-64">
+<h3 class="font-label text-[10px] font-bold tracking-[0.2em] text-on-surface-variant uppercase mb-2">Up Next</h3>
+<div class="glass-panel p-4 rounded-xl border border-white/5 space-y-4">
+<div class="aspect-video rounded-lg overflow-hidden">
+<img alt="Next Movie Preview" class="w-full h-full object-cover" data-alt="Distant silhouette of a character looking at a massive futuristic megacity at night with neon lights and flying vehicles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTJhyAhmHQAF_0ofa7e_IapGOjXTU3EvhRAUOf4oh__KqlWNMTEXxMufR8-qhm6fsQktqZdMNS_XcMA8vmm7JK6yrc88lyVN7n2ZC1HHYHdaB2z2hyPcOKakOy0GAYe89AFyT3FjfASkzXLDOEjdeVWjB4UjTJ7bMKWH1ux3kO-LeRdNopZWLotk3biSPEIIzjni2jvdUZeo9sC5J_xu0OJRg8k6vgQwrUgigRQ3ugCgw3se5VsVRGtyn4byB4KrO0LQk1LwyeGLI"/>
+</div>
+<div>
+<p class="font-headline font-bold text-sm text-on-surface">Echoes of Andromeda</p>
+<p class="font-body text-xs text-on-surface-variant mt-1">Starting in 08s</p>
+</div>
+<button class="w-full py-3 rounded-full bg-surface-container-high text-primary font-label text-[10px] font-bold uppercase tracking-widest hover:bg-surface-bright transition-colors">
+                Cancel
+            </button>
+</div>
+</aside>
+<!-- Navigation suppression: As per Task, only "Back to Details" button and player controls are primary. Bottom/Side Nav is hidden for immersive focused task. -->
+</body></html>

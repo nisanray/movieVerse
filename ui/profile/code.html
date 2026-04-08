@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MovieVerse - User Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#454559",
+                        "tertiary-container": "#fed268",
+                        "surface-bright": "#2b2a3c",
+                        "on-primary-fixed-variant": "#610003",
+                        "on-surface": "#e9e6f7",
+                        "primary": "#ff8e80",
+                        "primary-container": "#ff7668",
+                        "on-primary": "#650003",
+                        "on-error-container": "#ffb2b9",
+                        "on-tertiary": "#6a5000",
+                        "inverse-primary": "#c1000c",
+                        "inverse-surface": "#fcf8ff",
+                        "secondary-dim": "#d4d2eb",
+                        "surface-container-highest": "#242434",
+                        "secondary-fixed-dim": "#d4d2eb",
+                        "surface": "#0d0d18",
+                        "error-dim": "#d73357",
+                        "surface-container-low": "#12121e",
+                        "on-secondary": "#505064",
+                        "on-primary-fixed": "#000000",
+                        "inverse-on-surface": "#555461",
+                        "outline": "#757482",
+                        "secondary": "#e2e0f9",
+                        "on-error": "#490013",
+                        "on-secondary-fixed": "#3e3d51",
+                        "on-background": "#e9e6f7",
+                        "outline-variant": "#474754",
+                        "tertiary-fixed": "#fed268",
+                        "surface-container-lowest": "#000000",
+                        "primary-fixed-dim": "#ff5b4c",
+                        "surface-variant": "#242434",
+                        "surface-dim": "#0d0d18",
+                        "surface-container-high": "#1e1e2d",
+                        "tertiary": "#ffe2a5",
+                        "secondary-fixed": "#e2e0f9",
+                        "tertiary-dim": "#efc45c",
+                        "on-tertiary-fixed-variant": "#6b5000",
+                        "on-tertiary-container": "#5f4700",
+                        "tertiary-fixed-dim": "#efc45c",
+                        "on-tertiary-fixed": "#483500",
+                        "error-container": "#a70138",
+                        "primary-dim": "#e80f16",
+                        "on-surface-variant": "#aba9b9",
+                        "surface-container": "#181826",
+                        "on-secondary-container": "#d0cee7",
+                        "background": "#0d0d18",
+                        "surface-tint": "#ff8e80",
+                        "on-secondary-fixed-variant": "#5a596e",
+                        "primary-fixed": "#ff7668",
+                        "error": "#ff6e84",
+                        "on-primary-container": "#4f0002"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Epilogue"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-transition-gradient {
+            background: linear-gradient(to bottom, rgba(13, 13, 24, 0.8), rgba(13, 13, 24, 0));
+        }
+        .no-line-rule { border: none !important; }
+        .glass-card {
+            background: rgba(30, 30, 45, 0.4);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-transparent backdrop-blur-xl bg-opacity-60 flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-red-600 dark:text-red-500">movie_filter</span>
+<h1 class="font-['Epilogue'] tracking-tighter font-bold text-2xl font-black tracking-tighter text-red-600 dark:text-red-500 uppercase">MovieVerse</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-400 hover:text-red-400 transition-colors duration-300 scale-95 active:transition-transform">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-4xl mx-auto min-h-screen">
+<!-- Profile Hero Section -->
+<section class="mb-12 relative">
+<div class="flex flex-col md:flex-row items-center gap-8">
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-tr from-primary to-tertiary rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+<div class="relative w-32 h-32 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-surface-container-highest">
+<img alt="Alex Chen" class="w-full h-full object-cover" data-alt="Close-up portrait of a young man with a warm smile, soft cinematic lighting, dark textured background, professional photography style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHErVUPqEzHjVDbNLqVgEri3HzoQ0wfnof9gK1MI1h3tU1db5WPn8ScvBUxt_cro0IIVDTLcCTplp49zr1HE1XYU-y98ckkh_wH0QJQzfKvWQx_rLW6lNFbtnqGnUvyDb_dbVVqhlWR4RrkOqGyji75-zp-qLFv81HYXU4BZ47b_-qytodafQA4EMgMx1LSYq-B14Gbi2821y_LDksKIP4RuAohesb1uDw7qMxyr0pfD180QblzUutYNdc0WdG6AQgzGjl4evRkgDM"/>
+</div>
+<button class="absolute bottom-1 right-1 bg-primary text-on-primary p-2 rounded-full shadow-lg hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</div>
+<div class="text-center md:text-left">
+<h2 class="font-headline text-4xl md:text-5xl font-black tracking-tight text-white mb-1">Alex Chen</h2>
+<p class="text-on-surface-variant font-medium tracking-wide">alex.chen@cinema-enthusiast.com</p>
+<div class="mt-4 flex flex-wrap justify-center md:justify-start gap-3">
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded-full border border-white/5">
+<span class="material-symbols-outlined text-[16px] text-tertiary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface">Premium Member</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded-full border border-white/5">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">visibility</span>
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface">432 Watched</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Preferred Genres Bento Grid -->
+<section class="mb-12">
+<h3 class="font-headline text-lg font-bold uppercase tracking-widest text-primary mb-6">Preferred Genres</h3>
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+<!-- Genre Chips -->
+<button class="group relative flex flex-col items-center justify-center aspect-square bg-surface-container-low rounded-xl overflow-hidden hover:bg-surface-container-high transition-all duration-300">
+<span class="material-symbols-outlined text-3xl mb-2 text-primary group-hover:scale-110 transition-transform">theaters</span>
+<span class="font-label text-xs font-bold tracking-widest uppercase text-on-surface-variant group-hover:text-white">Noir</span>
+<div class="absolute inset-0 border-2 border-primary/40 opacity-100 rounded-xl"></div>
+</button>
+<button class="group flex flex-col items-center justify-center aspect-square bg-surface-container-low rounded-xl overflow-hidden hover:bg-surface-container-high transition-all duration-300">
+<span class="material-symbols-outlined text-3xl mb-2 text-on-surface-variant group-hover:text-primary group-hover:scale-110 transition-transform">rocket_launch</span>
+<span class="font-label text-xs font-bold tracking-widest uppercase text-on-surface-variant group-hover:text-white">Sci-Fi</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center aspect-square bg-surface-container-low rounded-xl overflow-hidden hover:bg-surface-container-high transition-all duration-300">
+<span class="material-symbols-outlined text-3xl mb-2 text-primary group-hover:scale-110 transition-transform">psychology</span>
+<span class="font-label text-xs font-bold tracking-widest uppercase text-on-surface-variant group-hover:text-white">Thriller</span>
+<div class="absolute inset-0 border-2 border-primary/40 opacity-100 rounded-xl"></div>
+</button>
+<button class="group flex flex-col items-center justify-center aspect-square bg-surface-container-low rounded-xl overflow-hidden hover:bg-surface-container-high transition-all duration-300">
+<span class="material-symbols-outlined text-3xl mb-2 text-on-surface-variant group-hover:text-primary group-hover:scale-110 transition-transform">history_edu</span>
+<span class="font-label text-xs font-bold tracking-widest uppercase text-on-surface-variant group-hover:text-white">History</span>
+</button>
+<button class="group flex flex-col items-center justify-center aspect-square bg-surface-container-low border border-dashed border-outline-variant rounded-xl hover:border-primary/50 transition-all duration-300">
+<span class="material-symbols-outlined text-2xl text-outline-variant group-hover:text-primary">add</span>
+<span class="font-label text-[10px] font-bold tracking-widest uppercase text-outline-variant mt-1 group-hover:text-primary">Add New</span>
+</button>
+</div>
+</section>
+<!-- Settings Section -->
+<section class="mb-12">
+<h3 class="font-headline text-lg font-bold uppercase tracking-widest text-primary mb-6">Settings &amp; Privacy</h3>
+<div class="space-y-3">
+<!-- Edit Profile -->
+<a class="flex items-center justify-between p-5 bg-surface-container-low rounded-xl hover:bg-surface-container-high transition-all group" href="#">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-highest group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">person_edit</span>
+</div>
+<div>
+<span class="block font-headline font-bold text-white tracking-tight">Edit Profile</span>
+<span class="text-xs text-on-surface-variant uppercase tracking-wider">Name, Email, Social Links</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</a>
+<!-- Watch History -->
+<a class="flex items-center justify-between p-5 bg-surface-container-low rounded-xl hover:bg-surface-container-high transition-all group" href="#">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-highest group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">history</span>
+</div>
+<div>
+<span class="block font-headline font-bold text-white tracking-tight">Watch History</span>
+<span class="text-xs text-on-surface-variant uppercase tracking-wider">Recently Viewed &amp; Ratings</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</a>
+<!-- Notification Settings -->
+<a class="flex items-center justify-between p-5 bg-surface-container-low rounded-xl hover:bg-surface-container-high transition-all group" href="#">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-highest group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">notifications</span>
+</div>
+<div>
+<span class="block font-headline font-bold text-white tracking-tight">Notification Settings</span>
+<span class="text-xs text-on-surface-variant uppercase tracking-wider">Alerts, News, New Releases</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</a>
+<!-- Help/Support -->
+<a class="flex items-center justify-between p-5 bg-surface-container-low rounded-xl hover:bg-surface-container-high transition-all group" href="#">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-highest group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">help_center</span>
+</div>
+<div>
+<span class="block font-headline font-bold text-white tracking-tight">Support &amp; FAQ</span>
+<span class="text-xs text-on-surface-variant uppercase tracking-wider">Help Center &amp; Community</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</a>
+</div>
+</section>
+<!-- Logout Button -->
+<section class="mt-16 flex flex-col items-center">
+<button class="group w-full max-w-sm py-4 bg-error-container rounded-xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-error-container/20">
+<span class="material-symbols-outlined text-white">logout</span>
+<span class="font-headline font-extrabold uppercase tracking-widest text-white">Logout</span>
+</button>
+<p class="mt-6 text-[10px] uppercase tracking-[0.2em] text-outline-variant font-bold">MovieVerse v2.4.0 • Built for Cinephiles</p>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-slate-950/80 backdrop-blur-2xl z-50 rounded-t-3xl border-t border-white/5 shadow-[0_-8px_30px_rgb(0,0,0,0.5)]">
+<div class="flex flex-col items-center justify-center text-slate-500 hover:text-white transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 hover:text-white transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Search</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 hover:text-white transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Watchlist</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 hover:text-white transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Suggested</span>
+</div>
+<div class="flex flex-col items-center justify-center text-red-500 bg-red-500/10 rounded-xl px-3 py-1">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
+</div>
+</nav>
+</body></html>

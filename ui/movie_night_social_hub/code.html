@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MOVIEVERSE - Social Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-variant": "#192540",
+                      "tertiary-fixed": "#fd8bcc",
+                      "on-primary-fixed": "#000000",
+                      "surface-bright": "#1f2b49",
+                      "on-surface": "#dee5ff",
+                      "tertiary-container": "#fd8bcc",
+                      "error-dim": "#d73357",
+                      "surface-container-highest": "#192540",
+                      "secondary": "#ffd709",
+                      "on-secondary": "#5b4b00",
+                      "tertiary-fixed-dim": "#ed7ebe",
+                      "on-tertiary-fixed": "#350025",
+                      "surface-container-low": "#091328",
+                      "inverse-surface": "#faf8ff",
+                      "secondary-dim": "#efc900",
+                      "secondary-fixed": "#ffd709",
+                      "error-container": "#a70138",
+                      "tertiary-dim": "#ed7ebe",
+                      "surface-container-lowest": "#000000",
+                      "on-tertiary-container": "#610246",
+                      "surface-container-high": "#141f38",
+                      "primary-fixed-dim": "#8686ff",
+                      "surface-tint": "#a5a5ff",
+                      "on-secondary-container": "#fff7e6",
+                      "on-secondary-fixed": "#453900",
+                      "background": "#060e20",
+                      "surface-container": "#0f1930",
+                      "outline": "#6d758c",
+                      "on-error-container": "#ffb2b9",
+                      "on-secondary-fixed-variant": "#665500",
+                      "on-tertiary-fixed-variant": "#6c104f",
+                      "secondary-container": "#705d00",
+                      "surface": "#060e20",
+                      "primary-fixed": "#9695ff",
+                      "surface-dim": "#060e20",
+                      "outline-variant": "#40485d",
+                      "secondary-fixed-dim": "#efc900",
+                      "on-primary": "#19059d",
+                      "error": "#ff6e84",
+                      "tertiary": "#ffa1d4",
+                      "on-primary-container": "#10007f",
+                      "on-tertiary": "#6e1150",
+                      "inverse-primary": "#4f4dcd",
+                      "on-error": "#490013",
+                      "primary-dim": "#9392ff",
+                      "on-surface-variant": "#a3aac4",
+                      "inverse-on-surface": "#4d556b",
+                      "on-primary-fixed-variant": "#16009a",
+                      "primary-container": "#9695ff",
+                      "primary": "#a5a5ff",
+                      "on-background": "#dee5ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Manrope"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(25, 37, 64, 0.6);
+            backdrop-filter: blur(20px);
+        }
+        body {
+            background-color: #060e20;
+            color: #dee5ff;
+            font-family: 'Inter', sans-serif;
+        }
+        .cinematic-shadow {
+            box-shadow: 0 0 32px rgba(255, 215, 9, 0.08);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#060e20]/60 backdrop-blur-xl flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="text-[#a5a5ff] hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#a5a5ff] to-[#9695ff] font-['Manrope']">MOVIEVERSE</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8 font-['Inter'] text-[13px] font-semibold tracking-wide uppercase">
+<a class="text-[#a3aac4] hover:text-[#a5a5ff] transition-colors" href="#">Home</a>
+<a class="text-[#a3aac4] hover:text-[#a5a5ff] transition-colors" href="#">Discovery</a>
+<a class="text-[#a5a5ff] transition-colors" href="#">Social</a>
+<a class="text-[#a3aac4] hover:text-[#a5a5ff] transition-colors" href="#">Tickets</a>
+<a class="text-[#a3aac4] hover:text-[#a5a5ff] transition-colors" href="#">Profile</a>
+</nav>
+<button class="text-[#a5a5ff] hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-7xl mx-auto">
+<!-- Hero Section: Social Context -->
+<section class="mb-12 relative">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="space-y-2">
+<span class="text-secondary font-label text-[0.6875rem] uppercase tracking-[0.05em] font-bold">In Progress</span>
+<h2 class="text-4xl md:text-5xl font-headline font-extrabold tracking-tight">Movie Night Hub</h2>
+<p class="text-on-surface-variant max-w-xl font-body text-title-md">Connect with your crew. Sync your screens. Never watch alone.</p>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed px-8 py-4 rounded-full font-bold flex items-center gap-2 scale-95 active:scale-90 transition-all shadow-lg hover:shadow-primary/20">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+                    Create Event
+                </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Active Group Watches (Left Column) -->
+<div class="lg:col-span-8 space-y-8">
+<div class="flex items-center justify-between">
+<h3 class="text-xl font-headline font-bold">Active Group Watches</h3>
+<button class="text-primary text-sm font-semibold hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Active Card 1 -->
+<div class="group relative bg-surface-container-low rounded-xl overflow-hidden shadow-2xl transition-transform hover:scale-[1.02]">
+<div class="aspect-video relative">
+<img alt="" class="w-full h-full object-cover opacity-60" data-alt="vibrant cinematic shot of a neon-lit cyberpunk city street at night with rain reflecting colorful lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBK5ugK81WxSJmO9Y7l2Ev_zxt-bpKRxbq7RWKxh7d3UPX1XxKHLQC6tgQ9wWATgmqKL5_Wi0BztqfvPhSeT3FLrr_4_R1gpnIdtFSBM1juh_gI6qux-FbmfJATyFba0lFX9NTxbu-KXIojFG5KvNElWZUjntc_xDOlleblbRUFVZJprKzPxvEgon5J6PhR1GmoerEMES03vixmzPmNeab18MeeoeX5Mp-oBhESsoQlSPSmdFwLzw4J0wqfpFyd8-dQJgALhZTF2zY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<div class="absolute top-4 left-4 bg-secondary text-on-secondary px-3 py-1 rounded-full text-[10px] font-black uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">sensors</span> Live
+                            </div>
+</div>
+<div class="p-6 -mt-12 relative z-10">
+<h4 class="text-lg font-headline font-bold mb-1">Interstellar Expedition</h4>
+<p class="text-on-surface-variant text-sm mb-4">4 friends currently watching</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-3">
+<img class="w-10 h-10 rounded-full border-2 border-surface-container-low object-cover" data-alt="close-up portrait of a smiling young man with light beard in soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCp3BhQy4lPFyuUrco_6iW20ZJ3Q55xLSRoNYaHqPVIJ1m0wRhMALcKO4Z3pORas8Nlx7jANw7ly86FPhTGqYoRWrWVQz43--p0n1bulTE69VvfSbId5gI5jevG9vDPSxTtbtFC_vqv2zcqrazHXX0-ghc1kChPTA9HtidBS1NeJ-qEorn7CKg77P25NSwWk6RvyGSvD7gYNwFNflV-aJ1fueCRWFLTn9U5x8NQmXRzTZ-WCyu7y6NKTeFZzB1ogyveX0XGqTBO_lg"/>
+<img class="w-10 h-10 rounded-full border-2 border-surface-container-low object-cover" data-alt="headshot of a woman with curly hair and bright smile against neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGRVtDiCYwJPbswUO7di3TtVtalEfuSilIwuFt8rGw-gqqX3lzNzP1SJF7c2qNDCkzchM0rWF0b4cI2IdTJedFC4eWLMnrYOVTL-5bF46fBTe_1yvUl0BiKjb3FL7Wd2r3sEfe3JwZ31FmYpzxhJdsfIiH67QJyTrmISnvL_HqVeZ5kvUilARypFWuSyfLTF219sKjewfchirHHlVwRhN7nSBJBTkuNB_03ZsAZXxTtVqTjZ86M96aOOF5wDnkxE9iEgn2CIlYDUo"/>
+<img class="w-10 h-10 rounded-full border-2 border-surface-container-low object-cover" data-alt="portrait of a man wearing glasses with focused expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy8ac3vP_Li3LKl8QfrMQ1MD0Np2ym09JikQTMSRtF_R_3CNY2-CjdndEqY2m2C1dDB7ZdhcoZUcE_1glH8f4a9I-S_BYc3OqFodJE8hrED_2VDRW7Zlm40umfdHYGPMh_Si1HQzSphdihtlGX3QZpOZqkh6sH45vA96gABY9Kq5XvjLO2zhukuieAwlTOBp0KuewxwHVf1VdwZ8GVgFrbzBzR9k7hP4I2TC0S2rMGUqdgArmB_fCUR0itOz8jlcWmlWjDyH7VLiw"/>
+<div class="w-10 h-10 rounded-full border-2 border-surface-container-low bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-on-surface-variant">+1</div>
+</div>
+<button class="bg-surface-bright p-3 rounded-full text-primary hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Active Card 2 -->
+<div class="group relative bg-surface-container-low rounded-xl overflow-hidden shadow-2xl transition-transform hover:scale-[1.02]">
+<div class="aspect-video relative">
+<img alt="" class="w-full h-full object-cover opacity-60" data-alt="abstract flowing silk-like shapes in deep blue and purple tones with ethereal soft glow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoTx5AjwgJvljPTF3iPbN6wEMVHKa3GjbogkEJGPq7a__aeCvFqsCKTO-pkj262_SJ2aJyB-kj_TaZyoKrmkYO0zuz0mjok8VkYz59fPqP4511Nhyx4mjF8t3IP3O6igzKuQM1ByiI2pBJygb6HW6Q-I_Hp-JhqUU8oBGGf__ouTxwmAeKiR4APpT4C5pqWnL6HxAbKeSF8Cbvq7fTJwlk77Cmr9GK74McS9hmkQL9mYyGNLjpkuriK_rHSxkKxIDlcRnK8Tqzcdo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<div class="absolute top-4 left-4 bg-secondary text-on-secondary px-3 py-1 rounded-full text-[10px] font-black uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">sensors</span> Live
+                            </div>
+</div>
+<div class="p-6 -mt-12 relative z-10">
+<h4 class="text-lg font-headline font-bold mb-1">Deep Sea Horrors</h4>
+<p class="text-on-surface-variant text-sm mb-4">Watching: "The Abyss"</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-3">
+<img class="w-10 h-10 rounded-full border-2 border-surface-container-low object-cover" data-alt="professional headshot of a person with friendly expression in soft daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDypI0DJyc5hN_n4nHDPpIj_i4aStOszRcw6DdJgmjWRfs4ntQsUSMOgRy6GShFm8J7x2sf2fHNTBpHUtNC714YOautjC6ICYZpPBZBzP1TVKcwsGALs3dRcg-aObtau85kZ3TmY5mvG9RisNvM3PxMS4Ut-rAp2KSGfGiQ1KHSoES6bZyg4LpcyMEUVU6s6jNWJW5YbuEbDVMW1IEqHSg2W-c6aIfqn7Ogi-uv8EdeoioFDGyQ_TfZaWDkwizSaVfGQkq4Dj_oVMk"/>
+<img class="w-10 h-10 rounded-full border-2 border-surface-container-low object-cover" data-alt="portrait of a young woman with intense eyes looking directly at camera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzzNmVnhyoKbdhx1EZSHZTtUubLPcZLPNeZxQgqrhSjuARKI_eZzsbChki_nUZfl1QPsqEKtk7eTEFkK8pw2aazxXeBSHcs9c8zMpIqxK_D_ilDSA0kBcGHj4_qmOqdaBqCWwhEpvSo0VAgtX4otVf8JYBh3YYFAvHWPOU7JpVrh6B0vn86X63bHytM_Bwi519e9t1R0VBwh362Y7brdnVIcbelJzJCBZrz8fzqIKdhiJBqAPC-M0zYTl731X7sFYnNXiCr-otNpM"/>
+</div>
+<button class="bg-surface-bright p-3 rounded-full text-primary hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Invite Friends CTA -->
+<div class="bg-surface-bright/50 p-8 rounded-3xl flex flex-col md:flex-row items-center gap-8 glass-panel">
+<div class="flex-shrink-0 w-24 h-24 bg-surface-container-highest rounded-full flex items-center justify-center border-4 border-outline-variant/20 shadow-inner">
+<span class="material-symbols-outlined text-4xl text-secondary">person_add</span>
+</div>
+<div class="flex-grow text-center md:text-left">
+<h4 class="text-2xl font-headline font-bold mb-2">Build your Movie Squad</h4>
+<p class="text-on-surface-variant text-sm md:text-base">Invite your friends and family to join Movieverse. Get 3 months of premium for every 2 successful invites.</p>
+</div>
+<button class="bg-surface-container-highest px-6 py-3 rounded-xl font-bold text-on-surface hover:bg-surface-container-high transition-colors border border-outline-variant/10">
+                        Invite Friends
+                    </button>
+</div>
+</div>
+<!-- Friend Activity (Right Column) -->
+<div class="lg:col-span-4 space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="text-xl font-headline font-bold">Friend Activity</h3>
+<button class="text-on-surface-variant">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<div class="space-y-4">
+<!-- Activity Item 1 -->
+<div class="bg-surface-container-low p-4 rounded-2xl flex gap-4 items-start hover:bg-surface-container transition-colors">
+<div class="relative flex-shrink-0">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="man with beard smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgRLR5sGq_xkJwbZWnujelZvvyZe1hplGShyWZN-WcinyIJvN39lUqY0ybjGiSPaF9h_mJR3JCj3qbFPyqXyogGhTzuyJqPxTa01fXX_7y5GP9eJXcfwisG0DBvVM4sHyJUxBcEfAftBSxN6IcUWdqzMwFaatNTbTGpwYYugmbRStZ9xXbUJXzwOPHHestWwjXPNfgQUCU1nlf_eDHg0WzT-FccylE1vnhrvMFRyCa-UoDyzZ_pg_HL83A6A6RapxVLt6Wgz1STM8"/>
+<div class="absolute -bottom-1 -right-1 bg-primary p-1 rounded-full text-[10px] leading-none text-on-primary border-2 border-surface-container-low">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">thumb_up</span>
+</div>
+</div>
+<div class="flex-grow">
+<p class="text-sm">
+<span class="font-bold text-on-surface">Alex Rivera</span> liked 
+                                <span class="font-bold text-primary">Dune: Part Two</span>
+</p>
+<p class="text-xs text-on-surface-variant mt-1">2 hours ago</p>
+<div class="mt-3 flex items-center gap-3 bg-surface-container-high p-2 rounded-lg">
+<img class="w-12 h-16 rounded-md object-cover" data-alt="cinematic close-up of a futuristic space soldier with desert landscape background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy40nr7WyC17_Re1LQpkiiJh_Av2OMvQXsWGzp35Q8cNFxQwNltKTgPZSVdy-lHepP_uoPTcLHrr85dSISe7mPKr-uKJmgrlajCjz3Mm7HXlaVnhWrtPVh-pDklish75TiSpB_WDRZtVRryTCFyXaqLS-LzAumqdPBbMI7uUryk2OXDkzI56o979VLWvHs3ygP_5gqYwmujuG2FgalLvP3krch5eEQ5-hTfI9MfCJtd651VD3Bc8RtTr-_8ttzEgL0JFf8IzFkWWw"/>
+<div>
+<p class="text-xs font-bold">Dune: Part Two</p>
+<p class="text-[10px] text-on-surface-variant">Action, Adventure</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="bg-surface-container-low p-4 rounded-2xl flex gap-4 items-start hover:bg-surface-container transition-colors">
+<div class="relative flex-shrink-0">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="woman smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD345xZWzoel6LQrMlYLh4kSSvY8cuEVjDM6Lh1ZGkJM2qEkojfQWQIj8t_qdjVmEuAZBQXHolQX0WSJ7HoUZzP91mMv0E2z5EZZzABDE5vKog7gy37nZ_Z3Uo8ExHlITJDbWglIg8YcRSPL4OuMEnZyuw_teEdQZt45KdfN9kcgHoBeaGAK4hEhXp8yQZGpd4mEifxx6qui8mXnwb5m0gUW7FGqxRq_KdYs5RPJWDTn_1zyBcKoW8rbiazaKKze4pDZXEzGh-D5I"/>
+<div class="absolute -bottom-1 -right-1 bg-secondary p-1 rounded-full text-[10px] leading-none text-on-secondary border-2 border-surface-container-low">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">visibility</span>
+</div>
+</div>
+<div class="flex-grow">
+<p class="text-sm">
+<span class="font-bold text-on-surface">Sarah Chen</span> is watching 
+                                <span class="font-bold text-primary">Everything Everywhere All at Once</span>
+</p>
+<p class="text-xs text-on-surface-variant mt-1">Now</p>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="bg-surface-container-low p-4 rounded-2xl flex gap-4 items-start hover:bg-surface-container transition-colors">
+<div class="relative flex-shrink-0">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="man with glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsJDzlXysfe351GHJTOlF40vVkfnu3LE7ovhQwrC7EYId1WEPbnQiPzB125fdky8FPIM3t9RRBAJxmFF5LI8dHJa_w08UiD3F0T-hlMySA2UVpahxSLeN6NEhb_eoON3wsP5bcbfdyRUBf0ndmSGcB7Rni28UZQ2Ohk8whZKvJbkgHzQMPzxcQ3XdUQ0jiLhNSHVvP05Pl-EvblZfYMRi7C4ve8NDhvCDUC4lNXpip1gTPL06cdxMj82jWAecaNZnIwOSumPcXhWI"/>
+<div class="absolute -bottom-1 -right-1 bg-tertiary p-1 rounded-full text-[10px] leading-none text-on-tertiary border-2 border-surface-container-low">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="flex-grow">
+<p class="text-sm">
+<span class="font-bold text-on-surface">Marcus Todd</span> rated 
+                                <span class="font-bold text-primary">Oppenheimer</span> 5 stars
+                            </p>
+<p class="text-xs text-on-surface-variant mt-1">Yesterday</p>
+<div class="flex mt-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full py-4 rounded-2xl bg-surface-container-highest/40 text-on-surface-variant font-semibold text-sm border border-outline-variant/10 hover:text-on-surface transition-colors">
+                    Load More Activity
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-[2rem] bg-[#192540]/60 backdrop-blur-xl flex justify-around items-center px-4 pt-3 pb-6 w-full shadow-[0_-4px_20px_rgba(0,0,0,0.4)] md:hidden">
+<a class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Discovery</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#ffd709] drop-shadow-[0_0_8px_rgba(255,215,9,0.3)] scale-110 active:scale-95 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Social</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">local_activity</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Tickets</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

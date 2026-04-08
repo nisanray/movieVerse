@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#454559",
+                    "tertiary-container": "#fed268",
+                    "surface-bright": "#2b2a3c",
+                    "on-primary-fixed-variant": "#610003",
+                    "on-surface": "#e9e6f7",
+                    "primary": "#ff8e80",
+                    "primary-container": "#ff7668",
+                    "on-primary": "#650003",
+                    "on-error-container": "#ffb2b9",
+                    "on-tertiary": "#6a5000",
+                    "inverse-primary": "#c1000c",
+                    "inverse-surface": "#fcf8ff",
+                    "secondary-dim": "#d4d2eb",
+                    "surface-container-highest": "#242434",
+                    "secondary-fixed-dim": "#d4d2eb",
+                    "surface": "#0d0d18",
+                    "error-dim": "#d73357",
+                    "surface-container-low": "#12121e",
+                    "on-secondary": "#505064",
+                    "on-primary-fixed": "#000000",
+                    "inverse-on-surface": "#555461",
+                    "outline": "#757482",
+                    "secondary": "#e2e0f9",
+                    "on-error": "#490013",
+                    "on-secondary-fixed": "#3e3d51",
+                    "on-background": "#e9e6f7",
+                    "outline-variant": "#474754",
+                    "tertiary-fixed": "#fed268",
+                    "surface-container-lowest": "#000000",
+                    "primary-fixed-dim": "#ff5b4c",
+                    "surface-variant": "#242434",
+                    "surface-dim": "#0d0d18",
+                    "surface-container-high": "#1e1e2d",
+                    "tertiary": "#ffe2a5",
+                    "secondary-fixed": "#e2e0f9",
+                    "tertiary-dim": "#efc45c",
+                    "on-tertiary-fixed-variant": "#6b5000",
+                    "on-tertiary-container": "#5f4700",
+                    "tertiary-fixed-dim": "#efc45c",
+                    "on-tertiary-fixed": "#483500",
+                    "error-container": "#a70138",
+                    "primary-dim": "#e80f16",
+                    "on-surface-variant": "#aba9b9",
+                    "surface-container": "#181826",
+                    "on-secondary-container": "#d0cee7",
+                    "background": "#0d0d18",
+                    "surface-tint": "#ff8e80",
+                    "on-secondary-fixed-variant": "#5a596e",
+                    "primary-fixed": "#ff7668",
+                    "error": "#ff6e84",
+                    "on-primary-container": "#4f0002"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Epilogue"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-transition-gradient {
+            background: linear-gradient(to bottom, rgba(13, 13, 24, 0.95), rgba(13, 13, 24, 0.8));
+        }
+        .cinematic-glow {
+            box-shadow: 0 0 40px rgba(255, 142, 128, 0.1);
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0d18;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #242434;
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-transparent backdrop-blur-xl bg-opacity-60 flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-red-600 dark:text-red-500 text-3xl">movie_filter</span>
+<h1 class="text-2xl font-black tracking-tighter text-red-600 dark:text-red-500 uppercase font-['Epilogue']">MovieVerse</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8">
+<a class="text-slate-400 font-['Epilogue'] tracking-tighter font-bold hover:text-red-400 transition-colors duration-300" href="#">Home</a>
+<a class="text-slate-400 font-['Epilogue'] tracking-tighter font-bold hover:text-red-400 transition-colors duration-300" href="#">Search</a>
+<a class="text-red-500 font-bold font-['Epilogue'] tracking-tighter hover:text-red-400 transition-colors duration-300" href="#">Watchlist</a>
+<a class="text-slate-400 font-['Epilogue'] tracking-tighter font-bold hover:text-red-400 transition-colors duration-300" href="#">Suggested</a>
+</nav>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">search</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-7xl mx-auto min-h-screen">
+<!-- Header & Tabs -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="text-primary font-label text-xs tracking-[0.2em] uppercase font-bold mb-2 block">Your Collection</span>
+<h2 class="text-5xl md:text-6xl font-headline font-black tracking-tighter text-on-surface">Watchlist</h2>
+</div>
+<!-- Custom Tabs -->
+<div class="flex p-1 bg-surface-container-low rounded-xl">
+<button class="px-6 py-2.5 rounded-lg text-sm font-bold bg-surface-container-high text-primary transition-all shadow-sm">All</button>
+<button class="px-6 py-2.5 rounded-lg text-sm font-bold text-on-surface-variant hover:text-on-surface transition-all">Watched</button>
+<button class="px-6 py-2.5 rounded-lg text-sm font-bold text-on-surface-variant hover:text-on-surface transition-all">Unwatched</button>
+</div>
+</div>
+</section>
+<!-- Movie Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-10">
+<!-- Movie Card 1 -->
+<div class="group relative space-y-4">
+<div class="aspect-[2/3] w-full rounded-xl overflow-hidden bg-surface-container-low transition-transform duration-500 group-hover:scale-[1.03] cinematic-glow">
+<div class="absolute top-3 left-3 z-10 bg-tertiary text-on-tertiary text-[10px] font-black px-2 py-1 rounded-sm flex items-center gap-1 shadow-lg">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                        8.9
+                    </div>
+<img alt="Cinematic Movie Poster" class="w-full h-full object-cover" data-alt="dramatic cinematic film poster featuring a solitary figure standing against a neon-lit cyberpunk cityscape at night with misty rain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO5ofhYFU8MUakhSHX7Nl2WinL6jA-OMP8yGwiLurynpraUvzxMjZD3FEl5ctv64cC0xE4WjWbPbYCtJK9YZOjacunqfSZJtJDxrJqKXH7vhcIPgvjN2JPUBgyyELQVE798gWwlg9XFg1RTNnDuJVDlggbOs1iRyIikztDI-11-zhqwJgxNyqiWIedlG8EKtUk3LIZ94lXfZuwai8kApmxYkMO7B8wMdfLn8WntVRir0zwLa_45EXkjp0wuV9IupFL5gBdSflrVuXs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div>
+<h3 class="font-headline text-lg font-extrabold tracking-tight leading-tight group-hover:text-primary transition-colors">The Last Protocol</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] font-label font-bold tracking-widest text-on-surface-variant uppercase">Sci-Fi</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-[10px] font-label font-bold tracking-widest text-on-surface-variant uppercase">2h 14m</span>
+</div>
+</div>
+</div>
+<!-- Movie Card 2 -->
+<div class="group relative space-y-4">
+<div class="aspect-[2/3] w-full rounded-xl overflow-hidden bg-surface-container-low transition-transform duration-500 group-hover:scale-[1.03] cinematic-glow">
+<div class="absolute top-3 left-3 z-10 bg-tertiary text-on-tertiary text-[10px] font-black px-2 py-1 rounded-sm flex items-center gap-1 shadow-lg">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                        9.2
+                    </div>
+<img alt="Cinematic Movie Poster" class="w-full h-full object-cover" data-alt="moody black and white portrait of a jazz musician with a saxophone in a smokey underground club with sharp rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJfy1Ywk6lNaLk6ss666TbjizDCfXS9EG-B6ve6hljC7MiLP29r5U2HvFsIjYt0IOZNgDChQt-aiC2ADEL1xx5qD5RwtHJ7M-QBS9C-uFGfVYbMlGAuvn4LXxNuscLokJTeWW85zFAQA-3Ye4UG-dFFtkgMJrtQwpwq1S8Gt9MdabVSwtXdPgNN5GMObVK6TrRv5VyIFWonK8PVXo-WAbYQjgJpYM5EqWpvAO8yvJvSzsOYk2RSnkjsLLmSFzYofP52VTW5bsg6IUD"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div>
+<h3 class="font-headline text-lg font-extrabold tracking-tight leading-tight group-hover:text-primary transition-colors">Midnight Blues</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] font-label font-bold tracking-widest text-on-surface-variant uppercase">Drama</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-[10px] font-label font-bold tracking-widest text-on-surface-variant uppercase">1h 48m</span>
+</div>
+</div>
+</div>
+<!-- Movie Card 3 -->
+<div class="group relative space-y-4">
+<div class="aspect-[2/3] w-full rounded-xl overflow-hidden bg-surface-container-low transition-transform duration-500 group-hover:scale-[1.03] cinematic-glow">
+<div class="absolute top-3 left-3 z-10 bg-tertiary text-on-tertiary text-[10px] font-black px-2 py-1 rounded-sm flex items-center gap-1 shadow-lg">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                        7.5
+                    </div>
+<img alt="Cinematic Movie Poster" class="w-full h-full object-cover" data-alt="vast cinematic desert landscape with towering orange rock formations under a burning sunset sky with deep purple shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwm2mOpQ5LFQnO80TnMKij0-tKXvzSMMTZi-J_-4ERRLLUYvuCwoSQujiSM9AHERMlV73zUueVFo8vttGffQuftuNu3SJvQnkzy4ltkPenDINQ4cP8LYYzbnFQguXE0jee8ohbfHPi2Fd3_JP6zWTW-_YOAgQVbpeZTcd_OSIuFOZ5DgedmTETr0tGsrueLeSs435BgyIcxLha9UtF66u7soMHBlHHVG__lgozN3Kb1hhHW8f5B1onlsbCGkUqCMy-eZJVFhcneJu9"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div>
+<h3 class="font-headline text-lg font-extrabold tracking-tight leading-tight group-hover:text-primary transition-colors">Echoes of Dust</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] font-label font-bold tracking-widest text-on-surface-variant uppercase">Western</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-[10px] font-label font-bold tracking-widest text-on-surface-variant uppercase">2h 30m</span>
+</div>
+</div>
+</div>
+<!-- Movie Card 4 -->
+<div class="group relative space-y-4">
+<div class="aspect-[2/3] w-full rounded-xl overflow-hidden bg-surface-container-low transition-transform duration-500 group-hover:scale-[1.03] cinematic-glow">
+<div class="absolute top-3 left-3 z-10 bg-tertiary text-on-tertiary text-[10px] font-black px-2 py-1 rounded-sm flex items-center gap-1 shadow-lg">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                        8.1
+                    </div>
+<img alt="Cinematic Movie Poster" class="w-full h-full object-cover" data-alt="abstract cinematic imagery of swirling blue and white cosmic nebula with tiny glittering stars and a distant glowing galaxy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2IaVkK3dSpsGHtoB_v0JuK4oHICq6BPLh8XFPQXsl2dqiYNTtOHVX7BlyP5TEi1yip__sFXn7z9T8qAFwDTpwAyI3Fipyszh2K1FMqonKHDQSqOKuDXfO5WIKKAdcz1pf7GKEVi9yGbFDFZZ04poMpNk89phNuofAQELiF7hcsa1KVGluVSd3hQp-JcDG2RTg3j86NZCe22W8xBfmB0t0kA3OLftzOvlrzUkHh9wl43XKFxzABSvIpjqbLYIDlqxp2Aix-pmBnS3X"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div>
+<h3 class="font-headline text-lg font-extrabold tracking-tight leading-tight group-hover:text-primary transition-colors">Nebula Rising</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] font-label font-bold tracking-widest text-on-surface-variant uppercase">Documentary</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-[10px] font-label font-bold tracking-widest text-on-surface-variant uppercase">1h 22m</span>
+</div>
+</div>
+</div>
+<!-- Movie Card 5 (Watched Overlay Example) -->
+<div class="group relative space-y-4">
+<div class="aspect-[2/3] w-full rounded-xl overflow-hidden bg-surface-container-low transition-transform duration-500 group-hover:scale-[1.03] cinematic-glow">
+<div class="absolute inset-0 bg-surface/40 backdrop-grayscale flex items-center justify-center z-10">
+<div class="bg-primary/90 p-2 rounded-full shadow-2xl">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="absolute top-3 left-3 z-20 bg-tertiary text-on-tertiary text-[10px] font-black px-2 py-1 rounded-sm flex items-center gap-1 shadow-lg">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                        6.8
+                    </div>
+<img alt="Cinematic Movie Poster" class="w-full h-full object-cover grayscale-[0.5]" data-alt="vintage 1940s noir street scene with long shadows of a detective under a flickering lamp post in the fog" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8y0B3IMs3mDaX-Kcp5wjZS5mm3V6RP-FCDLd6LQLkEmGBr6ipQkniQCdND_bBFZhZaPC89j3F7hKW9cOAFQ4b1QM2nJm3WpJ8gSS9PnnRE2knHCSpl82y3rXbU5jLjL8EFAdgEN1rqgIJnEdWgQj5iiSvNG3aurKA6k7EhazbZQZ_11fCVOYPFMMmLbAB5NVDxAJuBkgkRNo8rwilddxociLlP-JEVfPsos-zQHRWwCxx3oUdUpZ32-764c_hzoSIiiSmrxOlE8Tl"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+</div>
+<div>
+<h3 class="font-headline text-lg font-extrabold tracking-tight leading-tight group-hover:text-primary transition-colors">Fog City Noir</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] font-label font-bold tracking-widest text-on-surface-variant uppercase">Mystery</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-[10px] font-label font-bold tracking-widest text-on-surface-variant uppercase">1h 55m</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Cinematic Empty State (Hidden by default, shown for demonstration) -->
+<div class="hidden flex-col items-center justify-center py-40 text-center animate-pulse">
+<div class="relative mb-8">
+<div class="absolute inset-0 bg-primary/20 blur-3xl rounded-full"></div>
+<span class="material-symbols-outlined text-primary text-8xl relative z-10" style="font-variation-settings: 'wght' 200;">movie_filter</span>
+</div>
+<h3 class="text-3xl font-headline font-black text-on-surface tracking-tighter mb-3">No movies yet</h3>
+<p class="text-on-surface-variant font-label max-w-xs mx-auto">Your cinematic journey hasn't started. Explore our library to add your first masterpiece.</p>
+<button class="mt-8 px-8 py-3 bg-primary text-on-primary font-headline font-bold text-sm tracking-tight rounded-md hover:scale-105 transition-transform">Start Exploring</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-slate-950/80 backdrop-blur-2xl z-50 rounded-t-3xl border-t border-white/5 shadow-[0_-8px_30px_rgb(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-white transition-all duration-300" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-white transition-all duration-300" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-red-500 bg-red-500/10 rounded-xl px-3 py-1 scale-105 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Watchlist</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-white transition-all duration-300" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Suggested</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-white transition-all duration-300" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
+</a>
+</nav>
+<!-- Background Decoration -->
+<div class="fixed inset-0 pointer-events-none -z-10">
+<div class="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary/5 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[10%] left-[-5%] w-[40%] h-[40%] bg-surface-bright/20 blur-[100px] rounded-full"></div>
+</div>
+</body></html>

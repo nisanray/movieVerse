@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#192540",
+                    "tertiary-fixed": "#fd8bcc",
+                    "on-primary-fixed": "#000000",
+                    "surface-bright": "#1f2b49",
+                    "on-surface": "#dee5ff",
+                    "tertiary-container": "#fd8bcc",
+                    "error-dim": "#d73357",
+                    "surface-container-highest": "#192540",
+                    "secondary": "#ffd709",
+                    "on-secondary": "#5b4b00",
+                    "tertiary-fixed-dim": "#ed7ebe",
+                    "on-tertiary-fixed": "#350025",
+                    "surface-container-low": "#091328",
+                    "inverse-surface": "#faf8ff",
+                    "secondary-dim": "#efc900",
+                    "secondary-fixed": "#ffd709",
+                    "error-container": "#a70138",
+                    "tertiary-dim": "#ed7ebe",
+                    "surface-container-lowest": "#000000",
+                    "on-tertiary-container": "#610246",
+                    "surface-container-high": "#141f38",
+                    "primary-fixed-dim": "#8686ff",
+                    "surface-tint": "#a5a5ff",
+                    "on-secondary-container": "#fff7e6",
+                    "on-secondary-fixed": "#453900",
+                    "background": "#060e20",
+                    "surface-container": "#0f1930",
+                    "outline": "#6d758c",
+                    "on-error-container": "#ffb2b9",
+                    "on-secondary-fixed-variant": "#665500",
+                    "on-tertiary-fixed-variant": "#6c104f",
+                    "secondary-container": "#705d00",
+                    "surface": "#060e20",
+                    "primary-fixed": "#9695ff",
+                    "surface-dim": "#060e20",
+                    "outline-variant": "#40485d",
+                    "secondary-fixed-dim": "#efc900",
+                    "on-primary": "#19059d",
+                    "error": "#ff6e84",
+                    "tertiary": "#ffa1d4",
+                    "on-primary-container": "#10007f",
+                    "on-tertiary": "#6e1150",
+                    "inverse-primary": "#4f4dcd",
+                    "on-error": "#490013",
+                    "primary-dim": "#9392ff",
+                    "on-surface-variant": "#a3aac4",
+                    "inverse-on-surface": "#4d556b",
+                    "on-primary-fixed-variant": "#16009a",
+                    "primary-container": "#9695ff",
+                    "primary": "#a5a5ff",
+                    "on-background": "#dee5ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "3xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body selection:bg-primary selection:text-on-primary">
+<header class="fixed top-0 w-full z-50 bg-[#060e20]/60 backdrop-blur-xl flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="text-[#a5a5ff] hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#a5a5ff] to-[#9695ff] font-['Manrope']">MOVIEVERSE</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-[#a5a5ff] hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</header>
+<main class="pt-20 pb-32 px-4 md:px-8 max-w-7xl mx-auto space-y-12">
+<section class="relative h-[400px] rounded-3xl overflow-hidden shadow-2xl group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="atmospheric cinematic shot of a neon-lit futuristic city street at night with rain reflecting vibrant pink and blue lights" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBg1iDBw2MAF2qsGOJdTphKrsKQX9KrTdjhv8VUjd-lKcQBQJdtd6FkZXBlDx8GEX6bzjlGeYAxdcL6GsPxd40vYLjU1MXycU5eucpbFApeOgwBeIye8Vr8aw_wJWtrv_EVrF9vt2eR9DYGd-sshTd40IyZETlLiY6PaIplihTz5QR1BJIzaV-tx5JOCFvKrwMpbuvIIaEuEvjNQ7VV6NVAc0dt-NNxnX76XX5Xx_MUKc2dZ7R2sua0edq7UlGuv3nVu2FmXBL_sCA')">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="space-y-2">
+<div class="flex items-center gap-3">
+<span class="bg-secondary text-on-secondary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest font-label">Exclusive Member Access</span>
+<span class="bg-surface-variant/80 glass-effect text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-medium uppercase tracking-widest font-label">IMAX 3D</span>
+</div>
+<h2 class="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter leading-none">Neon Dreams: 2099</h2>
+<p class="text-on-surface-variant max-w-xl font-medium">In the year 2099, the line between soul and silicon fades into a neon haze of rebellion and discovery.</p>
+</div>
+<div class="flex gap-4">
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined">confirmation_number</span>
+                            Book Tickets
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<div class="lg:col-span-7 space-y-8">
+<div class="flex items-center justify-between">
+<h3 class="text-2xl font-headline font-bold">Premium Theaters Nearby</h3>
+<div class="flex gap-2">
+<button class="p-2 rounded-xl bg-surface-container-high text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">map</span>
+</button>
+<button class="p-2 rounded-xl bg-surface-container-high text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container-low p-6 rounded-3xl group hover:bg-surface-container transition-all cursor-pointer">
+<div class="flex gap-6">
+<div class="w-24 h-24 rounded-2xl overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="ultra modern minimalist luxury cinema lobby with gold accents and plush velvet seating in a high-end theater" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnaMWVwuh1bNUIbndoMMhZY749XSrlpDkjpG7hhVb_2Aq0TXtGK296Sb86fF0j4zdib8FR2El_JMRaaTbCc5U3g9Jn2g-LMGvR3XWDOccW0geRJU-xb55tx1eTtqEK7pdiEzaGhaLRCQ-YXcFKVKL7CDrkJ29BVbzUEBoD_iaEH2eACzjQ4I-1n314bbELUsqmI5Zsg7EUJBnMAJvwsP9sKZNyK2HUFfaYuxN0TlG8oFlbdJNXmzoZ5YhcYGztHBAVj--WDfc7y5A"/>
+</div>
+<div class="flex-grow space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-xl font-bold font-headline">The Grand Stellar Luxe</h4>
+<div class="flex items-center gap-2 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                                            0.8 miles away • Downtown
+                                        </div>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-high px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-secondary font-bold text-sm">4.9</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-xl bg-surface-container-highest text-primary font-bold text-sm hover:bg-primary hover:text-on-primary transition-all">18:30</button>
+<button class="px-4 py-2 rounded-xl bg-surface-container-highest text-primary font-bold text-sm hover:bg-primary hover:text-on-primary transition-all">21:00</button>
+<button class="px-4 py-2 rounded-xl bg-surface-container-highest text-primary font-bold text-sm hover:bg-primary hover:text-on-primary transition-all">23:45</button>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-3xl group hover:bg-surface-container transition-all cursor-pointer">
+<div class="flex gap-6">
+<div class="w-24 h-24 rounded-2xl overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="cinematic close up of professional digital movie projector lens glowing in a dark high-tech theater environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt_FnAMsDwXvSpnJzxxFpQ6lFe-dsCE46Wl7hkPLhZvZG1nVSjqmsdglzez5mLXx7AuWWDJS-lKkBhA_jBIP86t6_DH6Hv94QK8sRquHjeKfdNSkCQvQDavXrjSddao4m_4mnpdUv6vV6AzmB3X59fvfSWK7tt5dJ929vN5WbbmvD7KKHA6wtQbT17iuYarzX5On1Dvma3mtaFMDvTud23gflUOwkgZu8OdXkmI4ZwDIyESmgKLjr6lC0w70kBYXNBSBeYi1l1eT4"/>
+</div>
+<div class="flex-grow space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-xl font-bold font-headline">Onyx Horizon Cinema</h4>
+<div class="flex items-center gap-2 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                                            1.4 miles away • Upper East
+                                        </div>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-high px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-secondary font-bold text-sm">4.7</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-xl bg-surface-container-highest text-primary font-bold text-sm hover:bg-primary hover:text-on-primary transition-all">19:15</button>
+<button class="px-4 py-2 rounded-xl bg-surface-container-highest text-primary font-bold text-sm hover:bg-primary hover:text-on-primary transition-all">22:30</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 space-y-8">
+<div class="bg-surface-container-high rounded-[2.5rem] p-8 shadow-2xl space-y-8">
+<div class="flex items-center justify-between">
+<h3 class="text-xl font-headline font-bold">Seat Selection Preview</h3>
+<div class="flex gap-1">
+<div class="w-3 h-3 rounded-full bg-outline-variant"></div>
+<div class="w-3 h-3 rounded-full bg-secondary shadow-[0_0_8px_rgba(255,215,9,0.3)]"></div>
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+</div>
+</div>
+<div class="relative py-12 flex flex-col items-center gap-6">
+<div class="w-3/4 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent rounded-full shadow-[0_0_20px_rgba(165,165,255,0.4)]"></div>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-[0.2em] font-label">Screen This Way</p>
+<div class="grid grid-cols-7 gap-3 mt-4">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest border border-white/5"></div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest border border-white/5"></div>
+<div class="w-8 h-8 rounded-lg bg-primary shadow-lg scale-110"></div>
+<div class="w-8 h-8 rounded-lg bg-primary shadow-lg scale-110"></div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest border border-white/5"></div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest border border-white/5"></div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest border border-white/5"></div>
+<div class="w-8 h-8 rounded-lg bg-secondary/20 border border-secondary/30"></div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest border border-white/5"></div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest border border-white/5"></div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest border border-white/5"></div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest border border-white/5"></div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest border border-white/5"></div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest border border-white/5"></div>
+</div>
+</div>
+<div class="pt-6 space-y-4 border-t border-outline-variant/20">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant">Selected Seats (2)</span>
+<span class="font-bold text-on-surface">Row F, Seat 12 &amp; 13</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant">Total Amount</span>
+<span class="text-2xl font-black text-secondary">$48.00</span>
+</div>
+<button class="w-full py-4 rounded-full bg-secondary text-on-secondary font-bold shadow-[0_4px_20px_rgba(255,215,9,0.2)] hover:scale-[1.02] active:scale-95 transition-all">
+                            Proceed to Payment
+                        </button>
+</div>
+</div>
+<div class="bg-gradient-to-br from-surface-container-highest to-surface-container-low p-8 rounded-[2.5rem] relative overflow-hidden group">
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-secondary/10 blur-[64px] rounded-full group-hover:scale-125 transition-transform duration-700"></div>
+<div class="relative z-10 space-y-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<h4 class="text-xl font-headline font-bold">Exclusive Member Access</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed">Unlock VIP seating, zero booking fees, and early access to world premieres with your Platinum Membership.</p>
+<button class="text-secondary font-bold text-sm flex items-center gap-2 hover:translate-x-1 transition-transform">
+                            View Benefits <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 w-full z-50 rounded-t-[2rem] bg-[#192540]/60 backdrop-blur-xl shadow-[0_-4px_20px_rgba(0,0,0,0.4)] flex justify-around items-center px-4 pt-3 pb-6 w-full">
+<div class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Discovery</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Social</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#ffd709] drop-shadow-[0_0_8px_rgba(255,215,9,0.3)] scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_activity</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Tickets</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#a3aac4] opacity-70 hover:text-[#a5a5ff] transition-colors scale-110 active:scale-95 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Profile</span>
+</div>
+</nav>
+</body></html>

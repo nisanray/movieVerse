@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MovieVerse - Search</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#181826",
+                    "surface-container-low": "#12121e",
+                    "inverse-surface": "#fcf8ff",
+                    "surface-container-lowest": "#000000",
+                    "on-background": "#e9e6f7",
+                    "on-tertiary-fixed-variant": "#6b5000",
+                    "on-secondary-fixed-variant": "#5a596e",
+                    "primary-fixed": "#ff7668",
+                    "on-tertiary-fixed": "#483500",
+                    "outline-variant": "#474754",
+                    "inverse-on-surface": "#555461",
+                    "on-primary-container": "#4f0002",
+                    "secondary-fixed": "#e2e0f9",
+                    "on-primary": "#650003",
+                    "surface-container-high": "#1e1e2d",
+                    "tertiary-fixed": "#fed268",
+                    "outline": "#757482",
+                    "secondary-fixed-dim": "#d4d2eb",
+                    "on-primary-fixed-variant": "#610003",
+                    "on-primary-fixed": "#000000",
+                    "surface-dim": "#0d0d18",
+                    "surface": "#0d0d18",
+                    "secondary-container": "#454559",
+                    "on-surface": "#e9e6f7",
+                    "secondary-dim": "#d4d2eb",
+                    "primary-dim": "#e80f16",
+                    "tertiary-dim": "#efc45c",
+                    "surface-bright": "#2b2a3c",
+                    "surface-tint": "#ff8e80",
+                    "on-tertiary": "#6a5000",
+                    "primary": "#ff8e80",
+                    "on-secondary-container": "#d0cee7",
+                    "tertiary-container": "#fed268",
+                    "on-surface-variant": "#aba9b9",
+                    "on-error-container": "#ffb2b9",
+                    "tertiary-fixed-dim": "#efc45c",
+                    "secondary": "#e2e0f9",
+                    "primary-fixed-dim": "#ff5b4c",
+                    "surface-container-highest": "#242434",
+                    "error-container": "#a70138",
+                    "primary-container": "#ff7668",
+                    "on-tertiary-container": "#5f4700",
+                    "on-secondary-fixed": "#3e3d51",
+                    "on-secondary": "#505064",
+                    "tertiary": "#ffe2a5",
+                    "error": "#ff6e84",
+                    "on-error": "#490013",
+                    "error-dim": "#d73357",
+                    "background": "#0d0d18",
+                    "inverse-primary": "#c1000c",
+                    "surface-variant": "#242434"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Epilogue"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0d0d18;
+            color: #e9e6f7;
+            font-family: 'Manrope', sans-serif;
+        }
+        .cinematic-shadow {
+            box-shadow: 0 10px 30px -10px rgba(232, 15, 22, 0.15);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background selection:bg-primary-dim selection:text-white">
+<!-- TopAppBar -->
+<nav class="bg-transparent backdrop-blur-xl bg-opacity-60 fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-red-600 dark:text-red-500" data-icon="movie_filter">movie_filter</span>
+<span class="text-2xl font-bold tracking-tighter text-white uppercase font-['Epilogue']">MovieVerse</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-red-600 dark:text-red-500 cursor-pointer active:scale-95 duration-150" data-icon="search">search</span>
+</div>
+</nav>
+<main class="pt-24 pb-32 px-6 max-w-5xl mx-auto">
+<!-- Search Header Section -->
+<section class="mb-10">
+<div class="relative group">
+<div class="absolute inset-y-0 left-5 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-primary-dim" data-icon="search">search</span>
+</div>
+<input class="w-full bg-surface-container-highest border-none text-on-surface py-5 pl-14 pr-12 rounded-full focus:ring-2 focus:ring-primary-dim transition-all duration-300 placeholder:text-on-surface-variant font-body" placeholder="Movies, actors, directors..." type="text"/>
+<div class="absolute inset-y-0 right-5 flex items-center">
+<button class="text-on-surface-variant hover:text-white active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Recent Searches Section -->
+<section class="mb-12">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline font-bold text-white text-xl tracking-tight">Recent Searches</h3>
+<button class="text-primary font-label text-sm uppercase tracking-widest hover:text-white transition-colors">Clear All</button>
+</div>
+<div class="flex flex-wrap gap-3">
+<div class="bg-surface-container-high px-5 py-2.5 rounded-full flex items-center gap-2 hover:bg-surface-bright transition-all cursor-pointer active:scale-95">
+<span class="text-on-surface-variant text-sm font-medium">Oppenheimer</span>
+<span class="material-symbols-outlined text-xs text-on-surface-variant" data-icon="close">close</span>
+</div>
+<div class="bg-surface-container-high px-5 py-2.5 rounded-full flex items-center gap-2 hover:bg-surface-bright transition-all cursor-pointer active:scale-95">
+<span class="text-on-surface-variant text-sm font-medium">Denis Villeneuve</span>
+<span class="material-symbols-outlined text-xs text-on-surface-variant" data-icon="close">close</span>
+</div>
+<div class="bg-surface-container-high px-5 py-2.5 rounded-full flex items-center gap-2 hover:bg-surface-bright transition-all cursor-pointer active:scale-95">
+<span class="text-on-surface-variant text-sm font-medium">Cyberpunk 2077</span>
+<span class="material-symbols-outlined text-xs text-on-surface-variant" data-icon="close">close</span>
+</div>
+<div class="bg-surface-container-high px-5 py-2.5 rounded-full flex items-center gap-2 hover:bg-surface-bright transition-all cursor-pointer active:scale-95">
+<span class="text-on-surface-variant text-sm font-medium">Interstellar</span>
+<span class="material-symbols-outlined text-xs text-on-surface-variant" data-icon="close">close</span>
+</div>
+</div>
+</section>
+<!-- Search Results / Discovery -->
+<section>
+<div class="flex items-baseline gap-3 mb-8">
+<h2 class="font-headline font-extrabold text-3xl text-white tracking-tighter">Recommended for You</h2>
+<span class="font-label text-xs text-on-surface-variant uppercase tracking-[0.2em]">Based on activity</span>
+</div>
+<!-- 2-Column Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
+<!-- Movie Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-4 cinematic-shadow transition-transform duration-500 group-hover:scale-105 group-hover:surface-tint">
+<img alt="" class="w-full h-full object-cover" data-alt="dramatic cinematic film poster of a lone astronaut standing on a glowing neon desert planet under multiple moons" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgkZRzWsXx3KmRfZGgMcubq5vB7t5I8zn7Pt6kt1ykYyxZ9fYlnG371E8QdIT1-QWTFrKgwgKa8oeXiIjitpBASjB6XXTwwRc4GW7-Y60y6Mw5u_TtOdc2eVdk6O_A7Mw-gAUM2KTjJsaBwWJokPVAaiGZKtWUVwHJxJaGB4dsAYq5NGvid_235TCq9P5_CIW9CSA0E8fMx_wwWvTU4XAlb-AJK-1DgJtlsuQ_KDnqBQWKpeQx9RCfJfJaQ7kpi2VpbU7ZZIOjKPaI"/>
+<div class="absolute top-3 left-3 bg-tertiary text-on-tertiary px-2 py-0.5 rounded-md font-bold text-xs">8.9</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-60"></div>
+</div>
+<h4 class="font-headline font-bold text-white text-lg leading-tight group-hover:text-primary transition-colors">Stellar Odyssey</h4>
+<p class="font-label text-xs text-on-surface-variant uppercase tracking-widest mt-1">Sci-Fi • 2024</p>
+</div>
+<!-- Movie Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-4 cinematic-shadow transition-transform duration-500 group-hover:scale-105">
+<img alt="" class="w-full h-full object-cover" data-alt="moody black and white portrait of a mysterious detective in a trench coat standing under a flickering street lamp" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADOdNKQbyBVdm6HomI6Y4lRnL2x3q98fo4MjVP3nUguEJJZbUY20PTWHOpvdctvWzxVXHr9SCJyH9DLpUPuLCPe2W7FuXi_rHeL1wmXoXWF4xs43mLMBWGY62AWleVlEkLP3wyedhVKz_rJYRpPreQs7HLrgCJN3Vrbw8CZ753JP3O1HsPpEhC4yu5bTRaVFV_-84QbzoAzbqHzr9ll12vnFe-Z6HXdZNX088Mmddlxg1PruB6xKR6gcK0_upS9snEPuA3IfFFkx4o"/>
+<div class="absolute top-3 left-3 bg-tertiary text-on-tertiary px-2 py-0.5 rounded-md font-bold text-xs">7.4</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-60"></div>
+</div>
+<h4 class="font-headline font-bold text-white text-lg leading-tight group-hover:text-primary transition-colors">Shadow Protocol</h4>
+<p class="font-label text-xs text-on-surface-variant uppercase tracking-widest mt-1">Thriller • 2023</p>
+</div>
+<!-- Movie Card 3 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-4 cinematic-shadow transition-transform duration-500 group-hover:scale-105">
+<img alt="" class="w-full h-full object-cover" data-alt="vibrant animated landscape of a floating magical city with waterfalls and colorful mythical creatures in sunset lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBgmRUz7aMVif6wwPNjYyH4A8_78Mar2B_XeGiI9LnWMP3FoqlxbJCFruIQCkQ9IUDkrDqxodfUm1UUlZp6kSI1cI5yWVtHQzZlSI2KJ63lmg-8FW2vwlTxzUnvtIsPO74yeFB3s-wemgtL-UXokTZi_xIj415RosvyQxQphvPNwhkkeo3o606xE2s95O-pqo5zZSfTrQYREBwofCYe9VvJfwSShCDJYZrnX5FHIZR2htk2ROh200Z0Z4pmstMszOBJP98pbA7hI5d"/>
+<div class="absolute top-3 left-3 bg-tertiary text-on-tertiary px-2 py-0.5 rounded-md font-bold text-xs">9.1</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-60"></div>
+</div>
+<h4 class="font-headline font-bold text-white text-lg leading-tight group-hover:text-primary transition-colors">Ethereal Realm</h4>
+<p class="font-label text-xs text-on-surface-variant uppercase tracking-widest mt-1">Animation • 2024</p>
+</div>
+<!-- Movie Card 4 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-4 cinematic-shadow transition-transform duration-500 group-hover:scale-105">
+<img alt="" class="w-full h-full object-cover" data-alt="close-up of a high-tech robotic face with glowing blue ocular sensors in a dark industrial workshop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBK-9_dvz6USfmCfG5sGOO16-e-Vq_JcJl4iOUuejM48JfXPw77h1LlutC_IBrUaSAW6-yuqroGy1xWew1hZ7xffzDg_m5cxIVQwnzfsIHcGrRJXruq_oClryoFo4DLdUVnFL7cSHQCeEOZsW5mu5cEFhdXNZbWHYSQkd9tuCx3mWxyLsNnL0of5EoTgQt3scD4x-HgpgIlfJfUeuJRmKhEEb7jrtecXLc9eqjcTtrhZixA85Zqh8chquAQT-MF4WU1EQ3VwSbQ7VKS"/>
+<div class="absolute top-3 left-3 bg-tertiary text-on-tertiary px-2 py-0.5 rounded-md font-bold text-xs">8.2</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-60"></div>
+</div>
+<h4 class="font-headline font-bold text-white text-lg leading-tight group-hover:text-primary transition-colors">Neural Breach</h4>
+<p class="font-label text-xs text-on-surface-variant uppercase tracking-widest mt-1">Action • 2023</p>
+</div>
+</div>
+</section>
+<!-- Discover Categories (Empty State Fallback Content) -->
+<section class="mt-20">
+<h3 class="font-headline font-bold text-white text-xl mb-6 tracking-tight">Browse Genres</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="h-24 rounded-xl bg-surface-container-low flex items-center justify-center border border-outline-variant/10 hover:bg-surface-bright hover:scale-[1.02] transition-all cursor-pointer">
+<span class="font-label font-bold tracking-widest uppercase text-on-surface-variant">Action</span>
+</div>
+<div class="h-24 rounded-xl bg-surface-container-low flex items-center justify-center border border-outline-variant/10 hover:bg-surface-bright hover:scale-[1.02] transition-all cursor-pointer">
+<span class="font-label font-bold tracking-widest uppercase text-on-surface-variant">Drama</span>
+</div>
+<div class="h-24 rounded-xl bg-surface-container-low flex items-center justify-center border border-outline-variant/10 hover:bg-surface-bright hover:scale-[1.02] transition-all cursor-pointer">
+<span class="font-label font-bold tracking-widest uppercase text-on-surface-variant">Horror</span>
+</div>
+<div class="h-24 rounded-xl bg-surface-container-low flex items-center justify-center border border-outline-variant/10 hover:bg-surface-bright hover:scale-[1.02] transition-all cursor-pointer">
+<span class="font-label font-bold tracking-widest uppercase text-on-surface-variant">Documentary</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center pt-3 pb-6 px-4 bg-[#0d0d18]/80 backdrop-blur-lg rounded-t-xl z-50 shadow-[0_-4px_20px_rgba(229,9,20,0.1)]">
+<div class="flex flex-col items-center justify-center text-slate-500 hover:text-white transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-red-500 font-bold scale-110 active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="search" style="font-variation-settings: 'FILL' 1;">search</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Search</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 hover:text-white transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Watchlist</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 hover:text-white transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Suggested</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 hover:text-white transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Manrope'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
+</div>
+</nav>
+</body></html>
