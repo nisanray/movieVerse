@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import '../../features/movie_details/presentation/bindings/movie_details_binding.dart';
+import '../../features/movie_details/presentation/pages/movie_details_page.dart';
+import '../../features/movie_discovery/presentation/bindings/movie_discovery_binding.dart';
 import '../../features/movie_discovery/presentation/pages/movie_discovery_page.dart';
 import '../../features/onboarding/presentation/bindings/onboarding_binding.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
@@ -15,9 +18,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.home,
       page: () => const MovieDiscoveryPage(),
-      // binding: MovieDiscoveryBinding(), // Add later
+      binding: MovieDiscoveryBinding(),
       transition: Transition.fadeIn,
     ),
-    // Future routes will be added here
+    GetPage(
+      name: AppRoutes.movieDetails,
+      page: () => const MovieDetailsPage(),
+      binding: MovieDetailsBinding(),
+      transition: Transition.rightToLeftWithFade,
+    ),
   ];
 }

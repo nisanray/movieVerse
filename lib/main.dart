@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'core/api/api_client.dart';
 import 'core/bindings/initial_binding.dart';
 import 'core/navigation/app_pages.dart';
@@ -10,6 +11,9 @@ import 'core/utils/storage_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Load environment variables
+  await dotenv.load(fileName: ".env");
   
   // Initialize Core Services
   await Get.putAsync(() => StorageService().init());
