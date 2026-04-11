@@ -22,12 +22,16 @@ class MovieDiscoveryPage extends GetView<MovieDiscoveryController> {
               return const Center(child: CircularProgressIndicator(color: Colors.red));
             }
 
+            // Determine if we should show discovery sections or a results grid
+            final bool isSearching = controller.searchQuery.value.isNotEmpty;
+            final bool isFilteringByGenre = controller.selectedGenre.value.id != 0;
+
             return CustomScrollView(
               slivers: [
                 const SliverToBoxAdapter(child: SizedBox(height: 180)), // Space for professional header
                 
-                if (controller.searchQuery.value.isNotEmpty)
-                  // Search Results View
+                if (isSearching || isFilteringByGenre)
+                  // Results Grid (Search or Genre Filter)
                   _buildSearchResultsGrid()
                 else ...[
                   // Discovery View (Default)
@@ -193,7 +197,7 @@ class MovieDiscoveryPage extends GetView<MovieDiscoveryController> {
         itemCount: controller.genres.length,
         itemBuilder: (context, index) {
           final genre = controller.genres[index];
-          final isSelected = controller.selectedGenre.value == genre;
+          final isSelected = controller.selectedGenre.value.id == genre.id;
           return Padding(
             padding: const EdgeInsets.only(right: 8),
             child: GestureDetector(
@@ -209,7 +213,7 @@ class MovieDiscoveryPage extends GetView<MovieDiscoveryController> {
                 ),
                 child: Center(
                   child: Text(
-                    genre,
+                    genre.name,
                     style: TextStyle(
                       color: isSelected ? Colors.black : Colors.white70,
                       fontSize: 12,

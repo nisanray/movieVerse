@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../domain/entities/media.dart';
+import '../../domain/entities/genre.dart';
 import '../../domain/repositories/movie_repository.dart';
 
 /// [MovieDiscoveryController] handles the state and data fetching for the Discovery (Home) screen.
@@ -17,8 +18,8 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
   final TextEditingController searchController = TextEditingController();
   final FocusNode searchFocusNode = FocusNode();
   final RxString searchQuery = ''.obs;
-  final RxList<String> genres = <String>[].obs;
-  final RxString selectedGenre = 'All'.obs;
+  final RxList<Genre> genres = <Genre>[].obs;
+  final Rx<Genre> selectedGenre = const Genre(id: 0, name: 'All').obs;
 
   // Observable lists for different media categories to enable granular UI updates.
   final RxList<Media> trendingMovies = <Media>[].obs;
@@ -56,7 +57,7 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
   void toggleMediaType(String type) {
     if (selectedMediaType.value == type) return;
     selectedMediaType.value = type;
-    selectedGenre.value = 'All'; // Reset genre on type change
+    selectedGenre.value = const Genre(id: 0, name: 'All'); 
     fetchAllMedia();
     fetchGenres();
   }
@@ -65,16 +66,37 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
   Future<void> fetchGenres() async {
     try {
       final fetchedGenres = await _repository.getGenres(selectedMediaType.value);
-      genres.assignAll(['All', ...fetchedGenres]);
+      genres.assignAll([const Genre(id: 0, name: 'All'), ...fetchedGenres]);
     } catch (e) {
-      genres.assignAll(['All']);
+      genres.assignAll([const Genre(id: 0, name: 'All')]);
     }
   }
 
   /// Updates the selected genre and filters the feed.
-  void selectGenre(String genre) {
+  void selectGenre(Genre genre) async {
     selectedGenre.value = genre;
-    // TODO: Implement discoverMedia with genre filter
+    
+    if (genre.id == 0) {
+      fetchAllMedia(); // Show standard Trending/Popular if 'All' is selected
+    } else {
+      try {
+        isLoading.value = true;
+        final results = await _repository.discoverMedia(
+          type: selectedMediaType.value,
+          genreId: genre.id,
+        );
+        // We update the 'trendingMovies' list as the primary feed for filtered results
+        trendingMovies.assignAll(results);
+        // Clear others to indicate we are in filter mode
+        popularMovies.clear();
+        nowPlayingMovies.clear();
+        change(results, status: RxStatus.success());
+      } catch (e) {
+        change(null, status: RxStatus.error(e.toString()));
+      } finally {
+        isLoading.value = false;
+      }
+    }
   }
 
   /// Performs a search for both Movies and TV Shows.

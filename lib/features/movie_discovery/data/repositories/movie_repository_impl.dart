@@ -1,4 +1,5 @@
 import '../../domain/entities/media.dart';
+import '../../domain/entities/genre.dart';
 import '../../domain/repositories/movie_repository.dart';
 import '../datasources/movie_remote_data_source.dart';
 
@@ -43,7 +44,7 @@ class MovieRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<List<String>> getGenres(String type) async {
+  Future<List<Genre>> getGenres(String type) async {
     return await remoteDataSource.getGenres(type);
   }
 

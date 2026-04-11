@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import '../../../../core/api/api_client.dart';
 import '../models/media_model.dart';
+import '../../domain/entities/genre.dart';
 
 abstract class MovieRemoteDataSource {
   Future<List<MediaModel>> getTrendingMovies();
@@ -10,7 +11,7 @@ abstract class MovieRemoteDataSource {
   Future<List<MediaModel>> getPopularTv();
   Future<List<MediaModel>> getNowPlayingTv();
   Future<List<MediaModel>> searchMedia(String query);
-  Future<List<String>> getGenres(String type); // movie or tv
+  Future<List<Genre>> getGenres(String type); // movie or tv
   Future<Map<String, String>> getCountries();
   Future<List<MediaModel>> discoverMedia({
     required String type,
@@ -72,11 +73,11 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
   }
 
   @override
-  Future<List<String>> getGenres(String type) async {
+  Future<List<Genre>> getGenres(String type) async {
     final response = await apiClient.getData('/genre/$type/list');
     if (response.data != null && response.data['genres'] != null) {
-      final List genres = response.data['genres'];
-      return genres.map((g) => g['name'] as String).toList();
+      final List results = response.data['genres'];
+      return results.map((json) => Genre.fromJson(json)).toList();
     }
     return [];
   }
