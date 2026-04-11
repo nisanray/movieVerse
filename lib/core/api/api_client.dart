@@ -35,9 +35,9 @@ class ApiClient extends getx.GetxService {
   }
 
   /// [getData] is a generic wrapper for GET requests to simplify API calls across the app.
-  Future<Response> getData(String uri) async {
+  Future<Response> getData(String uri, {Map<String, dynamic>? queryParameters}) async {
     try {
-      return await dio.get(uri);
+      return await dio.get(uri, queryParameters: queryParameters);
     } catch (e) {
       // Re-throw the error to be handled by the calling Controller
       return Response(

@@ -1,18 +1,21 @@
 import 'package:get/get.dart';
-import '../../domain/entities/movie.dart';
+import '../../domain/entities/media.dart';
 import '../../domain/repositories/movie_repository.dart';
 
 /// [MovieDiscoveryController] handles the state and data fetching for the Discovery (Home) screen.
 /// It uses GetX StateMixin for efficient UI updates (Loading, Success, Error states).
-class MovieDiscoveryController extends GetxController with StateMixin<List<Movie>> {
+class MovieDiscoveryController extends GetxController with StateMixin<List<Media>> {
   final MovieRepository _repository;
 
   MovieDiscoveryController(this._repository);
 
-  // Observable lists for different movie categories to enable granular UI updates.
-  final RxList<Movie> trendingMovies = <Movie>[].obs;
-  final RxList<Movie> popularMovies = <Movie>[].obs;
-  final RxList<Movie> nowPlayingMovies = <Movie>[].obs;
+  // Observable for current media type (movie or tv).
+  final RxString selectedMediaType = 'movie'.obs;
+
+  // Observable lists for different media categories to enable granular UI updates.
+  final RxList<Media> trendingMovies = <Media>[].obs;
+  final RxList<Media> popularMovies = <Media>[].obs;
+  final RxList<Media> nowPlayingMovies = <Media>[].obs;
   
   // High-level loading state for the initial page load.
   final RxBool isLoading = true.obs;
@@ -21,19 +24,34 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Movie
   void onInit() {
     super.onInit();
     // Fetch all required data immediately when the controller is created.
-    fetchAllMovies();
+    fetchAllMedia();
   }
 
-  /// Fetches Trending, Popular, and Now Playing movies from the repository.
+  /// Toggles between 'movie' and 'tv' and refreshes the feed.
+  void toggleMediaType(String type) {
+    if (selectedMediaType.value == type) return;
+    selectedMediaType.value = type;
+    fetchAllMedia();
+  }
+
+  /// Fetches Trending, Popular, and Now Playing media from the repository.
   /// Requests are executed in parallel via [Future.wait] to minimize load time.
-  Future<void> fetchAllMovies() async {
+  Future<void> fetchAllMedia() async {
     try {
       isLoading.value = true;
       
+      final bool isMovieSelected = selectedMediaType.value == 'movie';
+      
       final results = await Future.wait([
-        _repository.getTrendingMovies(),
-        _repository.getPopularMovies(),
-        _repository.getNowPlayingMovies(),
+        isMovieSelected 
+            ? _repository.getTrendingMovies() 
+            : _repository.getTrendingTv(),
+        isMovieSelected
+            ? _repository.getPopularMovies()
+            : _repository.getPopularTv(),
+        isMovieSelected
+            ? _repository.getNowPlayingMovies()
+            : _repository.getNowPlayingTv(),
       ]);
 
       // Assign fetched data to the observable lists.
