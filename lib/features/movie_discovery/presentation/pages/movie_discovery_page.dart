@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,27 +24,29 @@ class MovieDiscoveryPage extends GetView<MovieDiscoveryController> {
 
             return CustomScrollView(
               slivers: [
-                const SliverToBoxAdapter(child: SizedBox(height: 120)), // Space for top UI
-                // Hero Backdrop section
-                SliverToBoxAdapter(
-                  child: _buildHeroSection(),
-                ),
-
-                // Trending Now
-                SliverToBoxAdapter(
-                  child: _buildMediaSection(
-                    title: 'Trending Now',
-                    items: controller.trendingMovies,
+                const SliverToBoxAdapter(child: SizedBox(height: 180)), // Space for professional header
+                
+                if (controller.searchQuery.value.isNotEmpty)
+                  // Search Results View
+                  _buildSearchResultsGrid()
+                else ...[
+                  // Discovery View (Default)
+                  SliverToBoxAdapter(
+                    child: _buildHeroSection(),
                   ),
-                ),
-
-                // Popular Media
-                SliverToBoxAdapter(
-                  child: _buildMediaSection(
-                    title: 'Popular on Movie Verse',
-                    items: controller.popularMovies,
+                  SliverToBoxAdapter(
+                    child: _buildMediaSection(
+                      title: 'Trending Now',
+                      items: controller.trendingMovies,
+                    ),
                   ),
-                ),
+                  SliverToBoxAdapter(
+                    child: _buildMediaSection(
+                      title: 'Popular on Movie Verse',
+                      items: controller.popularMovies,
+                    ),
+                  ),
+                ],
 
                 // Bottom padding
                 const SliverToBoxAdapter(child: SizedBox(height: 100)),
@@ -63,78 +66,195 @@ class MovieDiscoveryPage extends GetView<MovieDiscoveryController> {
       top: 0,
       left: 0,
       right: 0,
-      child: Container(
-        padding: EdgeInsets.only(top: Get.statusBarHeight + 10, left: 20, right: 20, bottom: 20),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.black.withOpacity(0.8),
-              Colors.black.withOpacity(0.4),
-              Colors.transparent,
-            ],
-          ),
-        ),
-        child: Column(
-          children: [
-            // Search Bar
-            Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(color: Colors.white24),
-              ),
-              child: const TextField(
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: 'Search movies, tv shows...',
-                  hintStyle: TextStyle(color: Colors.white54),
-                  prefixIcon: Icon(Icons.search, color: Colors.white70),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                ),
+      child: ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+          child: Container(
+            padding: EdgeInsets.only(
+              top: Get.statusBarHeight + 10,
+              left: 20,
+              right: 20,
+              bottom: 16,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.3),
+              border: Border(
+                bottom: BorderSide(color: Colors.white.withOpacity(0.1)),
               ),
             ),
-            const SizedBox(height: 16),
-            // Media Toggle
-            Obx(() => Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                _buildToggleButton('movie', 'Movies'),
-                const SizedBox(width: 12),
-                _buildToggleButton('tv', 'TV Shows'),
+                // Top Row: Brand & Search
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: TextField(
+                          controller: controller.searchController,
+                          focusNode: controller.searchFocusNode,
+                          onChanged: (value) => controller.searchQuery.value = value,
+                          style: const TextStyle(color: Colors.white, fontSize: 14),
+                          decoration: InputDecoration(
+                            hintText: 'Search Movie Verse...',
+                            hintStyle: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+                            prefixIcon: Icon(Icons.search, color: Colors.white.withOpacity(0.6), size: 20),
+                            suffixIcon: controller.searchQuery.value.isNotEmpty 
+                              ? IconButton(
+                                  icon: const Icon(Icons.clear, color: Colors.white70, size: 18),
+                                  onPressed: () {
+                                    controller.searchController.clear();
+                                    controller.searchQuery.value = '';
+                                  },
+                                )
+                              : null,
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    // Professional Filter Icon
+                    Container(
+                      height: 45,
+                      width: 45,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(Icons.tune_rounded, color: Colors.white70, size: 22),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                
+                // Secondary Row: Segmented Toggle
+                Obx(() => Row(
+                  children: [
+                    _buildSegmentButton('movie', 'Movies'),
+                    const SizedBox(width: 16),
+                    _buildSegmentButton('tv', 'TV Shows'),
+                  ],
+                )),
+                const SizedBox(height: 16),
+
+                // Tertiary Row: Genre Chips
+                _buildGenreList(),
               ],
-            )),
-          ],
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildToggleButton(String type, String label) {
+  Widget _buildSegmentButton(String type, String label) {
     final bool isSelected = controller.selectedMediaType.value == type;
     return GestureDetector(
       onTap: () => controller.toggleMediaType(type),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.red : Colors.white.withOpacity(0.05),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: isSelected ? Colors.red : Colors.white24),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.white70,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            fontSize: 14,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? Colors.white : Colors.white.withOpacity(0.4),
+              fontSize: 16,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+              letterSpacing: 0.5,
+            ),
           ),
-        ),
+          const SizedBox(height: 4),
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            height: 3,
+            width: isSelected ? 20 : 0,
+            decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  Widget _buildGenreList() {
+    return SizedBox(
+      height: 32,
+      child: Obx(() => ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: controller.genres.length,
+        itemBuilder: (context, index) {
+          final genre = controller.genres[index];
+          final isSelected = controller.selectedGenre.value == genre;
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: GestureDetector(
+              onTap: () => controller.selectGenre(genre),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                decoration: BoxDecoration(
+                  color: isSelected ? Colors.white : Colors.white.withOpacity(0.05),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: isSelected ? Colors.white : Colors.white.withOpacity(0.1),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    genre,
+                    style: TextStyle(
+                      color: isSelected ? Colors.black : Colors.white70,
+                      fontSize: 12,
+                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      )),
+    );
+  }
+
+  Widget _buildSearchResultsGrid() {
+    return controller.state != null && controller.state!.isNotEmpty
+      ? SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          sliver: SliverGrid(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.7,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+            ),
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return MovieCard(media: controller.state![index]);
+              },
+              childCount: controller.state!.length,
+            ),
+          ),
+        )
+      : const SliverToBoxAdapter(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.only(top: 100),
+              child: Text(
+                'No results found',
+                style: TextStyle(color: Colors.white70, fontSize: 16),
+              ),
+            ),
+          ),
+        );
   }
 
   Widget _buildHeroSection() {
