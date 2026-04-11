@@ -14,12 +14,19 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
   // Observable for current media type (movie or tv).
   final RxString selectedMediaType = 'movie'.obs;
 
-  // Search and Genre States
+  // Search, Genre, and Year States
   final TextEditingController searchController = TextEditingController();
   final FocusNode searchFocusNode = FocusNode();
   final RxString searchQuery = ''.obs;
   final RxList<Genre> genres = <Genre>[].obs;
   final Rx<Genre> selectedGenre = const Genre(id: 0, name: 'All').obs;
+  final RxInt selectedYear = 0.obs;
+
+  // List of years from current year down to 1950.
+  final List<int> availableYears = [
+    0, // Representing "All"
+    ...List.generate(DateTime.now().year - 1950 + 1, (index) => DateTime.now().year - index),
+  ];
 
   // Observable lists for different media categories to enable granular UI updates.
   final RxList<Media> trendingMovies = <Media>[].obs;
@@ -28,6 +35,9 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
   
   // High-level loading state for the initial page load.
   final RxBool isLoading = true.obs;
+
+  /// Returns true if any advanced filter (besides All) is applied.
+  bool get hasActiveFilters => selectedGenre.value.id != 0 || selectedYear.value != 0;
 
   @override
   void onInit() {
@@ -41,7 +51,7 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
       if (query.isNotEmpty) {
         performSearch(query);
       } else {
-        fetchAllMedia();
+        fetchFilteredMedia();
       }
     }, time: const Duration(milliseconds: 500));
   }
@@ -58,6 +68,7 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
     if (selectedMediaType.value == type) return;
     selectedMediaType.value = type;
     selectedGenre.value = const Genre(id: 0, name: 'All'); 
+    selectedYear.value = 0;
     fetchAllMedia();
     fetchGenres();
   }
@@ -73,29 +84,48 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
   }
 
   /// Updates the selected genre and filters the feed.
-  void selectGenre(Genre genre) async {
+  void selectGenre(Genre genre) {
     selectedGenre.value = genre;
-    
-    if (genre.id == 0) {
-      fetchAllMedia(); // Show standard Trending/Popular if 'All' is selected
-    } else {
-      try {
-        isLoading.value = true;
-        final results = await _repository.discoverMedia(
-          type: selectedMediaType.value,
-          genreId: genre.id,
-        );
-        // We update the 'trendingMovies' list as the primary feed for filtered results
-        trendingMovies.assignAll(results);
-        // Clear others to indicate we are in filter mode
-        popularMovies.clear();
-        nowPlayingMovies.clear();
-        change(results, status: RxStatus.success());
-      } catch (e) {
-        change(null, status: RxStatus.error(e.toString()));
-      } finally {
-        isLoading.value = false;
-      }
+    fetchFilteredMedia();
+  }
+
+  /// Updates the selected year and filters the feed.
+  void selectYear(int year) {
+    selectedYear.value = year;
+    fetchFilteredMedia();
+  }
+
+  /// Resets all filters to default.
+  void resetFilters() {
+    selectedGenre.value = const Genre(id: 0, name: 'All');
+    selectedYear.value = 0;
+    fetchFilteredMedia();
+  }
+
+  /// Fetches media based on the combination of current genre and year filters.
+  Future<void> fetchFilteredMedia() async {
+    if (!hasActiveFilters) {
+      fetchAllMedia();
+      return;
+    }
+
+    try {
+      isLoading.value = true;
+      final results = await _repository.discoverMedia(
+        type: selectedMediaType.value,
+        genreId: selectedGenre.value.id == 0 ? null : selectedGenre.value.id,
+        year: selectedYear.value == 0 ? null : selectedYear.value,
+      );
+      
+      trendingMovies.assignAll(results);
+      popularMovies.clear();
+      nowPlayingMovies.clear();
+      
+      change(results, status: RxStatus.success());
+    } catch (e) {
+      change(null, status: RxStatus.error(e.toString()));
+    } finally {
+      isLoading.value = false;
     }
   }
 

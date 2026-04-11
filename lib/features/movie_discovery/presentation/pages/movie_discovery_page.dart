@@ -7,6 +7,7 @@ import '../../../../core/navigation/app_routes.dart';
 import '../controllers/movie_discovery_controller.dart';
 import '../widgets/movie_card.dart';
 import '../widgets/discovery_header.dart';
+import '../widgets/filter_drawer.dart';
 import '../../domain/entities/media.dart';
 
 class MovieDiscoveryPage extends GetView<MovieDiscoveryController> {
@@ -16,6 +17,7 @@ class MovieDiscoveryPage extends GetView<MovieDiscoveryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      endDrawer: const FilterDrawer(),
       body: Stack(
         children: [
           Obx(() {
@@ -183,42 +185,45 @@ class MovieDiscoveryPage extends GetView<MovieDiscoveryController> {
                   ],
                 ),
                 const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton.icon(
-                      onPressed: () => Get.toNamed(
-                        AppRoutes.movieDetails,
-                        arguments: {
-                          'id': featuredMedia.id,
-                          'type': featuredMedia.isMovie ? 'movie' : 'tv',
-                        },
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () => Get.toNamed(
+                          AppRoutes.movieDetails,
+                          arguments: {
+                            'id': featuredMedia.id,
+                            'type': featuredMedia.isMovie ? 'movie' : 'tv',
+                          },
+                        ),
+                        icon: const Icon(Icons.play_arrow),
+                        label: const Text('Play'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                        ),
                       ),
-                      icon: const Icon(Icons.play_arrow),
-                      label: const Text('Play'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                      const SizedBox(width: 16),
+                      OutlinedButton.icon(
+                        onPressed: () => Get.toNamed(
+                          AppRoutes.movieDetails,
+                          arguments: {
+                            'id': featuredMedia.id,
+                            'type': featuredMedia.isMovie ? 'movie' : 'tv',
+                          },
+                        ),
+                        icon: const Icon(Icons.info_outline, color: Colors.white),
+                        label: const Text('More Info', style: TextStyle(color: Colors.white)),
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: Colors.white),
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    OutlinedButton.icon(
-                      onPressed: () => Get.toNamed(
-                        AppRoutes.movieDetails,
-                        arguments: {
-                          'id': featuredMedia.id,
-                          'type': featuredMedia.isMovie ? 'movie' : 'tv',
-                        },
-                      ),
-                      icon: const Icon(Icons.info_outline, color: Colors.white),
-                      label: const Text('More Info', style: TextStyle(color: Colors.white)),
-                      style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Colors.white),
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

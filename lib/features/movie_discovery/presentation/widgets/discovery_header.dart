@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/movie_discovery_controller.dart';
-import '../../domain/entities/genre.dart';
 
 class DiscoveryHeader extends GetView<MovieDiscoveryController> {
   const DiscoveryHeader({super.key});
@@ -33,7 +32,7 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 // Top Row: Search Bar
-                _buildSearchBar(),
+                _buildSearchBar(context),
                 const SizedBox(height: 16),
 
                 // Secondary Row: Segmented Toggle
@@ -58,7 +57,7 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
     );
   }
 
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(BuildContext context) {
     return Row(
       children: [
         Expanded(
@@ -106,20 +105,45 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
           ),
         ),
         const SizedBox(width: 12),
-        // Professional Filter Icon
-        Container(
-          height: 45,
-          width: 45,
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: const Icon(
-            Icons.tune_rounded,
-            color: Colors.white70,
-            size: 22,
-          ),
-        ),
+        // Professional Filter Icon with Active Badge
+        Builder(builder: (context) {
+          return GestureDetector(
+            onTap: () => Scaffold.of(context).openEndDrawer(),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  height: 45,
+                  width: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Icons.tune_rounded,
+                    color: Colors.white70,
+                    size: 22,
+                  ),
+                ),
+                Obx(() => controller.selectedYear.value != 0
+                    ? Positioned(
+                        top: -2,
+                        right: -2,
+                        child: Container(
+                          height: 12,
+                          width: 12,
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.black, width: 2),
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink()),
+              ],
+            ),
+          );
+        }),
       ],
     );
   }
