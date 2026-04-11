@@ -44,6 +44,11 @@ class MovieDetails {
   final List<String> genres;
   final List<Cast> cast;
   final List<Video> videos;
+  final bool isMovie;
+  final int? numberOfSeasons;
+  final int? numberOfEpisodes;
+  final String? tagline;
+  final String? status;
 
   MovieDetails({
     required this.id,
@@ -57,6 +62,11 @@ class MovieDetails {
     required this.genres,
     required this.cast,
     required this.videos,
+    required this.isMovie,
+    this.numberOfSeasons,
+    this.numberOfEpisodes,
+    this.tagline,
+    this.status,
   });
 
   String get fullPosterPath => 'https://image.tmdb.org/t/p/w500$posterPath';

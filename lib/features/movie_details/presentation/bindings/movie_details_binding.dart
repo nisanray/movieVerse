@@ -8,7 +8,9 @@ import '../controllers/movie_details_controller.dart';
 class MovieDetailsBinding extends Bindings {
   @override
   void dependencies() {
-    final int movieId = Get.arguments as int;
+    final Map<String, dynamic> args = Get.arguments as Map<String, dynamic>;
+    final int movieId = args['id'];
+    final String mediaType = args['type'];
 
     Get.lazyPut<MovieDetailsRemoteDataSource>(
       () => MovieDetailsRemoteDataSourceImpl(apiClient: Get.find<ApiClient>()),
@@ -20,6 +22,10 @@ class MovieDetailsBinding extends Bindings {
       ),
     );
 
-    Get.put(MovieDetailsController(Get.find<MovieDetailsRepository>(), movieId));
+    Get.put(MovieDetailsController(
+      Get.find<MovieDetailsRepository>(),
+      movieId,
+      mediaType,
+    ));
   }
 }

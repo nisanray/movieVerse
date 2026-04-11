@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import '../../../movie_discovery/presentation/widgets/movie_card.dart';
 import '../controllers/movie_details_controller.dart';
 
 class MovieDetailsPage extends GetView<MovieDetailsController> {
@@ -41,6 +42,8 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
                 _buildCastList(details),
                 const SizedBox(height: 32),
                 _buildTrailerSection(),
+                const SizedBox(height: 32),
+                _buildSimilarSection(),
                 const SizedBox(height: 100),
               ],
             ),
@@ -82,6 +85,19 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (details.tagline != null && details.tagline!.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(
+              details.tagline!.toUpperCase(),
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
+              ),
+            ),
+          ),
         Text(
           details.title,
           style: GoogleFonts.poppins(
@@ -104,9 +120,26 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
               details.releaseDate.split('-').first,
               style: const TextStyle(color: Colors.white70, fontSize: 16),
             ),
+            const SizedBox(width: 16),
+            _buildStatusChip(details.status ?? ''),
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildStatusChip(String status) {
+    if (status.isEmpty) return const SizedBox.shrink();
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: Colors.white12,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        status,
+        style: const TextStyle(color: Colors.white70, fontSize: 10),
+      ),
     );
   }
 
@@ -115,7 +148,12 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          _buildChip('${details.runtime} min'),
+          if (details.isMovie)
+            _buildChip('${details.runtime} min')
+          else ...[
+            _buildChip('${details.numberOfSeasons} Seasons'),
+            _buildChip('${details.numberOfEpisodes} Episodes'),
+          ],
           ...details.genres.map((g) => _buildChip(g)),
         ],
       ),
@@ -181,6 +219,7 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
               final actor = details.cast[index];
               return Container(
                 margin: const EdgeInsets.only(right: 16),
+                width: 70,
                 child: Column(
                   children: [
                     CircleAvatar(
@@ -191,7 +230,8 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
                     Text(
                       actor.name,
                       style: const TextStyle(color: Colors.white, fontSize: 10),
-                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],
@@ -228,6 +268,38 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
               controller: controller.youtubeController!,
               showVideoProgressIndicator: true,
               progressIndicatorColor: Colors.red,
+            ),
+          ),
+        ],
+      );
+    });
+  }
+
+  Widget _buildSimilarSection() {
+    return Obx(() {
+      if (controller.similarMedia.isEmpty) return const SizedBox.shrink();
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Similar Content',
+            style: GoogleFonts.poppins(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 220,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: controller.similarMedia.length,
+              itemBuilder: (context, index) {
+                final media = controller.similarMedia[index];
+                return MovieCard(media: media);
+              },
             ),
           ),
         ],

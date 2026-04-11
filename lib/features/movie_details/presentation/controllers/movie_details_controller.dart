@@ -1,15 +1,17 @@
 import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import '../../../movie_discovery/domain/entities/media.dart';
 import '../../domain/entities/movie_details_entities.dart';
 import '../../domain/repositories/movie_details_repository.dart';
 
-/// [MovieDetailsController] manages the state for the Movie Details screen.
-/// It handles complex data fetching (Details, Cast, Videos) and the YouTube player lifecycle.
+/// [MovieDetailsController] manages the state for the Media Details screen.
+/// It handles complex data fetching (Details, Cast, Videos, Similar) and the YouTube player lifecycle.
 class MovieDetailsController extends GetxController with StateMixin<MovieDetails> {
   final MovieDetailsRepository _repository;
   final int movieId;
+  final String mediaType;
 
-  MovieDetailsController(this._repository, this.movieId);
+  MovieDetailsController(this._repository, this.movieId, this.mediaType);
 
   /// Controller for the YouTube player to play movie trailers.
   YoutubePlayerController? youtubeController;
@@ -17,51 +19,60 @@ class MovieDetailsController extends GetxController with StateMixin<MovieDetails
   /// Observable to notify the UI when the trailer is ready to be played.
   final RxBool isTrailerReady = false.obs;
 
+  /// Observable list for similar media recommendations.
+  final RxList<Media> similarMedia = <Media>[].obs;
+
   @override
   void onInit() {
     super.onInit();
-    // Load movie details immediately on route transition.
+    // Load movie details and similar media immediately.
     fetchMovieDetails();
   }
 
-  /// Fetches the complete movie details, credits, and video trailers.
+  /// Fetches the complete media details and similar content in parallel.
   Future<void> fetchMovieDetails() async {
     try {
       change(null, status: RxStatus.loading());
-      final result = await _repository.getMovieDetails(movieId);
       
-      // Attempt to initialize the YouTube player if movie trailers are found.
-      if (result.videos.isNotEmpty) {
-        // Safe-cast to List<Video> to avoid subtype mismatch errors in the firstWhere orElse closure.
-        final List<Video> videos = result.videos.cast<Video>();
+      // Execute both detail fetching and similar media fetching in parallel.
+      final results = await Future.wait([
+        _repository.getMovieDetails(movieId, mediaType),
+        _repository.getSimilarMedia(movieId, mediaType),
+      ]);
+
+      final MovieDetails details = results[0] as MovieDetails;
+      final List<Media> similar = results[1] as List<Media>;
+
+      similarMedia.assignAll(similar);
+      
+      // Attempt to initialize the YouTube player if trailers are found.
+      if (details.videos.isNotEmpty) {
+        final List<Video> videos = details.videos.cast<Video>();
         
         // Prioritize official 'Trailer' types from 'YouTube'.
-        final trailer = videos.firstWhere(
-          (v) => v.type == 'Trailer' && v.site == 'YouTube',
-          orElse: () => videos.first,
-        );
+        final trailerResults = videos.where((v) => v.type == 'Trailer' && v.site == 'YouTube');
         
-        // Initialize the player settings (Autoplay is off to respect user bandwidth).
-        youtubeController = YoutubePlayerController(
-          initialVideoId: trailer.key,
-          flags: const YoutubePlayerFlags(
-            autoPlay: false,
-            mute: false,
-          ),
-        );
-        isTrailerReady.value = true;
+        if (trailerResults.isNotEmpty) {
+          final trailer = trailerResults.first;
+          youtubeController = YoutubePlayerController(
+            initialVideoId: trailer.key,
+            flags: const YoutubePlayerFlags(
+              autoPlay: false,
+              mute: false,
+            ),
+          );
+          isTrailerReady.value = true;
+        }
       }
       
-      change(result, status: RxStatus.success());
+      change(details, status: RxStatus.success());
     } catch (e) {
-      // Handle scenario-specific errors and update the UI state.
       change(null, status: RxStatus.error(e.toString()));
     }
   }
 
   @override
   void onClose() {
-    // Dispose of the YouTube controller to prevent memory leaks.
     youtubeController?.dispose();
     super.onClose();
   }

@@ -35,15 +35,17 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
                 // Top Row: Search Bar
                 _buildSearchBar(),
                 const SizedBox(height: 16),
-                
+
                 // Secondary Row: Segmented Toggle
-                Obx(() => Row(
-                  children: [
-                    _buildSegmentButton('movie', 'Movies'),
-                    const SizedBox(width: 16),
-                    _buildSegmentButton('tv', 'TV Shows'),
-                  ],
-                )),
+                Obx(
+                  () => Row(
+                    children: [
+                      _buildSegmentButton('movie', 'Movies'),
+                      const SizedBox(width: 16),
+                      _buildSegmentButton('tv', 'TV Shows'),
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 16),
 
                 // Tertiary Row: Genre Chips
@@ -73,17 +75,30 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
               style: const TextStyle(color: Colors.white, fontSize: 14),
               decoration: InputDecoration(
                 hintText: 'Search Movie Verse...',
-                hintStyle: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
-                prefixIcon: Icon(Icons.search, color: Colors.white.withOpacity(0.6), size: 20),
-                suffixIcon: Obx(() => controller.searchQuery.value.isNotEmpty 
-                  ? IconButton(
-                      icon: const Icon(Icons.clear, color: Colors.white70, size: 18),
-                      onPressed: () {
-                        controller.searchController.clear();
-                        controller.searchQuery.value = '';
-                      },
-                    )
-                  : const SizedBox.shrink()),
+                hintStyle: TextStyle(
+                  color: Colors.white.withOpacity(0.4),
+                  fontSize: 14,
+                ),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.white.withOpacity(0.6),
+                  size: 20,
+                ),
+                suffixIcon: Obx(
+                  () => controller.searchQuery.value.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(
+                            Icons.clear,
+                            color: Colors.white70,
+                            size: 18,
+                          ),
+                          onPressed: () {
+                            controller.searchController.clear();
+                            controller.searchQuery.value = '';
+                          },
+                        )
+                      : const SizedBox.shrink(),
+                ),
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(vertical: 10),
               ),
@@ -99,7 +114,11 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
             color: Colors.white.withOpacity(0.1),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: const Icon(Icons.tune_rounded, color: Colors.white70, size: 22),
+          child: const Icon(
+            Icons.tune_rounded,
+            color: Colors.white70,
+            size: 22,
+          ),
         ),
       ],
     );
@@ -125,7 +144,7 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             height: 3,
-            width: isSelected ? 20 : 0,
+            width: isSelected ? (type == 'movie' ? 50 : 75) : 0,
             decoration: BoxDecoration(
               color: Colors.red,
               borderRadius: BorderRadius.circular(2),
@@ -141,7 +160,7 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
       height: 32,
       child: Obx(() {
         if (controller.genres.isEmpty) return const SizedBox.shrink();
-        
+
         return ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: controller.genres.length,
@@ -154,12 +173,19 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
                 child: GestureDetector(
                   onTap: () => controller.selectGenre(genre),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
-                      color: isSelected ? Colors.white : Colors.white.withOpacity(0.05),
+                      color: isSelected
+                          ? Colors.white
+                          : Colors.white.withOpacity(0.05),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: isSelected ? Colors.white : Colors.white.withOpacity(0.1),
+                        color: isSelected
+                            ? Colors.white
+                            : Colors.white.withOpacity(0.1),
                       ),
                     ),
                     child: Center(
@@ -168,7 +194,9 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
                         style: TextStyle(
                           color: isSelected ? Colors.black : Colors.white70,
                           fontSize: 12,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                          fontWeight: isSelected
+                              ? FontWeight.bold
+                              : FontWeight.normal,
                         ),
                       ),
                     ),

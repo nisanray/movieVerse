@@ -189,7 +189,10 @@ class MovieDiscoveryPage extends GetView<MovieDiscoveryController> {
                     ElevatedButton.icon(
                       onPressed: () => Get.toNamed(
                         AppRoutes.movieDetails,
-                        arguments: featuredMedia.id,
+                        arguments: {
+                          'id': featuredMedia.id,
+                          'type': featuredMedia.isMovie ? 'movie' : 'tv',
+                        },
                       ),
                       icon: const Icon(Icons.play_arrow),
                       label: const Text('Play'),
@@ -203,7 +206,10 @@ class MovieDiscoveryPage extends GetView<MovieDiscoveryController> {
                     OutlinedButton.icon(
                       onPressed: () => Get.toNamed(
                         AppRoutes.movieDetails,
-                        arguments: featuredMedia.id,
+                        arguments: {
+                          'id': featuredMedia.id,
+                          'type': featuredMedia.isMovie ? 'movie' : 'tv',
+                        },
                       ),
                       icon: const Icon(Icons.info_outline, color: Colors.white),
                       label: const Text('More Info', style: TextStyle(color: Colors.white)),

@@ -15,7 +15,13 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(AppRoutes.movieDetails, arguments: media.id),
+      onTap: () => Get.toNamed(
+        AppRoutes.movieDetails,
+        arguments: {
+          'id': media.id,
+          'type': media.isMovie ? 'movie' : 'tv',
+        },
+      ),
       child: Container(
         width: 140,
         margin: const EdgeInsets.only(right: 16),
