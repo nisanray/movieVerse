@@ -73,7 +73,9 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
               onChanged: (value) => controller.searchQuery.value = value,
               style: const TextStyle(color: Colors.white, fontSize: 14),
               decoration: InputDecoration(
-                hintText: 'Search Movie Verse...',
+                hintText: controller.selectedMediaType.value == 'movie' 
+                    ? 'Search Movies...' 
+                    : 'Search TV Shows...',
                 hintStyle: TextStyle(
                   color: Colors.white.withOpacity(0.4),
                   fontSize: 14,
@@ -125,7 +127,7 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
                     size: 22,
                   ),
                 ),
-                Obx(() => controller.selectedYear.value != 0
+                Obx(() => controller.hasActiveFilters
                     ? Positioned(
                         top: -2,
                         right: -2,

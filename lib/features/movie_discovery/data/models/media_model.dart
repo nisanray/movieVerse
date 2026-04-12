@@ -17,8 +17,12 @@ class MediaModel extends Media {
 
   /// Factory constructor to create a [MediaModel] from TMDB JSON.
   factory MediaModel.fromJson(Map<String, dynamic> json) {
-    // If 'title' exists, it's a Movie. If 'name' exists, it's likely a TV Show.
-    final bool isMovieResult = json.containsKey('title');
+    // If 'media_type' is provided (e.g., from multi-search), use it.
+    // Otherwise, fallback to checking for 'title' vs 'name'.
+    final String? mediaType = json['media_type'];
+    final bool isMovieResult = mediaType != null 
+        ? mediaType == 'movie' 
+        : json.containsKey('title');
     
     return MediaModel(
       id: json['id'] ?? 0,

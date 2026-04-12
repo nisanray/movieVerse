@@ -21,6 +21,9 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
   final RxList<Genre> genres = <Genre>[].obs;
   final Rx<Genre> selectedGenre = const Genre(id: 0, name: 'All').obs;
   final RxInt selectedYear = 0.obs;
+  final RxString selectedCountryCode = ''.obs;
+  final RxString selectedSortBy = 'popularity.desc'.obs;
+  final RxMap<String, String> countries = <String, String>{}.obs;
 
   // List of years from current year down to 1950.
   final List<int> availableYears = [
@@ -37,7 +40,10 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
   final RxBool isLoading = true.obs;
 
   /// Returns true if any advanced filter (besides All) is applied.
-  bool get hasActiveFilters => selectedGenre.value.id != 0 || selectedYear.value != 0;
+  bool get hasActiveFilters => 
+      selectedGenre.value.id != 0 || 
+      selectedYear.value != 0 || 
+      selectedCountryCode.value.isNotEmpty;
 
   @override
   void onInit() {
@@ -45,6 +51,7 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
     // Fetch all required data immediately when the controller is created.
     fetchAllMedia();
     fetchGenres();
+    fetchCountries();
     
     // Listen to search changes with debounce
     debounce(searchQuery, (query) {
@@ -69,8 +76,20 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
     selectedMediaType.value = type;
     selectedGenre.value = const Genre(id: 0, name: 'All'); 
     selectedYear.value = 0;
+    selectedCountryCode.value = '';
     fetchAllMedia();
     fetchGenres();
+    fetchCountries();
+  }
+
+  /// Fetches Countries from the repository.
+  Future<void> fetchCountries() async {
+    try {
+      final fetchedCountries = await _repository.getCountries();
+      countries.assignAll(fetchedCountries);
+    } catch (e) {
+      countries.clear();
+    }
   }
 
   /// Fetches Genres for the current media type.
@@ -99,6 +118,8 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
   void resetFilters() {
     selectedGenre.value = const Genre(id: 0, name: 'All');
     selectedYear.value = 0;
+    selectedCountryCode.value = '';
+    selectedSortBy.value = 'popularity.desc';
     fetchFilteredMedia();
   }
 
@@ -115,6 +136,8 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
         type: selectedMediaType.value,
         genreId: selectedGenre.value.id == 0 ? null : selectedGenre.value.id,
         year: selectedYear.value == 0 ? null : selectedYear.value,
+        countryCode: selectedCountryCode.value.isEmpty ? null : selectedCountryCode.value,
+        sortBy: selectedSortBy.value,
       );
       
       trendingMovies.assignAll(results);

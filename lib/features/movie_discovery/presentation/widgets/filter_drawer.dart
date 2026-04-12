@@ -28,17 +28,25 @@ class FilterDrawer extends GetView<MovieDiscoveryController> {
           ),
           
           SafeArea(
-            child: Padding(
+            child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildHeader(),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 32),
                   _buildSectionTitle('Search by Year'),
                   const SizedBox(height: 16),
-                  _buildYearGrid(),
-                  const Spacer(),
+                  _buildYearDropdown(),
+                  const SizedBox(height: 32),
+                  _buildSectionTitle('Origin Country'),
+                  const SizedBox(height: 16),
+                  _buildCountryDropdown(),
+                  const SizedBox(height: 32),
+                  _buildSectionTitle('Sort By'),
+                  const SizedBox(height: 16),
+                  _buildSortDropdown(),
+                  const SizedBox(height: 40),
                   _buildActionButtons(),
                   const SizedBox(height: 10),
                 ],
@@ -90,49 +98,100 @@ class FilterDrawer extends GetView<MovieDiscoveryController> {
     );
   }
 
-  Widget _buildYearGrid() {
-    return Expanded(
-      child: GridView.builder(
-        padding: EdgeInsets.zero,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 1.8,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-        ),
-        itemCount: controller.availableYears.length,
-        itemBuilder: (context, index) {
-          final year = controller.availableYears[index];
-          final label = year == 0 ? 'All' : year.toString();
+  Widget _buildYearDropdown() {
+    return Obx(() => _buildGlassDropdown<int>(
+      value: controller.selectedYear.value,
+      items: controller.availableYears.map((year) {
+        return DropdownMenuItem<int>(
+          value: year,
+          child: Text(
+            year == 0 ? 'All Years' : year.toString(),
+            style: const TextStyle(color: Colors.white, fontSize: 14),
+          ),
+        );
+      }).toList(),
+      onChanged: (value) => controller.selectedYear.value = value ?? 0,
+    ));
+  }
 
-          return Obx(() {
-            final isSelected = controller.selectedYear.value == year;
-            return GestureDetector(
-              onTap: () => controller.selectedYear.value = year,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                decoration: BoxDecoration(
-                  color: isSelected ? Colors.red : Colors.white.withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: isSelected ? Colors.red : Colors.white.withOpacity(0.1),
-                    width: 1.5,
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    label,
-                    style: GoogleFonts.poppins(
-                      color: isSelected ? Colors.white : Colors.white70,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-            );
-          });
-        },
+
+  Widget _buildCountryDropdown() {
+    final popularCountries = {
+      '': 'All Countries',
+      'US': 'United States',
+      'IN': 'India',
+      'GB': 'United Kingdom',
+      'KR': 'South Korea',
+      'JP': 'Japan',
+      'FR': 'France',
+      'ES': 'Spain',
+      'IT': 'Italy',
+      'HK': 'Hong Kong',
+      'CN': 'China',
+      'BR': 'Brazil',
+      'RU': 'Russia',
+    };
+
+    return Obx(() => _buildGlassDropdown<String>(
+      value: controller.selectedCountryCode.value,
+      items: popularCountries.entries.map((entry) {
+        return DropdownMenuItem<String>(
+          value: entry.key,
+          child: Text(
+            entry.value,
+            style: const TextStyle(color: Colors.white, fontSize: 14),
+          ),
+        );
+      }).toList(),
+      onChanged: (value) => controller.selectedCountryCode.value = value ?? '',
+    ));
+  }
+
+  Widget _buildSortDropdown() {
+    final sortOptions = {
+      'popularity.desc': 'Popularity',
+      'vote_average.desc': 'Top Rated',
+      'primary_release_date.desc': 'Newest First',
+      'primary_release_date.asc': 'Oldest First',
+    };
+
+    return Obx(() => _buildGlassDropdown<String>(
+      value: controller.selectedSortBy.value,
+      items: sortOptions.entries.map((entry) {
+        return DropdownMenuItem<String>(
+          value: entry.key,
+          child: Text(
+            entry.value,
+            style: const TextStyle(color: Colors.white, fontSize: 14),
+          ),
+        );
+      }).toList(),
+      onChanged: (value) => controller.selectedSortBy.value = value ?? 'popularity.desc',
+    ));
+  }
+
+  Widget _buildGlassDropdown<T>({
+    required T value,
+    required List<DropdownMenuItem<T>> items,
+    required ValueChanged<T?> onChanged,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.white.withOpacity(0.1)),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<T>(
+          value: value,
+          items: items,
+          onChanged: onChanged,
+          dropdownColor: Colors.grey[900],
+          icon: const Icon(Icons.keyboard_arrow_down, color: Colors.red),
+          isExpanded: true,
+          style: GoogleFonts.poppins(color: Colors.white),
+        ),
       ),
     );
   }

@@ -43,13 +43,17 @@ class MovieDiscoveryPage extends GetView<MovieDiscoveryController> {
                   ),
                   SliverToBoxAdapter(
                     child: _buildMediaSection(
-                      title: 'Trending Now',
+                      title: controller.selectedMediaType.value == 'movie' 
+                          ? 'Trending Movies' 
+                          : 'Trending TV Shows',
                       items: controller.trendingMovies,
                     ),
                   ),
                   SliverToBoxAdapter(
                     child: _buildMediaSection(
-                      title: 'Popular on Movie Verse',
+                      title: controller.selectedMediaType.value == 'movie'
+                          ? 'Popular on Movie Verse'
+                          : 'Top Rated TV Series',
                       items: controller.popularMovies,
                     ),
                   ),
