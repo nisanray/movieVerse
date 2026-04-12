@@ -43,6 +43,10 @@ class FilterDrawer extends GetView<MovieDiscoveryController> {
                   const SizedBox(height: 16),
                   _buildCountryDropdown(),
                   const SizedBox(height: 32),
+                  _buildSectionTitle('Genre'),
+                  const SizedBox(height: 16),
+                  _buildGenreDropdown(),
+                  const SizedBox(height: 32),
                   _buildSectionTitle('Sort By'),
                   const SizedBox(height: 16),
                   _buildSortDropdown(),
@@ -101,6 +105,7 @@ class FilterDrawer extends GetView<MovieDiscoveryController> {
   Widget _buildYearDropdown() {
     return Obx(() => _buildGlassDropdown<int>(
       value: controller.selectedYear.value,
+      hint: 'All Years',
       items: controller.availableYears.map((year) {
         return DropdownMenuItem<int>(
           value: year,
@@ -114,37 +119,71 @@ class FilterDrawer extends GetView<MovieDiscoveryController> {
     ));
   }
 
+  Widget _buildGenreDropdown() {
+    return Obx(() {
+      if (controller.genres.isEmpty) {
+        return _buildGlassDropdown<int>(
+          value: 0,
+          hint: 'Loading...',
+          items: [
+            const DropdownMenuItem<int>(value: 0, child: Text('Loading...', style: TextStyle(color: Colors.white70))),
+          ],
+          onChanged: (_) {},
+        );
+      }
+
+      return _buildGlassDropdown<int>(
+        value: controller.selectedGenre.value.id,
+        hint: 'All Genres',
+        items: controller.genres.map((genre) {
+          return DropdownMenuItem<int>(
+            value: genre.id,
+            child: Text(
+              genre.name,
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          );
+        }).toList(),
+        onChanged: (id) {
+          final genre = controller.genres.firstWhere((g) => g.id == id);
+          controller.selectedGenre.value = genre;
+        },
+      );
+    });
+  }
 
   Widget _buildCountryDropdown() {
-    final popularCountries = {
-      '': 'All Countries',
-      'US': 'United States',
-      'IN': 'India',
-      'GB': 'United Kingdom',
-      'KR': 'South Korea',
-      'JP': 'Japan',
-      'FR': 'France',
-      'ES': 'Spain',
-      'IT': 'Italy',
-      'HK': 'Hong Kong',
-      'CN': 'China',
-      'BR': 'Brazil',
-      'RU': 'Russia',
-    };
+    return Obx(() {
+      final countryList = controller.countries.entries.toList()
+        ..sort((a, b) => a.value.compareTo(b.value));
 
-    return Obx(() => _buildGlassDropdown<String>(
-      value: controller.selectedCountryCode.value,
-      items: popularCountries.entries.map((entry) {
-        return DropdownMenuItem<String>(
-          value: entry.key,
-          child: Text(
-            entry.value,
-            style: const TextStyle(color: Colors.white, fontSize: 14),
-          ),
-        );
-      }).toList(),
-      onChanged: (value) => controller.selectedCountryCode.value = value ?? '',
-    ));
+      final items = [
+        const DropdownMenuItem<String>(
+          value: '',
+          child: Text('All Countries', style: TextStyle(color: Colors.white, fontSize: 14)),
+        ),
+        ...countryList.map((entry) {
+          return DropdownMenuItem<String>(
+            value: entry.key,
+            child: Text(
+              entry.value,
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          );
+        }),
+      ];
+
+      // Safe check for value existence in items
+      final String currentValue = controller.selectedCountryCode.value;
+      final bool valueInItems = items.any((item) => item.value == currentValue);
+
+      return _buildGlassDropdown<String>(
+        value: valueInItems ? currentValue : '',
+        hint: 'All Countries',
+        items: items,
+        onChanged: (value) => controller.selectedCountryCode.value = value ?? '',
+      );
+    });
   }
 
   Widget _buildSortDropdown() {
@@ -157,6 +196,7 @@ class FilterDrawer extends GetView<MovieDiscoveryController> {
 
     return Obx(() => _buildGlassDropdown<String>(
       value: controller.selectedSortBy.value,
+      hint: 'Popularity',
       items: sortOptions.entries.map((entry) {
         return DropdownMenuItem<String>(
           value: entry.key,
@@ -172,6 +212,7 @@ class FilterDrawer extends GetView<MovieDiscoveryController> {
 
   Widget _buildGlassDropdown<T>({
     required T value,
+    required String hint,
     required List<DropdownMenuItem<T>> items,
     required ValueChanged<T?> onChanged,
   }) {
