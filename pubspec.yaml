@@ -38,8 +38,11 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
-  # Networking
+  # Networking & Cloud
   dio: ^5.7.0
+  firebase_core: ^3.11.0
+  firebase_auth: ^5.5.0
+  google_sign_in: ^6.2.2
 
   # UI & Animations
   cupertino_icons: ^1.0.8
