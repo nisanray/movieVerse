@@ -53,6 +53,3 @@ dev_tools/
 CHANGELOG.md
 FEATURE_REGISTRY.md
 DEVELOPER_INSTRUCTIONS.md
-
-# Firebase
-lib/firebase_options.dart
