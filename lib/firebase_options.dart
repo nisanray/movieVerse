@@ -41,48 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB4lwEoc7wk8o8ZauSo-WVQb7emYiBK6Go',
-    appId: '1:795446990515:web:1bc32134b65a8b9713c2c6',
-    messagingSenderId: '795446990515',
-    projectId: 'movieverse-cd97b',
-    authDomain: 'movieverse-cd97b.firebaseapp.com',
-    storageBucket: 'movieverse-cd97b.firebasestorage.app',
-    measurementId: 'G-B0PK6SHFQ0',
+    apiKey: 'AIzaSyAKa-SeAGI7u7x2PKeq35Me6wfG7h15XLY',
+    appId: '1:222419290639:web:2144c04e0b3838649b317a',
+    messagingSenderId: '222419290639',
+    projectId: 'movieverse-2beab',
+    authDomain: 'movieverse-2beab.firebaseapp.com',
+    storageBucket: 'movieverse-2beab.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCi1fEFHWA4MKKrJBmlgIosvfg8scLu86w',
-    appId: '1:795446990515:android:652cac1689b5c1cb13c2c6',
-    messagingSenderId: '795446990515',
-    projectId: 'movieverse-cd97b',
-    storageBucket: 'movieverse-cd97b.firebasestorage.app',
+    apiKey: 'AIzaSyDcvVajXNBq7YFXX4VwLQcusqaQXXH4mLU',
+    appId: '1:222419290639:android:4c91df7005d0e22f9b317a',
+    messagingSenderId: '222419290639',
+    projectId: 'movieverse-2beab',
+    storageBucket: 'movieverse-2beab.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAA8BgNk-7s0RUxFK18oL-Wh--UjabB96k',
-    appId: '1:795446990515:ios:0d2bafb3864274c513c2c6',
-    messagingSenderId: '795446990515',
-    projectId: 'movieverse-cd97b',
-    storageBucket: 'movieverse-cd97b.firebasestorage.app',
+    apiKey: 'AIzaSyAVUZ3YSHcUpoxlWMYIz2RLK-Nmw14Ykjo',
+    appId: '1:222419290639:ios:90e04999e60e20989b317a',
+    messagingSenderId: '222419290639',
+    projectId: 'movieverse-2beab',
+    storageBucket: 'movieverse-2beab.firebasestorage.app',
+    iosClientId: '222419290639-2f1kpejh623sm40pnftboa9tbie3s8g9.apps.googleusercontent.com',
     iosBundleId: 'com.example.movieVerse',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAA8BgNk-7s0RUxFK18oL-Wh--UjabB96k',
-    appId: '1:795446990515:ios:0d2bafb3864274c513c2c6',
-    messagingSenderId: '795446990515',
-    projectId: 'movieverse-cd97b',
-    storageBucket: 'movieverse-cd97b.firebasestorage.app',
+    apiKey: 'AIzaSyAVUZ3YSHcUpoxlWMYIz2RLK-Nmw14Ykjo',
+    appId: '1:222419290639:ios:90e04999e60e20989b317a',
+    messagingSenderId: '222419290639',
+    projectId: 'movieverse-2beab',
+    storageBucket: 'movieverse-2beab.firebasestorage.app',
+    iosClientId: '222419290639-2f1kpejh623sm40pnftboa9tbie3s8g9.apps.googleusercontent.com',
     iosBundleId: 'com.example.movieVerse',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyB4lwEoc7wk8o8ZauSo-WVQb7emYiBK6Go',
-    appId: '1:795446990515:web:81b39bd02ed34e6913c2c6',
-    messagingSenderId: '795446990515',
-    projectId: 'movieverse-cd97b',
-    authDomain: 'movieverse-cd97b.firebaseapp.com',
-    storageBucket: 'movieverse-cd97b.firebasestorage.app',
-    measurementId: 'G-LQQ4JFZZ9R',
+    apiKey: 'AIzaSyAKa-SeAGI7u7x2PKeq35Me6wfG7h15XLY',
+    appId: '1:222419290639:web:46c43cfa072305c49b317a',
+    messagingSenderId: '222419290639',
+    projectId: 'movieverse-2beab',
+    authDomain: 'movieverse-2beab.firebaseapp.com',
+    storageBucket: 'movieverse-2beab.firebasestorage.app',
   );
+
 }

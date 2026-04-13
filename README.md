@@ -6,10 +6,10 @@
 
 ## 🌟 Key Features
 
-- **Cinematic Discovery**: Explore trending, popular, and top-rated movies with a high-impact UI.
-- **Smart Recommendations**: Get personalized suggestions based on your viewing history and preferences.
-- **Watchlist Management**: Save and track your favorite movies across multiple devices.
-- **Offline First**: Fast performance and offline availability powered by Hive caching.
+- **Premium Discovery**: Explore trending, popular, and top-rated movies/TV shows with a high-impact, glassmorphic UI.
+- **Firebase Authentication**: Secure user accounts with Email/Password and Google Sign-In integration.
+- **Advanced Filtering**: Discover content by Genre, Country, Year, and Rating using a unified filtering engine.
+- **Unified Media Search**: Fast, real-time search across the entire TMDB database.
 - **Clean Architecture**: Built using a modular GetX-based architecture for scalability and maintainability.
 
 ---
@@ -17,6 +17,7 @@
 ## 🛠️ Tech Stack
 
 - **Frontend**: Flutter
+- **Backend/Auth**: Firebase (Core, Auth)
 - **State Management**: GetX
 - **Networking**: Dio (TMDB API v3)
 - **Local Database**: Hive
