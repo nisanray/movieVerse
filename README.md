@@ -10,6 +10,7 @@
 - **Firebase Authentication**: Secure user accounts with Email/Password and Google Sign-In integration.
 - **Advanced Filtering**: Discover content by Genre, Country, Year, and Rating using a unified filtering engine.
 - **Unified Media Search**: Fast, real-time search across the entire TMDB database.
+- **Movie Details Navigation**: Tap Similar Content to jump to that title’s details seamlessly.
 - **Clean Architecture**: Built using a modular GetX-based architecture for scalability and maintainability.
 
 ---
