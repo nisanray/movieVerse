@@ -20,13 +20,14 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
   final RxString selectedSortBy = 'popularity.desc'.obs;
   final RxMap<String, String> countries = <String, String>{}.obs;
 
+  // Search, Genre, and Year States
+  final TextEditingController searchController = TextEditingController();
+  final FocusNode searchFocusNode = FocusNode();
+  final RxString searchQuery = ''.obs;
   final RxList<Genre> genres = <Genre>[].obs;
   final Rx<Genre> selectedGenre = const Genre(id: 0, name: 'All').obs;
   final RxInt selectedYear = 0.obs;
   final RxString selectedCountryCode = ''.obs;
-
-  // Search query (bound to widget controller)
-  final RxString searchQuery = ''.obs;
   
   // List of years from current year down to 1950.
   final List<int> availableYears = [
@@ -85,6 +86,9 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
 
   @override
   void onClose() {
+    // Note: We don't manually dispose searchController/focusNode here
+    // because doing so during navigation transitions causes crashes.
+    // Flutter's widget tree or GC will handle them safely.
     scrollController.dispose();
     super.onClose();
   }

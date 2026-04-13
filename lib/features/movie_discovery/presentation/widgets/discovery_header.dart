@@ -5,36 +5,8 @@ import '../../../../core/navigation/app_routes.dart';
 import '../../../auth/domain/entities/user_entity.dart';
 import '../controllers/movie_discovery_controller.dart';
 
-class DiscoveryHeader extends StatefulWidget {
+class DiscoveryHeader extends GetView<MovieDiscoveryController> {
   const DiscoveryHeader({super.key});
-
-  @override
-  State<DiscoveryHeader> createState() => _DiscoveryHeaderState();
-}
-
-class _DiscoveryHeaderState extends State<DiscoveryHeader> {
-  late TextEditingController _searchController;
-  late FocusNode _searchFocusNode;
-  final MovieDiscoveryController controller = Get.find<MovieDiscoveryController>();
-
-  @override
-  void initState() {
-    super.initState();
-    _searchController = TextEditingController(text: controller.searchQuery.value);
-    _searchFocusNode = FocusNode();
-    
-    // Sync local controller changes to global state
-    _searchController.addListener(() {
-      controller.searchQuery.value = _searchController.text;
-    });
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    _searchFocusNode.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +27,16 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
               bottom: 8,
             ),
             decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: 0.3),
+              color: Colors.black.withOpacity(0.3),
               border: Border(
-                bottom: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
+                bottom: BorderSide(color: Colors.white.withOpacity(0.1)),
               ),
             ),
             child: Obx(
               () => Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // Top Row: Search Bar (Always visible)
                   _buildSearchBar(context),
                   
                   AnimatedOpacity(
@@ -75,6 +48,7 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
                       child: Column(
                         children: [
                           const SizedBox(height: 10),
+                          // Secondary Row: Segmented Toggle
                           Row(
                             children: [
                               _buildSegmentButton('movie', 'Movies'),
@@ -83,6 +57,7 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
                             ],
                           ),
                           const SizedBox(height: 8),
+                          // Tertiary Row: Genre Chips
                           _buildGenreList(),
                         ],
                       ),
@@ -100,6 +75,7 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
   Widget _buildSearchBar(BuildContext context) {
     return Row(
       children: [
+        // User Profile Avatar Thumbnail (Moved to the left)
         GestureDetector(
           onTap: () => Get.toNamed(AppRoutes.profile),
           child: Obx(() {
@@ -108,9 +84,9 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
               height: 45,
               width: 45,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.1),
+                color: Colors.white.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+                border: Border.all(color: Colors.white.withOpacity(0.1)),
                 image: user?.photoUrl != null 
                   ? DecorationImage(
                       image: NetworkImage(user!.photoUrl!),
@@ -129,12 +105,12 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
           child: Container(
             height: 45,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.1),
+              color: Colors.white.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: TextField(
-              controller: _searchController,
-              focusNode: _searchFocusNode,
+              controller: controller.searchController,
+              focusNode: controller.searchFocusNode,
               onChanged: (value) => controller.searchQuery.value = value,
               style: const TextStyle(color: Colors.white, fontSize: 14),
               decoration: InputDecoration(
@@ -142,12 +118,12 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
                     ? 'Search Movies...' 
                     : 'Search TV Shows...',
                 hintStyle: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.4),
+                  color: Colors.white.withOpacity(0.4),
                   fontSize: 14,
                 ),
                 prefixIcon: Icon(
                   Icons.search,
-                  color: Colors.white.withValues(alpha: 0.6),
+                  color: Colors.white.withOpacity(0.6),
                   size: 20,
                 ),
                 suffixIcon: Obx(
@@ -159,7 +135,7 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
                             size: 18,
                           ),
                           onPressed: () {
-                            _searchController.clear();
+                            controller.searchController.clear();
                             controller.searchQuery.value = '';
                           },
                         )
@@ -172,6 +148,7 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
           ),
         ),
         const SizedBox(width: 12),
+        // Filter Icon
         Builder(builder: (context) {
           return GestureDetector(
             onTap: () => Scaffold.of(context).openEndDrawer(),
@@ -207,7 +184,7 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
       height: 45,
       width: 45,
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.1),
+        color: Colors.white.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Icon(
@@ -219,7 +196,7 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
   }
 
   Widget _buildSegmentButton(String type, String label) {
-    bool isSelected = controller.selectedMediaType.value == type;
+    final bool isSelected = controller.selectedMediaType.value == type;
     return GestureDetector(
       onTap: () => controller.toggleMediaType(type),
       child: Column(
@@ -228,7 +205,7 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
           Text(
             label,
             style: TextStyle(
-              color: isSelected ? Colors.white : Colors.white.withValues(alpha: 0.4),
+              color: isSelected ? Colors.white : Colors.white.withOpacity(0.4),
               fontSize: 16,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
               letterSpacing: 0.5,
@@ -274,12 +251,12 @@ class _DiscoveryHeaderState extends State<DiscoveryHeader> {
                     decoration: BoxDecoration(
                       color: isSelected
                           ? Colors.white
-                          : Colors.white.withValues(alpha: 0.05),
+                          : Colors.white.withOpacity(0.05),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                         color: isSelected
                             ? Colors.white
-                            : Colors.white.withValues(alpha: 0.1),
+                            : Colors.white.withOpacity(0.1),
                       ),
                     ),
                     child: Center(

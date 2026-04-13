@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/navigation/app_routes.dart';
@@ -7,21 +8,45 @@ import '../../domain/entities/media.dart';
 class MovieCard extends StatelessWidget {
   final Media media;
 
-  const MovieCard({
-    super.key,
-    required this.media,
-  });
+  const MovieCard({super.key, required this.media});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(
-        AppRoutes.movieDetails,
-        arguments: {
-          'id': media.id,
-          'type': media.isMovie ? 'movie' : 'tv',
-        },
-      ),
+      onTap: () {
+        final args = {'id': media.id, 'type': media.isMovie ? 'movie' : 'tv'};
+
+        if (kDebugMode) {
+          debugPrint(
+            'MovieCard tap -> id=${media.id}, isMovie=${media.isMovie}, currentRoute=${Get.currentRoute}, args=$args',
+          );
+        }
+
+        // When already on the details route, replace the page instead of stacking
+        if (Get.currentRoute == AppRoutes.movieDetails) {
+          if (kDebugMode) {
+            debugPrint(
+              'MovieCard navigation: using Get.offNamed to movieDetails',
+            );
+          }
+          Get.offNamed(
+            AppRoutes.movieDetails,
+            arguments: args,
+            preventDuplicates: false,
+          );
+        } else {
+          if (kDebugMode) {
+            debugPrint(
+              'MovieCard navigation: using Get.toNamed to movieDetails',
+            );
+          }
+          Get.toNamed(
+            AppRoutes.movieDetails,
+            arguments: args,
+            preventDuplicates: false,
+          );
+        }
+      },
       child: Container(
         width: 140,
         margin: const EdgeInsets.only(right: 16),
@@ -45,9 +70,7 @@ class MovieCard extends StatelessWidget {
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Container(
                   color: Colors.grey[900],
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  child: const Center(child: CircularProgressIndicator()),
                 ),
                 errorWidget: (context, url, error) => Container(
                   color: Colors.grey[900],
@@ -78,9 +101,14 @@ class MovieCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
-                        color: media.isMovie ? Colors.red.withOpacity(0.8) : Colors.blue.withOpacity(0.8),
+                        color: media.isMovie
+                            ? Colors.red.withOpacity(0.8)
+                            : Colors.blue.withOpacity(0.8),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
@@ -106,11 +134,7 @@ class MovieCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                          size: 14,
-                        ),
+                        const Icon(Icons.star, color: Colors.amber, size: 14),
                         const SizedBox(width: 4),
                         Text(
                           media.voteAverage.toStringAsFixed(1),

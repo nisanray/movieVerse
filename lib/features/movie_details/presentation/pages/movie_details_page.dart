@@ -1,43 +1,136 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import '../../../../core/api/api_client.dart';
 import '../../../movie_discovery/presentation/widgets/movie_card.dart';
-import '../../domain/entities/movie_details_entities.dart';
 import '../../../watchlist/presentation/controllers/watchlist_controller.dart';
+import '../../data/datasources/movie_details_remote_data_source.dart';
+import '../../data/repositories/movie_details_repository_impl.dart';
+import '../../domain/entities/movie_details_entities.dart';
+import '../../domain/repositories/movie_details_repository.dart';
 import '../controllers/movie_details_controller.dart';
 
 class MovieDetailsPage extends StatelessWidget {
   const MovieDetailsPage({super.key});
 
-  /// Finds the controller using the movieId from arguments.
-  /// We handle the lookup once per build to ensure stability.
-  MovieDetailsController _findController() {
-    final args = Get.arguments as Map<String, dynamic>;
-    final int movieId = args['id'];
-    return Get.find<MovieDetailsController>(tag: 'movie_$movieId');
+  /// Safely finds the controller using the movieId from arguments.
+  /// If arguments are null (common during route transitions), returns null.
+  MovieDetailsController? _findController() {
+    final args = Get.arguments as Map<String, dynamic>?;
+    if (args == null) {
+      if (kDebugMode) {
+        debugPrint('MovieDetailsPage._findController: arguments are null');
+      }
+      return null;
+    }
+    final int? movieId = args['id'];
+    if (movieId == null) {
+      if (kDebugMode) {
+        debugPrint(
+          'MovieDetailsPage._findController: movieId missing in args=$args',
+        );
+      }
+      return null;
+    }
+    final String tag = 'movie_$movieId';
+    if (kDebugMode) {
+      debugPrint(
+        'MovieDetailsPage._findController: looking for controller with tag=$tag',
+      );
+    }
+
+    // If the controller is already registered with this tag, just return it.
+    if (Get.isRegistered<MovieDetailsController>(tag: tag)) {
+      if (kDebugMode) {
+        debugPrint(
+          'MovieDetailsPage._findController: found existing controller for tag=$tag',
+        );
+      }
+      return Get.find<MovieDetailsController>(tag: tag);
+    }
+
+    // If not registered (for example, if the binding didn't run as expected),
+    // create the required dependencies and controller on the fly.
+    try {
+      if (kDebugMode) {
+        debugPrint(
+          'MovieDetailsPage._findController: controller not found, creating on the fly for tag=$tag',
+        );
+      }
+
+      final ApiClient apiClient = Get.find<ApiClient>();
+
+      final MovieDetailsRemoteDataSource remoteDataSource =
+          MovieDetailsRemoteDataSourceImpl(apiClient: apiClient);
+
+      final MovieDetailsRepository repository = MovieDetailsRepositoryImpl(
+        remoteDataSource: remoteDataSource,
+      );
+
+      final controller = MovieDetailsController(
+        repository,
+        movieId,
+        args['type'] as String,
+      );
+
+      Get.put<MovieDetailsController>(controller, tag: tag);
+
+      if (kDebugMode) {
+        debugPrint(
+          'MovieDetailsPage._findController: controller created and registered for tag=$tag',
+        );
+      }
+
+      return controller;
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint(
+          'MovieDetailsPage._findController: failed to create controller for tag=$tag, error=$e',
+        );
+      }
+      return null;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final controller = _findController();
-    
+
+    // If controller is not found (e.g. during a transition where arguments are null),
+    // we return a beautiful empty scaffold instead of crashing.
+    if (controller == null) {
+      return const Scaffold(backgroundColor: Colors.black);
+    }
+
     return Scaffold(
+      // Use a key based on movieId to force Flutter to rebuild this widget
+      // when the movieId changes (important for Get.offNamed on same route).
+      key: ValueKey<int>(controller.movieId),
       backgroundColor: Colors.black,
       body: controller.obx(
-        (details) => details != null 
-            ? _buildContent(details, controller) 
+        (details) => details != null
+            ? _buildContent(details, controller)
             : const SizedBox.shrink(),
-        onLoading: const Center(child: CircularProgressIndicator(color: Colors.red)),
+        onLoading: const Center(
+          child: CircularProgressIndicator(color: Colors.red),
+        ),
         onError: (error) => Center(
-          child: Text('Error: $error', style: const TextStyle(color: Colors.white)),
+          child: Text(
+            'Error: $error',
+            style: const TextStyle(color: Colors.white),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildContent(MovieDetails details, MovieDetailsController controller) {
+  Widget _buildContent(
+    MovieDetails details,
+    MovieDetailsController controller,
+  ) {
     return CustomScrollView(
       slivers: [
         _buildSliverAppBar(details),
@@ -80,15 +173,18 @@ class MovieDetailsPage extends StatelessWidget {
               icon: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.5),
+                  color: Colors.black.withOpacity(0.5),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  isInWatchlist ? Icons.bookmark_added_rounded : Icons.bookmark_add_outlined,
+                  isInWatchlist
+                      ? Icons.bookmark_added_rounded
+                      : Icons.bookmark_add_outlined,
                   color: isInWatchlist ? Colors.red : Colors.white,
                 ),
               ),
-              onPressed: () => watchlistController.toggleWatchlist(details.toMedia()),
+              onPressed: () =>
+                  watchlistController.toggleWatchlist(details.toMedia()),
             );
           },
         ),
@@ -227,7 +323,11 @@ class MovieDetailsPage extends StatelessWidget {
         const SizedBox(height: 12),
         Text(
           details.overview,
-          style: const TextStyle(color: Colors.white70, fontSize: 14, height: 1.5),
+          style: const TextStyle(
+            color: Colors.white70,
+            fontSize: 14,
+            height: 1.5,
+          ),
         ),
       ],
     );
@@ -260,7 +360,9 @@ class MovieDetailsPage extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: CachedNetworkImageProvider(actor.profileUrl),
+                      backgroundImage: CachedNetworkImageProvider(
+                        actor.profileUrl,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -282,7 +384,8 @@ class MovieDetailsPage extends StatelessWidget {
 
   Widget _buildTrailerSection(MovieDetailsController controller) {
     return Obx(() {
-      if (!controller.isTrailerReady.value || controller.youtubeController == null) {
+      if (!controller.isTrailerReady.value ||
+          controller.youtubeController == null) {
         return const SizedBox.shrink();
       }
 
