@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../core/navigation/app_routes.dart';
 import '../../../auth/domain/entities/user_entity.dart';
 import '../controllers/movie_discovery_controller.dart';
 
@@ -74,6 +75,32 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
   Widget _buildSearchBar(BuildContext context) {
     return Row(
       children: [
+        // User Profile Avatar Thumbnail (Moved to the left)
+        GestureDetector(
+          onTap: () => Get.toNamed(AppRoutes.profile),
+          child: Obx(() {
+            final user = controller.authController.user.value;
+            return Container(
+              height: 45,
+              width: 45,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.white.withOpacity(0.1)),
+                image: user?.photoUrl != null 
+                  ? DecorationImage(
+                      image: NetworkImage(user!.photoUrl!),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+              ),
+              child: user?.photoUrl == null 
+                ? const Icon(Icons.person, color: Colors.white70, size: 22)
+                : null,
+            );
+          }),
+        ),
+        const SizedBox(width: 12),
         Expanded(
           child: Container(
             height: 45,
@@ -148,32 +175,6 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
             ),
           );
         }),
-        const SizedBox(width: 12),
-        // User Profile Avatar Thumbnail
-        GestureDetector(
-          onTap: () => Get.toNamed('/profile'),
-          child: Obx(() {
-            final user = controller.authController.user.value;
-            return Container(
-              height: 45,
-              width: 45,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.white.withOpacity(0.1)),
-                image: user?.photoUrl != null 
-                  ? DecorationImage(
-                      image: NetworkImage(user!.photoUrl!),
-                      fit: BoxFit.cover,
-                    )
-                  : null,
-              ),
-              child: user?.photoUrl == null 
-                ? const Icon(Icons.person, color: Colors.white70, size: 22)
-                : null,
-            );
-          }),
-        ),
       ],
     );
   }
