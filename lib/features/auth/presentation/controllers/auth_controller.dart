@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/features/auth/domain/repositories/auth_repository.dart';
 import '/features/auth/domain/entities/user_entity.dart';
@@ -72,6 +73,26 @@ class AuthController extends GetxController {
       await _repository.signOut();
     } catch (e) {
       errorMessage.value = e.toString();
+    }
+  }
+
+  Future<void> sendPasswordReset(String email) async {
+    try {
+      isLoading.value = true;
+      errorMessage.value = '';
+      await _repository.sendPasswordResetEmail(email);
+      Get.back(); // Go back to login
+      Get.snackbar(
+        'Success',
+        'Password reset email sent!',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green.withOpacity(0.1),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      errorMessage.value = e.toString();
+    } finally {
+      isLoading.value = false;
     }
   }
 }

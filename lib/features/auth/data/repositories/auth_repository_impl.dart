@@ -81,4 +81,13 @@ class AuthRepositoryImpl implements AuthRepository {
     final user = _firebaseAuth.currentUser;
     return user != null ? UserModel.fromFirebaseUser(user) : null;
   }
+
+  @override
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

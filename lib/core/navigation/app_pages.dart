@@ -7,6 +7,7 @@ import '../../features/onboarding/presentation/bindings/onboarding_binding.dart'
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/auth/presentation/bindings/auth_binding.dart';
 import '../../features/auth/presentation/pages/auth_page.dart';
+import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/profile/presentation/bindings/profile_binding.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/splash/presentation/bindings/splash_binding.dart';
@@ -49,6 +50,11 @@ class AppPages {
       page: () => const ProfilePage(),
       binding: ProfileBinding(),
       transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: AppRoutes.forgotPassword,
+      page: () => const ForgotPasswordPage(),
+      binding: AuthBinding(),
     ),
   ];
 }

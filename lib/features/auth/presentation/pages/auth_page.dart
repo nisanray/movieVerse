@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '/core/constants/app_assets.dart';
-import '/features/auth/presentation/controllers/auth_controller.dart';
+import '../../../../core/navigation/app_routes.dart';
+import '../controllers/auth_controller.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -172,7 +173,7 @@ class _AuthPageState extends State<AuthPage> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () => Get.toNamed(AppRoutes.forgotPassword),
                       child: const Text(
                         'Forgot Password?',
                         style: TextStyle(color: Colors.red, fontSize: 12),
