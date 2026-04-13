@@ -1,7 +1,9 @@
 abstract class AppRoutes {
-  static const String initial = '/';
+  static const String initial = '/'; // Splash
+  static const String splash = '/splash';
   static const String onboarding = '/onboarding';
   static const String auth = '/auth';
   static const String home = '/home';
   static const String movieDetails = '/movie-details';
+  static const String profile = '/profile';
 }

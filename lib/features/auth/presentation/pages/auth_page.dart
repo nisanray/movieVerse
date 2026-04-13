@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:movie_verse/core/constants/app_assets.dart';
-import 'package:movie_verse/features/auth/presentation/controllers/auth_controller.dart';
+import '/core/constants/app_assets.dart';
+import '/features/auth/presentation/controllers/auth_controller.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});

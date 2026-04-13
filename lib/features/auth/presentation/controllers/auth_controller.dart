@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:movie_verse/features/auth/domain/repositories/auth_repository.dart';
-import 'package:movie_verse/features/auth/domain/entities/user_entity.dart';
-import 'package:movie_verse/core/navigation/app_routes.dart';
+import '/features/auth/domain/repositories/auth_repository.dart';
+import '/features/auth/domain/entities/user_entity.dart';
+import '/core/navigation/app_routes.dart';
 
 class AuthController extends GetxController {
   final AuthRepository _repository;
@@ -18,7 +18,7 @@ class AuthController extends GetxController {
     super.onInit();
     // Bind the observable user to the stream from the repository
     user.bindStream(_repository.onAuthStateChanged);
-    
+
     // Listen to auth changes to redirect user
     ever(user, _handleAuthRedirect);
   }

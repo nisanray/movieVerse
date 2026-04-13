@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../auth/domain/entities/user_entity.dart';
 import '../controllers/movie_discovery_controller.dart';
 
 class DiscoveryHeader extends GetView<MovieDiscoveryController> {
@@ -120,26 +121,14 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
           ),
         ),
         const SizedBox(width: 12),
-        // Professional Filter Icon with Active Badge
+        // Filter Icon
         Builder(builder: (context) {
           return GestureDetector(
             onTap: () => Scaffold.of(context).openEndDrawer(),
             child: Stack(
               clipBehavior: Clip.none,
               children: [
-                Container(
-                  height: 45,
-                  width: 45,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.tune_rounded,
-                    color: Colors.white70,
-                    size: 22,
-                  ),
-                ),
+                _buildGlassButton(Icons.tune_rounded),
                 Obx(() => controller.hasActiveFilters
                     ? Positioned(
                         top: -2,
@@ -159,7 +148,49 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
             ),
           );
         }),
+        const SizedBox(width: 12),
+        // User Profile Avatar Thumbnail
+        GestureDetector(
+          onTap: () => Get.toNamed('/profile'),
+          child: Obx(() {
+            final user = controller.authController.user.value;
+            return Container(
+              height: 45,
+              width: 45,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.white.withOpacity(0.1)),
+                image: user?.photoUrl != null 
+                  ? DecorationImage(
+                      image: NetworkImage(user!.photoUrl!),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+              ),
+              child: user?.photoUrl == null 
+                ? const Icon(Icons.person, color: Colors.white70, size: 22)
+                : null,
+            );
+          }),
+        ),
       ],
+    );
+  }
+
+  Widget _buildGlassButton(IconData icon) {
+    return Container(
+      height: 45,
+      width: 45,
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Icon(
+        icon,
+        color: Colors.white70,
+        size: 22,
+      ),
     );
   }
 

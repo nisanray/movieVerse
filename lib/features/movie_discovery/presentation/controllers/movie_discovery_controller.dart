@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../domain/entities/media.dart';
 import '../../domain/entities/genre.dart';
 import '../../domain/repositories/movie_repository.dart';
@@ -8,6 +9,7 @@ import '../../domain/repositories/movie_repository.dart';
 /// It uses GetX StateMixin for efficient UI updates (Loading, Success, Error states).
 class MovieDiscoveryController extends GetxController with StateMixin<List<Media>> {
   final MovieRepository _repository;
+  final AuthController authController = Get.find<AuthController>();
 
   MovieDiscoveryController(this._repository);
 

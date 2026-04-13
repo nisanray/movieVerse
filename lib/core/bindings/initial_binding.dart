@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:movie_verse/features/auth/presentation/controllers/auth_controller.dart';
-import 'package:movie_verse/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:movie_verse/features/auth/domain/repositories/auth_repository.dart';
+import '../../features/auth/presentation/controllers/auth_controller.dart';
+import '../../features/auth/data/repositories/auth_repository_impl.dart';
+import '../../features/auth/domain/repositories/auth_repository.dart';
 
 class InitialBinding extends Bindings {
   @override

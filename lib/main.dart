@@ -32,17 +32,12 @@ class MovieVerseApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final storageService = Get.find<StorageService>();
-    final initialRoute = storageService.isOnboardingCompleted()
-        ? AppRoutes.home
-        : AppRoutes.onboarding;
-
     return GetMaterialApp(
       title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
       initialBinding: InitialBinding(),
-      initialRoute: initialRoute,
+      initialRoute: AppRoutes.initial, // Always start with Splash
       getPages: AppPages.routes,
       defaultTransition: Transition.cupertino,
     );
