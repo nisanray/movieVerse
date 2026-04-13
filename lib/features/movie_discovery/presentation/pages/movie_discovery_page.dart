@@ -30,8 +30,9 @@ class MovieDiscoveryPage extends GetView<MovieDiscoveryController> {
             final bool isFilteringByGenre = controller.selectedGenre.value.id != 0;
 
             return CustomScrollView(
+              controller: controller.scrollController,
               slivers: [
-                const SliverToBoxAdapter(child: SizedBox(height: 180)), // Space for professional header
+                const SliverToBoxAdapter(child: SizedBox(height: 120)), // Space for professional header
                 
                 if (isSearching || isFilteringByGenre)
                   // Results Grid (Search or Genre Filter)

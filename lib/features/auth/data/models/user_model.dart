@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
@@ -8,12 +9,12 @@ class UserModel extends UserEntity {
     super.photoUrl,
   });
 
-  factory UserModel.fromFirebaseUser(dynamic user) {
+  factory UserModel.fromFirebaseUser(User user) {
     return UserModel(
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
-      photoUrl: user.photoUrl,
+      photoUrl: user.photoURL,
     );
   }
 }

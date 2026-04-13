@@ -15,17 +15,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   // Load environment variables
   await dotenv.load(fileName: ".env");
-  
+
   // Initialize Core Services
   await Get.putAsync(() => StorageService().init());
   await Get.putAsync(() => ApiClient().init());
-  
+
   runApp(const MovieVerseApp());
 }
 
@@ -35,8 +33,8 @@ class MovieVerseApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final storageService = Get.find<StorageService>();
-    final initialRoute = storageService.isOnboardingCompleted() 
-        ? AppRoutes.home 
+    final initialRoute = storageService.isOnboardingCompleted()
+        ? AppRoutes.home
         : AppRoutes.onboarding;
 
     return GetMaterialApp(

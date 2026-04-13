@@ -39,6 +39,10 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
   // High-level loading state for the initial page load.
   final RxBool isLoading = true.obs;
 
+  // Scroll tracking for dynamic header
+  final ScrollController scrollController = ScrollController();
+  final RxBool isHeaderShrunk = false.obs;
+
   /// Returns true if any advanced filter (besides All) is applied.
   bool get hasActiveFilters => 
       selectedGenre.value.id != 0 || 
@@ -53,6 +57,9 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
     fetchGenres();
     fetchCountries();
     
+    // Listen to scroll to shrink/expand header
+    scrollController.addListener(_handleScroll);
+
     // Listen to search changes with debounce
     debounce(searchQuery, (query) {
       if (query.isNotEmpty) {
@@ -63,10 +70,21 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
     }, time: const Duration(milliseconds: 500));
   }
 
+  void _handleScroll() {
+    if (scrollController.hasClients) {
+      if (scrollController.offset > 50 && !isHeaderShrunk.value) {
+        isHeaderShrunk.value = true;
+      } else if (scrollController.offset <= 50 && isHeaderShrunk.value) {
+        isHeaderShrunk.value = false;
+      }
+    }
+  }
+
   @override
   void onClose() {
     searchController.dispose();
     searchFocusNode.dispose();
+    scrollController.dispose();
     super.onClose();
   }
 

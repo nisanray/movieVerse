@@ -8,6 +8,8 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
 
   @override
   Widget build(BuildContext context) {
+    final double topPadding = MediaQuery.of(context).padding.top;
+    
     return Positioned(
       top: 0,
       left: 0,
@@ -17,10 +19,10 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
           filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
           child: Container(
             padding: EdgeInsets.only(
-              top: Get.statusBarHeight + 10,
+              top: topPadding + 6,
               left: 20,
               right: 20,
-              bottom: 16,
+              bottom: 8,
             ),
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.3),
@@ -28,28 +30,39 @@ class DiscoveryHeader extends GetView<MovieDiscoveryController> {
                 bottom: BorderSide(color: Colors.white.withOpacity(0.1)),
               ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Top Row: Search Bar
-                _buildSearchBar(context),
-                const SizedBox(height: 16),
-
-                // Secondary Row: Segmented Toggle
-                Obx(
-                  () => Row(
-                    children: [
-                      _buildSegmentButton('movie', 'Movies'),
-                      const SizedBox(width: 16),
-                      _buildSegmentButton('tv', 'TV Shows'),
-                    ],
+            child: Obx(
+              () => Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Top Row: Search Bar (Always visible)
+                  _buildSearchBar(context),
+                  
+                  AnimatedOpacity(
+                    opacity: controller.isHeaderShrunk.value ? 0.0 : 1.0,
+                    duration: const Duration(milliseconds: 300),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      height: controller.isHeaderShrunk.value ? 0 : null,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          // Secondary Row: Segmented Toggle
+                          Row(
+                            children: [
+                              _buildSegmentButton('movie', 'Movies'),
+                              const SizedBox(width: 16),
+                              _buildSegmentButton('tv', 'TV Shows'),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          // Tertiary Row: Genre Chips
+                          _buildGenreList(),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-
-                // Tertiary Row: Genre Chips
-                _buildGenreList(),
-              ],
+                ],
+              ),
             ),
           ),
         ),
