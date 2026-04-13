@@ -21,6 +21,35 @@ class Media {
     required this.isMovie,
   });
 
+  /// Convert to Map for Firestore
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'overview': overview,
+      'posterPath': posterPath,
+      'backdropPath': backdropPath,
+      'voteAverage': voteAverage,
+      'releaseDate': releaseDate,
+      'isMovie': isMovie,
+      'addedAt': DateTime.now().toIso8601String(),
+    };
+  }
+
+  /// Create from Map (Firestore)
+  factory Media.fromMap(Map<String, dynamic> map) {
+    return Media(
+      id: map['id'] ?? 0,
+      title: map['title'] ?? '',
+      overview: map['overview'] ?? '',
+      posterPath: map['posterPath'] ?? '',
+      backdropPath: map['backdropPath'] ?? '',
+      voteAverage: (map['voteAverage'] ?? 0).toDouble(),
+      releaseDate: map['releaseDate'] ?? '',
+      isMovie: map['isMovie'] ?? true,
+    );
+  }
+
   /// Helper to get the full formatted poster URL.
   String get fullPosterPath => posterPath.isNotEmpty 
       ? 'https://image.tmdb.org/t/p/w500$posterPath' 

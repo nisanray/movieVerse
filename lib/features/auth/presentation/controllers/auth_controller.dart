@@ -1,11 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '/features/auth/domain/repositories/auth_repository.dart';
-import '/features/auth/domain/entities/user_entity.dart';
-import '/core/navigation/app_routes.dart';
+import '../../../../core/utils/snackbar_utils.dart';
+import '../../../../core/utils/storage_service.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../../domain/entities/user_entity.dart';
+import '../../../../core/navigation/app_routes.dart';
 
 class AuthController extends GetxController {
   final AuthRepository _repository;
+  final StorageService _storageService = Get.find<StorageService>();
 
   AuthController(this._repository);
 
@@ -26,6 +28,9 @@ class AuthController extends GetxController {
 
   void _handleAuthRedirect(UserEntity? user) {
     if (user != null) {
+      // Once a user is authenticated, we mark onboarding as completed
+      // to prevent the loop on restart.
+      _storageService.setOnboardingCompleted(true);
       Get.offAllNamed(AppRoutes.home);
     } else {
       Get.offAllNamed(AppRoutes.auth);
@@ -82,12 +87,9 @@ class AuthController extends GetxController {
       errorMessage.value = '';
       await _repository.sendPasswordResetEmail(email);
       Get.back(); // Go back to login
-      Get.snackbar(
-        'Success',
-        'Password reset email sent!',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green.withOpacity(0.1),
-        colorText: Colors.white,
+      SnackbarUtils.success(
+        title: 'Email Sent!',
+        message: 'Check your inbox to reset your password.',
       );
     } catch (e) {
       errorMessage.value = e.toString();

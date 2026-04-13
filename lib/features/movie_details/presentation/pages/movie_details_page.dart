@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../movie_discovery/presentation/widgets/movie_card.dart';
+import '../../domain/entities/movie_details_entities.dart';
+import '../../../watchlist/presentation/controllers/watchlist_controller.dart';
 import '../controllers/movie_details_controller.dart';
 
 class MovieDetailsPage extends GetView<MovieDetailsController> {
@@ -23,7 +25,7 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
     );
   }
 
-  Widget _buildContent(dynamic details) {
+  Widget _buildContent(MovieDetails details) {
     return CustomScrollView(
       slivers: [
         _buildSliverAppBar(details),
@@ -53,11 +55,33 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
     );
   }
 
-  Widget _buildSliverAppBar(dynamic details) {
+  Widget _buildSliverAppBar(MovieDetails details) {
     return SliverAppBar(
       expandedHeight: 400,
       backgroundColor: Colors.black,
       pinned: true,
+      actions: [
+        GetX<WatchlistController>(
+          builder: (watchlistController) {
+            final isInWatchlist = watchlistController.isInWatchlist(details.id);
+            return IconButton(
+              icon: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  isInWatchlist ? Icons.bookmark_added_rounded : Icons.bookmark_add_outlined,
+                  color: isInWatchlist ? Colors.red : Colors.white,
+                ),
+              ),
+              onPressed: () => watchlistController.toggleWatchlist(details.toMedia()),
+            );
+          },
+        ),
+        const SizedBox(width: 8),
+      ],
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,
@@ -81,7 +105,7 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
     );
   }
 
-  Widget _buildTitleSection(dynamic details) {
+  Widget _buildTitleSection(MovieDetails details) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -143,7 +167,7 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
     );
   }
 
-  Widget _buildInfoChips(dynamic details) {
+  Widget _buildInfoChips(MovieDetails details) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -176,7 +200,7 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
     );
   }
 
-  Widget _buildOverview(dynamic details) {
+  Widget _buildOverview(MovieDetails details) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -197,7 +221,7 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
     );
   }
 
-  Widget _buildCastList(dynamic details) {
+  Widget _buildCastList(MovieDetails details) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

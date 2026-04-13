@@ -10,6 +10,8 @@ import '../../features/auth/presentation/pages/auth_page.dart';
 import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/profile/presentation/bindings/profile_binding.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/watchlist/presentation/bindings/watchlist_binding.dart';
+import '../../features/watchlist/presentation/pages/watchlist_page.dart';
 import '../../features/splash/presentation/bindings/splash_binding.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import 'app_routes.dart';
@@ -55,6 +57,11 @@ class AppPages {
       name: AppRoutes.forgotPassword,
       page: () => const ForgotPasswordPage(),
       binding: AuthBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.watchlist,
+      page: () => const WatchlistPage(),
+      transition: Transition.cupertino,
     ),
   ];
 }

@@ -84,8 +84,6 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
 
   @override
   void onClose() {
-    searchController.dispose();
-    searchFocusNode.dispose();
     scrollController.dispose();
     super.onClose();
   }

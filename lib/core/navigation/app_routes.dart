@@ -7,4 +7,5 @@ abstract class AppRoutes {
   static const String movieDetails = '/movie-details';
   static const String profile = '/profile';
   static const String forgotPassword = '/forgot-password';
+  static const String watchlist = '/watchlist';
 }

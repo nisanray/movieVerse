@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../core/navigation/app_routes.dart';
 import '../../../auth/domain/entities/user_entity.dart';
 import '../controllers/profile_controller.dart';
 
@@ -93,6 +94,13 @@ class ProfilePage extends GetView<ProfileController> {
                   padding: const EdgeInsets.all(24),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
+                      _buildSectionTitle('COLLECTIONS'),
+                      GestureDetector(
+                        onTap: () => Get.toNamed(AppRoutes.watchlist),
+                        child: _buildGlassTile(Icons.bookmark_outline_rounded, 'My Watchlist'),
+                      ),
+                      
+                      const SizedBox(height: 32),
                       _buildSectionTitle('ACCOUNT'),
                       _buildGlassTile(Icons.person_outline, 'Personal Information'),
                       _buildGlassTile(Icons.notifications_none_rounded, 'Notifications'),

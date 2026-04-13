@@ -1,3 +1,5 @@
+import '../../../movie_discovery/domain/entities/media.dart';
+
 class Cast {
   final int id;
   final String name;
@@ -71,4 +73,18 @@ class MovieDetails {
 
   String get fullPosterPath => 'https://image.tmdb.org/t/p/w500$posterPath';
   String get fullBackdropPath => 'https://image.tmdb.org/t/p/original$backdropPath';
+
+  /// Converts detailed model back to simple Media entity for watchlist persistence.
+  Media toMedia() {
+    return Media(
+      id: id,
+      title: title,
+      overview: overview,
+      posterPath: posterPath,
+      backdropPath: backdropPath,
+      voteAverage: voteAverage,
+      releaseDate: releaseDate,
+      isMovie: isMovie,
+    );
+  }
 }
