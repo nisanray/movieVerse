@@ -27,14 +27,20 @@ class AuthController extends GetxController {
   }
 
   void _handleAuthRedirect(UserEntity? user) {
+    // 1. Check Auth State first (Implicit onboarding completion)
     if (user != null) {
-      // Once a user is authenticated, we mark onboarding as completed
-      // to prevent the loop on restart.
       _storageService.setOnboardingCompleted(true);
       Get.offAllNamed(AppRoutes.home);
-    } else {
-      Get.offAllNamed(AppRoutes.auth);
+      return;
     }
+
+    // 2. Check Explicit Onboarding Flag
+    if (!_storageService.isOnboardingCompleted()) {
+      Get.offAllNamed(AppRoutes.onboarding);
+      return;
+    }
+    
+    Get.offAllNamed(AppRoutes.auth);
   }
 
   Future<void> login(String email, String password) async {

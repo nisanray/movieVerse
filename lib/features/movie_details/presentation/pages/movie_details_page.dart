@@ -8,15 +8,27 @@ import '../../domain/entities/movie_details_entities.dart';
 import '../../../watchlist/presentation/controllers/watchlist_controller.dart';
 import '../controllers/movie_details_controller.dart';
 
-class MovieDetailsPage extends GetView<MovieDetailsController> {
+class MovieDetailsPage extends StatelessWidget {
   const MovieDetailsPage({super.key});
+
+  /// Finds the controller using the movieId from arguments.
+  /// We handle the lookup once per build to ensure stability.
+  MovieDetailsController _findController() {
+    final args = Get.arguments as Map<String, dynamic>;
+    final int movieId = args['id'];
+    return Get.find<MovieDetailsController>(tag: 'movie_$movieId');
+  }
 
   @override
   Widget build(BuildContext context) {
+    final controller = _findController();
+    
     return Scaffold(
       backgroundColor: Colors.black,
       body: controller.obx(
-        (details) => _buildContent(details!),
+        (details) => details != null 
+            ? _buildContent(details, controller) 
+            : const SizedBox.shrink(),
         onLoading: const Center(child: CircularProgressIndicator(color: Colors.red)),
         onError: (error) => Center(
           child: Text('Error: $error', style: const TextStyle(color: Colors.white)),
@@ -25,7 +37,7 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
     );
   }
 
-  Widget _buildContent(MovieDetails details) {
+  Widget _buildContent(MovieDetails details, MovieDetailsController controller) {
     return CustomScrollView(
       slivers: [
         _buildSliverAppBar(details),
@@ -43,9 +55,9 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
                 const SizedBox(height: 32),
                 _buildCastList(details),
                 const SizedBox(height: 32),
-                _buildTrailerSection(),
+                _buildTrailerSection(controller),
                 const SizedBox(height: 32),
-                _buildSimilarSection(),
+                _buildSimilarSection(controller),
                 const SizedBox(height: 100),
               ],
             ),
@@ -68,7 +80,7 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
               icon: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withValues(alpha: 0.5),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -235,7 +247,7 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
         ),
         const SizedBox(height: 16),
         SizedBox(
-          height: 100,
+          height: 110,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: details.cast.length,
@@ -268,7 +280,7 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
     );
   }
 
-  Widget _buildTrailerSection() {
+  Widget _buildTrailerSection(MovieDetailsController controller) {
     return Obx(() {
       if (!controller.isTrailerReady.value || controller.youtubeController == null) {
         return const SizedBox.shrink();
@@ -299,7 +311,7 @@ class MovieDetailsPage extends GetView<MovieDetailsController> {
     });
   }
 
-  Widget _buildSimilarSection() {
+  Widget _buildSimilarSection(MovieDetailsController controller) {
     return Obx(() {
       if (controller.similarMedia.isEmpty) return const SizedBox.shrink();
 

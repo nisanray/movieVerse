@@ -17,19 +17,19 @@ class SplashController extends GetxController {
     // Wait for a small duration for a smooth branded entrance
     await Future.delayed(const Duration(milliseconds: 2000));
 
-    // 1. Check Onboarding
+    // 1. Check Auth State first (Implicit onboarding completion)
+    if (_authController.user.value != null) {
+      _storageService.setOnboardingCompleted(true);
+      Get.offAllNamed(AppRoutes.home);
+      return;
+    }
+
+    // 2. Check Explicit Onboarding Flag
     if (!_storageService.isOnboardingCompleted()) {
       Get.offAllNamed(AppRoutes.onboarding);
       return;
     }
 
-    // 2. Check Auth State
-    // The AuthController already listens to authStateChanges and populates the user.
-    // We just need to check if it has determined the state yet.
-    if (_authController.user.value != null) {
-      Get.offAllNamed(AppRoutes.home);
-    } else {
-      Get.offAllNamed(AppRoutes.auth);
-    }
+    Get.offAllNamed(AppRoutes.auth);
   }
 }

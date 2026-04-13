@@ -17,16 +17,17 @@ class MovieDiscoveryController extends GetxController with StateMixin<List<Media
   final RxString selectedMediaType = 'movie'.obs;
 
   // Search, Genre, and Year States
-  final TextEditingController searchController = TextEditingController();
-  final FocusNode searchFocusNode = FocusNode();
-  final RxString searchQuery = ''.obs;
+  final RxString selectedSortBy = 'popularity.desc'.obs;
+  final RxMap<String, String> countries = <String, String>{}.obs;
+
   final RxList<Genre> genres = <Genre>[].obs;
   final Rx<Genre> selectedGenre = const Genre(id: 0, name: 'All').obs;
   final RxInt selectedYear = 0.obs;
   final RxString selectedCountryCode = ''.obs;
-  final RxString selectedSortBy = 'popularity.desc'.obs;
-  final RxMap<String, String> countries = <String, String>{}.obs;
 
+  // Search query (bound to widget controller)
+  final RxString searchQuery = ''.obs;
+  
   // List of years from current year down to 1950.
   final List<int> availableYears = [
     0, // Representing "All"

@@ -11,21 +11,32 @@ class MovieDetailsBinding extends Bindings {
     final Map<String, dynamic> args = Get.arguments as Map<String, dynamic>;
     final int movieId = args['id'];
     final String mediaType = args['type'];
+    final String tag = 'movie_$movieId';
+
+    // Delete any previous controller with this tag to force a fresh fetch
+    if (Get.isRegistered<MovieDetailsController>(tag: tag)) {
+      Get.delete<MovieDetailsController>(tag: tag, force: true);
+    }
 
     Get.lazyPut<MovieDetailsRemoteDataSource>(
       () => MovieDetailsRemoteDataSourceImpl(apiClient: Get.find<ApiClient>()),
+      tag: tag,
     );
 
     Get.lazyPut<MovieDetailsRepository>(
       () => MovieDetailsRepositoryImpl(
-        remoteDataSource: Get.find<MovieDetailsRemoteDataSource>(),
+        remoteDataSource: Get.find<MovieDetailsRemoteDataSource>(tag: tag),
       ),
+      tag: tag,
     );
 
-    Get.put(MovieDetailsController(
-      Get.find<MovieDetailsRepository>(),
-      movieId,
-      mediaType,
-    ));
+    Get.put(
+      MovieDetailsController(
+        Get.find<MovieDetailsRepository>(tag: tag),
+        movieId,
+        mediaType,
+      ),
+      tag: tag,
+    );
   }
 }
