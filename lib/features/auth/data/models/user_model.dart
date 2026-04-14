@@ -7,6 +7,7 @@ class UserModel extends UserEntity {
     super.email,
     super.displayName,
     super.photoUrl,
+    super.bio,
   });
 
   factory UserModel.fromFirebaseUser(User user) {
@@ -16,5 +17,24 @@ class UserModel extends UserEntity {
       displayName: user.displayName,
       photoUrl: user.photoURL,
     );
+  }
+
+  factory UserModel.fromFirestore(Map<String, dynamic> json, String uid) {
+    return UserModel(
+      uid: uid,
+      email: json['email'],
+      displayName: json['displayName'],
+      photoUrl: json['photoUrl'],
+      bio: json['bio'],
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'email': email,
+      'displayName': displayName,
+      'photoUrl': photoUrl,
+      'bio': bio,
+    };
   }
 }

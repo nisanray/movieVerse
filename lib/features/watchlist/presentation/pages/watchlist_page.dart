@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../controllers/watchlist_controller.dart';
 import '../../../media_discovery/presentation/widgets/media_card.dart';
 
@@ -44,7 +45,10 @@ class WatchlistPage extends GetView<WatchlistController> {
           ),
           itemCount: watchlist!.length,
           itemBuilder: (context, index) {
-            return MediaCard(media: watchlist[index]);
+            return MediaCard(media: watchlist[index])
+                .animate(delay: (index * 100).ms)
+                .fadeIn(duration: 500.ms)
+                .slideY(begin: 0.2, end: 0, curve: Curves.easeOut);
           },
         ),
         onLoading: const Center(child: CircularProgressIndicator(color: Colors.red)),

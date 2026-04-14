@@ -11,8 +11,23 @@ class AppTheme {
       surface: Color(0xFF141414),
     ),
     textTheme: const TextTheme(
-      headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+      headlineLarge: TextStyle(
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
       bodyLarge: TextStyle(fontSize: 16, color: Colors.white70),
+    ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      selectedItemColor: Color(0xFFE50914),
+      unselectedItemColor: Colors.white54,
+      selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+      unselectedLabelStyle: TextStyle(fontSize: 10),
+      selectedIconTheme: IconThemeData(size: 20),
+      unselectedIconTheme: IconThemeData(size: 20),
     ),
   );
 }

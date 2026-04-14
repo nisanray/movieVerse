@@ -1,17 +1,17 @@
 import 'package:get/get.dart';
 import '../../features/media_details/presentation/bindings/media_details_binding.dart';
 import '../../features/media_details/presentation/pages/media_details_page.dart';
-import '../../features/media_discovery/presentation/bindings/media_discovery_binding.dart';
-import '../../features/media_discovery/presentation/pages/media_discovery_page.dart';
 import '../../features/onboarding/presentation/bindings/onboarding_binding.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/auth/presentation/bindings/auth_binding.dart';
 import '../../features/auth/presentation/pages/auth_page.dart';
 import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/profile/presentation/bindings/profile_binding.dart';
+import '../../features/profile/presentation/pages/profile_management_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
-import '../../features/watchlist/presentation/bindings/watchlist_binding.dart';
 import '../../features/watchlist/presentation/pages/watchlist_page.dart';
+import '../../features/main/presentation/bindings/main_binding.dart';
+import '../../features/main/presentation/pages/main_page.dart';
 import '../../features/splash/presentation/bindings/splash_binding.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import 'app_routes.dart';
@@ -31,8 +31,8 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.home,
-      page: () => const MediaDiscoveryPage(),
-      binding: MediaDiscoveryBinding(),
+      page: () => const MainPage(),
+      binding: MainBinding(),
       transition: Transition.fadeIn,
     ),
     GetPage(
@@ -52,6 +52,12 @@ class AppPages {
       page: () => const ProfilePage(),
       binding: ProfileBinding(),
       transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: AppRoutes.profileManagement,
+      page: () => const ProfileManagementPage(),
+      binding: ProfileBinding(),
+      transition: Transition.fadeIn,
     ),
     GetPage(
       name: AppRoutes.forgotPassword,

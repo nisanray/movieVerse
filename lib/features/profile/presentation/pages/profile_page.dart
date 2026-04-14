@@ -67,7 +67,26 @@ class ProfilePage extends GetView<ProfileController> {
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Column(
                       children: [
-                        _buildAvatar(),
+                        Stack(
+                          children: [
+                            _buildAvatar(),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: GestureDetector(
+                                onTap: () => Get.toNamed(AppRoutes.profileManagement),
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.red,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(Icons.edit_rounded, color: Colors.white, size: 16),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 20),
                         Obx(() => Text(
                           controller.user?.displayName ?? 'Movie Enthusiast',
@@ -82,6 +101,19 @@ class ProfilePage extends GetView<ProfileController> {
                           style: GoogleFonts.poppins(
                             fontSize: 14,
                             color: Colors.white60,
+                          ),
+                        )),
+                        const SizedBox(height: 12),
+                        Obx(() => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          child: Text(
+                            controller.user?.bio ?? 'Passionate about cinema and storytelling.',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                              fontSize: 13,
+                              color: Colors.white70,
+                              fontStyle: FontStyle.italic,
+                            ),
                           ),
                         )),
                       ],
@@ -102,7 +134,10 @@ class ProfilePage extends GetView<ProfileController> {
                       
                       const SizedBox(height: 32),
                       _buildSectionTitle('ACCOUNT'),
-                      _buildGlassTile(Icons.person_outline, 'Personal Information'),
+                      GestureDetector(
+                        onTap: () => Get.toNamed(AppRoutes.profileManagement),
+                        child: _buildGlassTile(Icons.person_outline, 'Personal Information'),
+                      ),
                       _buildGlassTile(Icons.notifications_none_rounded, 'Notifications'),
                       _buildGlassTile(Icons.security_rounded, 'Security & Privacy'),
                       
