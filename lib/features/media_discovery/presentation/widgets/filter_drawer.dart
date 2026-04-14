@@ -19,14 +19,14 @@ class FilterDrawer extends GetView<MediaDiscoveryController> {
             filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.8),
+                color: Colors.black.withAlpha(64),
                 border: Border(
-                  left: BorderSide(color: Colors.white.withOpacity(0.1)),
+                  left: BorderSide(color: Colors.white.withAlpha(26)),
                 ),
               ),
             ),
           ),
-          
+
           SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -35,23 +35,23 @@ class FilterDrawer extends GetView<MediaDiscoveryController> {
                 children: [
                   _buildHeader(),
                   const SizedBox(height: 32),
-                  _buildSectionTitle('Search by Year'),
+                  _buildSectionTitle(context, 'Search by Year'),
                   const SizedBox(height: 16),
                   _buildYearDropdown(),
                   const SizedBox(height: 32),
-                  _buildSectionTitle('Origin Country'),
+                  _buildSectionTitle(context, 'Origin Country'),
                   const SizedBox(height: 16),
                   _buildCountryDropdown(),
                   const SizedBox(height: 32),
-                  _buildSectionTitle('Genre'),
+                  _buildSectionTitle(context, 'Genre'),
                   const SizedBox(height: 16),
                   _buildGenreDropdown(),
                   const SizedBox(height: 32),
-                  _buildSectionTitle('Sort By'),
+                  _buildSectionTitle(context, 'Sort By'),
                   const SizedBox(height: 16),
                   _buildSortDropdown(),
                   const SizedBox(height: 40),
-                  _buildActionButtons(),
+                  _buildActionButtons(context),
                   const SizedBox(height: 10),
                 ],
               ),
@@ -80,43 +80,49 @@ class FilterDrawer extends GetView<MediaDiscoveryController> {
           child: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withAlpha(26),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.chevron_right, color: Colors.white, size: 24),
+            child: const Icon(
+              Icons.chevron_right,
+              color: Colors.white,
+              size: 24,
+            ),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildSectionTitle(String title) {
+  Widget _buildSectionTitle(BuildContext context, String title) {
     return Text(
       title.toUpperCase(),
       style: GoogleFonts.poppins(
         fontSize: 12,
         fontWeight: FontWeight.bold,
-        color: Colors.red,
+        color: Theme.of(context).colorScheme.primary,
         letterSpacing: 1.5,
       ),
     );
   }
 
   Widget _buildYearDropdown() {
-    return Obx(() => _buildGlassDropdown<int>(
-      value: controller.selectedYear.value,
-      hint: 'All Years',
-      items: controller.availableYears.map((year) {
-        return DropdownMenuItem<int>(
-          value: year,
-          child: Text(
-            year == 0 ? 'All Years' : year.toString(),
-            style: const TextStyle(color: Colors.white, fontSize: 14),
-          ),
-        );
-      }).toList(),
-      onChanged: (value) => controller.selectedYear.value = value ?? 0,
-    ));
+    return Obx(
+      () => _buildGlassDropdown<int>(
+        value: controller.selectedYear.value,
+        hint: 'All Years',
+        items: controller.availableYears.map((year) {
+          return DropdownMenuItem<int>(
+            value: year,
+            child: Text(
+              year == 0 ? 'All Years' : year.toString(),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          );
+        }).toList(),
+        onChanged: (value) => controller.selectedYear.value = value ?? 0,
+      ),
+    );
   }
 
   Widget _buildGenreDropdown() {
@@ -126,7 +132,13 @@ class FilterDrawer extends GetView<MediaDiscoveryController> {
           value: 0,
           hint: 'Loading...',
           items: [
-            const DropdownMenuItem<int>(value: 0, child: Text('Loading...', style: TextStyle(color: Colors.white70))),
+            const DropdownMenuItem<int>(
+              value: 0,
+              child: Text(
+                'Loading...',
+                style: TextStyle(color: Colors.white70),
+              ),
+            ),
           ],
           onChanged: (_) {},
         );
@@ -160,7 +172,10 @@ class FilterDrawer extends GetView<MediaDiscoveryController> {
       final items = [
         const DropdownMenuItem<String>(
           value: '',
-          child: Text('All Countries', style: TextStyle(color: Colors.white, fontSize: 14)),
+          child: Text(
+            'All Countries',
+            style: TextStyle(color: Colors.white, fontSize: 14),
+          ),
         ),
         ...countryList.map((entry) {
           return DropdownMenuItem<String>(
@@ -181,7 +196,8 @@ class FilterDrawer extends GetView<MediaDiscoveryController> {
         value: valueInItems ? currentValue : '',
         hint: 'All Countries',
         items: items,
-        onChanged: (value) => controller.selectedCountryCode.value = value ?? '',
+        onChanged: (value) =>
+            controller.selectedCountryCode.value = value ?? '',
       );
     });
   }
@@ -194,20 +210,23 @@ class FilterDrawer extends GetView<MediaDiscoveryController> {
       'primary_release_date.asc': 'Oldest First',
     };
 
-    return Obx(() => _buildGlassDropdown<String>(
-      value: controller.selectedSortBy.value,
-      hint: 'Popularity',
-      items: sortOptions.entries.map((entry) {
-        return DropdownMenuItem<String>(
-          value: entry.key,
-          child: Text(
-            entry.value,
-            style: const TextStyle(color: Colors.white, fontSize: 14),
-          ),
-        );
-      }).toList(),
-      onChanged: (value) => controller.selectedSortBy.value = value ?? 'popularity.desc',
-    ));
+    return Obx(
+      () => _buildGlassDropdown<String>(
+        value: controller.selectedSortBy.value,
+        hint: 'Popularity',
+        items: sortOptions.entries.map((entry) {
+          return DropdownMenuItem<String>(
+            value: entry.key,
+            child: Text(
+              entry.value,
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          );
+        }).toList(),
+        onChanged: (value) =>
+            controller.selectedSortBy.value = value ?? 'popularity.desc',
+      ),
+    );
   }
 
   Widget _buildGlassDropdown<T>({
@@ -219,17 +238,17 @@ class FilterDrawer extends GetView<MediaDiscoveryController> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withAlpha(13),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
+        border: Border.all(color: Colors.white.withAlpha(26)),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<T>(
           value: value,
           items: items,
           onChanged: onChanged,
-          dropdownColor: Colors.grey[900],
-          icon: const Icon(Icons.keyboard_arrow_down, color: Colors.red),
+          dropdownColor: Colors.black.withAlpha(230),
+          icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white70),
           isExpanded: true,
           style: GoogleFonts.poppins(color: Colors.white),
         ),
@@ -237,7 +256,7 @@ class FilterDrawer extends GetView<MediaDiscoveryController> {
     );
   }
 
-  Widget _buildActionButtons() {
+  Widget _buildActionButtons(BuildContext context) {
     return Column(
       children: [
         SizedBox(
@@ -248,10 +267,12 @@ class FilterDrawer extends GetView<MediaDiscoveryController> {
               Get.back();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               elevation: 0,
             ),
             child: Text(

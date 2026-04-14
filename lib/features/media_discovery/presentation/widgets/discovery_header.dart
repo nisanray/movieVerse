@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/navigation/app_routes.dart';
-import '../../../auth/domain/entities/user_entity.dart';
 import '../controllers/media_discovery_controller.dart';
 
 class DiscoveryHeader extends GetView<MediaDiscoveryController> {
@@ -11,7 +10,7 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
   @override
   Widget build(BuildContext context) {
     final double topPadding = MediaQuery.of(context).padding.top;
-    
+
     return Positioned(
       top: 0,
       left: 0,
@@ -21,15 +20,15 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
           filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
           child: Container(
             padding: EdgeInsets.only(
-              top: topPadding + 6,
-              left: 20,
-              right: 20,
-              bottom: 8,
+              top: topPadding + 2,
+              left: 16,
+              right: 16,
+              bottom: 6,
             ),
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withAlpha(64),
               border: Border(
-                bottom: BorderSide(color: Colors.white.withOpacity(0.1)),
+                bottom: BorderSide(color: Colors.white.withAlpha(26)),
               ),
             ),
             child: Obx(
@@ -38,7 +37,7 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
                 children: [
                   // Top Row: Search Bar (Always visible)
                   _buildSearchBar(context),
-                  
+
                   AnimatedOpacity(
                     opacity: controller.isHeaderShrunk.value ? 0.0 : 1.0,
                     duration: const Duration(milliseconds: 300),
@@ -47,7 +46,7 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
                       height: controller.isHeaderShrunk.value ? 0 : null,
                       child: Column(
                         children: [
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 8),
                           // Secondary Row: Segmented Toggle
                           Row(
                             children: [
@@ -56,7 +55,7 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
                               _buildSegmentButton('tv', 'TV Shows'),
                             ],
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 10),
                           // Tertiary Row: Genre Chips
                           _buildGenreList(),
                         ],
@@ -81,31 +80,31 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
           child: Obx(() {
             final user = controller.authController.user.value;
             return Container(
-              height: 45,
-              width: 45,
+              height: 40,
+              width: 40,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
+                color: Colors.white.withAlpha(26),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.white.withOpacity(0.1)),
-                image: user?.photoUrl != null 
-                  ? DecorationImage(
-                      image: NetworkImage(user!.photoUrl!),
-                      fit: BoxFit.cover,
-                    )
-                  : null,
+                border: Border.all(color: Colors.white.withAlpha(26)),
+                image: user?.photoUrl != null
+                    ? DecorationImage(
+                        image: NetworkImage(user!.photoUrl!),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
               ),
-              child: user?.photoUrl == null 
-                ? const Icon(Icons.person, color: Colors.white70, size: 22)
-                : null,
+              child: user?.photoUrl == null
+                  ? const Icon(Icons.person, color: Colors.white70, size: 22)
+                  : null,
             );
           }),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: Container(
-            height: 45,
+            height: 40,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withAlpha(26),
               borderRadius: BorderRadius.circular(12),
             ),
             child: TextField(
@@ -114,16 +113,16 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
               onChanged: (value) => controller.searchQuery.value = value,
               style: const TextStyle(color: Colors.white, fontSize: 14),
               decoration: InputDecoration(
-                hintText: controller.selectedMediaType.value == 'movie' 
-                    ? 'Search Movies...' 
+                hintText: controller.selectedMediaType.value == 'movie'
+                    ? 'Search Movies...'
                     : 'Search TV Shows...',
                 hintStyle: TextStyle(
-                  color: Colors.white.withOpacity(0.4),
+                  color: Colors.white.withAlpha(102),
                   fontSize: 14,
                 ),
                 prefixIcon: Icon(
                   Icons.search,
-                  color: Colors.white.withOpacity(0.6),
+                  color: Colors.white.withAlpha(153),
                   size: 20,
                 ),
                 suffixIcon: Obx(
@@ -149,86 +148,97 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
         ),
         const SizedBox(width: 12),
         // Filter Icon
-        Builder(builder: (context) {
-          return GestureDetector(
-            onTap: () => Scaffold.of(context).openEndDrawer(),
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                _buildGlassButton(Icons.tune_rounded),
-                Obx(() => controller.hasActiveFilters
-                    ? Positioned(
-                        top: -2,
-                        right: -2,
-                        child: Container(
-                          height: 12,
-                          width: 12,
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.black, width: 2),
-                          ),
-                        ),
-                      )
-                    : const SizedBox.shrink()),
-              ],
-            ),
-          );
-        }),
+        Builder(
+          builder: (context) {
+            return GestureDetector(
+              onTap: () => Scaffold.of(context).openEndDrawer(),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  _buildGlassButton(Icons.tune_rounded),
+                  Obx(
+                    () => controller.hasActiveFilters
+                        ? Positioned(
+                            top: -2,
+                            right: -2,
+                            child: Container(
+                              height: 12,
+                              width: 12,
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ],
     );
   }
 
   Widget _buildGlassButton(IconData icon) {
     return Container(
-      height: 45,
-      width: 45,
+      height: 40,
+      width: 40,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
+        color: Colors.white.withAlpha(26),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Icon(
-        icon,
-        color: Colors.white70,
-        size: 22,
-      ),
+      child: Icon(icon, color: Colors.white70, size: 22),
     );
   }
 
   Widget _buildSegmentButton(String type, String label) {
-    final bool isSelected = controller.selectedMediaType.value == type;
     return GestureDetector(
       onTap: () => controller.toggleMediaType(type),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              color: isSelected ? Colors.white : Colors.white.withOpacity(0.4),
-              fontSize: 16,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-              letterSpacing: 0.5,
-            ),
-          ),
-          const SizedBox(height: 4),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            height: 3,
-            width: isSelected ? (type == 'movie' ? 50 : 75) : 0,
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-        ],
+      behavior: HitTestBehavior.opaque,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: Obx(() {
+          final bool isSelected = controller.selectedMediaType.value == type;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  color: isSelected
+                      ? Colors.white
+                      : Colors.white.withAlpha(102),
+                  fontSize: 15,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              const SizedBox(height: 4),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                height: 3,
+                width: isSelected ? (type == 'movie' ? 50 : 75) : 0,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }
 
   Widget _buildGenreList() {
     return SizedBox(
-      height: 32,
+      height: 28,
       child: Obx(() {
         if (controller.genres.isEmpty) return const SizedBox.shrink();
 
@@ -245,18 +255,18 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
                   onTap: () => controller.selectGenre(genre),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 6,
+                      horizontal: 12,
+                      vertical: 5,
                     ),
                     decoration: BoxDecoration(
                       color: isSelected
                           ? Colors.white
-                          : Colors.white.withOpacity(0.05),
+                          : Colors.white.withAlpha(13),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                         color: isSelected
                             ? Colors.white
-                            : Colors.white.withOpacity(0.1),
+                            : Colors.white.withAlpha(26),
                       ),
                     ),
                     child: Center(

@@ -9,6 +9,7 @@ class Media {
   final double voteAverage;
   final String releaseDate; // Maps to 'release_date' for movies and 'first_air_date' for TV shows.
   final bool isMovie;
+  final List<int> genreIds;
 
   Media({
     required this.id,
@@ -19,6 +20,7 @@ class Media {
     required this.voteAverage,
     required this.releaseDate,
     required this.isMovie,
+    this.genreIds = const [],
   });
 
   /// Convert to Map for Firestore
@@ -32,6 +34,7 @@ class Media {
       'voteAverage': voteAverage,
       'releaseDate': releaseDate,
       'isMovie': isMovie,
+      'genreIds': genreIds,
       'addedAt': DateTime.now().toIso8601String(),
     };
   }
@@ -47,6 +50,7 @@ class Media {
       voteAverage: (map['voteAverage'] ?? 0).toDouble(),
       releaseDate: map['releaseDate'] ?? '',
       isMovie: map['isMovie'] ?? true,
+      genreIds: List<int>.from(map['genreIds'] ?? []),
     );
   }
 

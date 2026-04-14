@@ -16,36 +16,39 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       endDrawer: const FilterDrawer(),
       body: Stack(
         children: [
           Obx(() {
             if (controller.isLoading.value) {
-              return const Center(child: CircularProgressIndicator(color: Colors.red));
+              return const Center(
+                child: CircularProgressIndicator(color: Colors.red),
+              );
             }
 
             // Determine if we should show discovery sections or a results grid
             final bool isSearching = controller.searchQuery.value.isNotEmpty;
-            final bool isFilteringByGenre = controller.selectedGenre.value.id != 0;
+            final bool isFilteringByGenre =
+                controller.selectedGenre.value.id != 0;
 
             return CustomScrollView(
               controller: controller.scrollController,
               slivers: [
-                const SliverToBoxAdapter(child: SizedBox(height: 120)), // Space for professional header
-                
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 96),
+                ), // Space for floating header
+
                 if (isSearching || isFilteringByGenre)
                   // Results Grid (Search or Genre Filter)
                   _buildSearchResultsGrid()
                 else ...[
                   // Discovery View (Default)
-                  SliverToBoxAdapter(
-                    child: _buildHeroSection(),
-                  ),
+                  SliverToBoxAdapter(child: _buildHeroSection()),
                   SliverToBoxAdapter(
                     child: _buildMediaSection(
-                      title: controller.selectedMediaType.value == 'movie' 
-                          ? 'Trending Movies' 
+                      title: controller.selectedMediaType.value == 'movie'
+                          ? 'Trending Movies'
                           : 'Trending TV Shows',
                       items: controller.trendingMedia,
                     ),
@@ -54,14 +57,14 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
                     child: _buildMediaSection(
                       title: controller.selectedMediaType.value == 'movie'
                           ? 'Popular on Movie Verse'
-                          : 'Top Rated TV Series',
+                          : 'Top Rated Series',
                       items: controller.popularMedia,
                     ),
                   ),
                 ],
 
                 // Bottom padding
-                const SliverToBoxAdapter(child: SizedBox(height: 100)),
+                const SliverToBoxAdapter(child: SizedBox(height: 80)),
               ],
             );
           }),
@@ -73,37 +76,33 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
     );
   }
 
-
   Widget _buildSearchResultsGrid() {
     return controller.state != null && controller.state!.isNotEmpty
-      ? SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          sliver: SliverGrid(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.7,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-            ),
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
+        ? SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            sliver: SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.7,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              delegate: SliverChildBuilderDelegate((context, index) {
                 return MediaCard(media: controller.state![index]);
-              },
-              childCount: controller.state!.length,
+              }, childCount: controller.state!.length),
             ),
-          ),
-        )
-      : const SliverToBoxAdapter(
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 100),
-              child: Text(
-                'No results found',
-                style: TextStyle(color: Colors.white70, fontSize: 16),
+          )
+        : const SliverToBoxAdapter(
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 100),
+                child: Text(
+                  'No results found',
+                  style: TextStyle(color: Colors.white70, fontSize: 16),
+                ),
               ),
             ),
-          ),
-        );
+          );
   }
 
   Widget _buildHeroSection() {
@@ -147,13 +146,18 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: featuredMedia.isMovie ? Colors.red : Colors.blue,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    featuredMedia.isMovie ? 'FEATURED MOVIE' : 'FEATURED TV SHOW',
+                    featuredMedia.isMovie
+                        ? 'FEATURED MOVIE'
+                        : 'FEATURED TV SHOW',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 10,
@@ -180,12 +184,18 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
                     const SizedBox(width: 8),
                     Text(
                       featuredMedia.voteAverage.toStringAsFixed(1),
-                      style: const TextStyle(color: Colors.white70, fontSize: 16),
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(width: 20),
                     Text(
                       featuredMedia.releaseDate.split('-').first,
-                      style: const TextStyle(color: Colors.white70, fontSize: 16),
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 16,
+                      ),
                     ),
                   ],
                 ),
@@ -208,7 +218,10 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           foregroundColor: Colors.black,
-                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 32,
+                            vertical: 12,
+                          ),
                         ),
                       ),
                       const SizedBox(width: 16),
@@ -220,11 +233,20 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
                             'type': featuredMedia.isMovie ? 'movie' : 'tv',
                           },
                         ),
-                        icon: const Icon(Icons.info_outline, color: Colors.white),
-                        label: const Text('More Info', style: TextStyle(color: Colors.white)),
+                        icon: const Icon(
+                          Icons.info_outline,
+                          color: Colors.white,
+                        ),
+                        label: const Text(
+                          'More Info',
+                          style: TextStyle(color: Colors.white),
+                        ),
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: Colors.white),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 12,
+                          ),
                         ),
                       ),
                     ],
@@ -238,7 +260,10 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
     );
   }
 
-  Widget _buildMediaSection({required String title, required List<Media> items}) {
+  Widget _buildMediaSection({
+    required String title,
+    required List<Media> items,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

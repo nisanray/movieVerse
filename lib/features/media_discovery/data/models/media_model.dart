@@ -13,6 +13,7 @@ class MediaModel extends Media {
     required super.voteAverage,
     required super.releaseDate,
     required super.isMovie,
+    super.genreIds = const [],
   });
 
   /// Factory constructor to create a [MediaModel] from TMDB JSON.
@@ -33,6 +34,7 @@ class MediaModel extends Media {
       voteAverage: (json['vote_average'] as num?)?.toDouble() ?? 0.0,
       releaseDate: (isMovieResult ? json['release_date'] : json['first_air_date']) ?? '',
       isMovie: isMovieResult,
+      genreIds: List<int>.from(json['genre_ids'] ?? []),
     );
   }
 
@@ -47,6 +49,7 @@ class MediaModel extends Media {
       'vote_average': voteAverage,
       if (isMovie) 'release_date': releaseDate else 'first_air_date': releaseDate,
       'is_movie': isMovie,
+      'genre_ids': genreIds,
     };
   }
 }
