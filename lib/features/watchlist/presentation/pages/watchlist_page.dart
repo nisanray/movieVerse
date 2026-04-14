@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controllers/watchlist_controller.dart';
-import '../../../movie_discovery/presentation/widgets/movie_card.dart';
+import '../../../media_discovery/presentation/widgets/media_card.dart';
 
 class WatchlistPage extends GetView<WatchlistController> {
   const WatchlistPage({super.key});
@@ -44,7 +44,7 @@ class WatchlistPage extends GetView<WatchlistController> {
           ),
           itemCount: watchlist!.length,
           itemBuilder: (context, index) {
-            return MovieCard(media: watchlist[index]);
+            return MediaCard(media: watchlist[index]);
           },
         ),
         onLoading: const Center(child: CircularProgressIndicator(color: Colors.red)),

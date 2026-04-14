@@ -144,7 +144,7 @@ class _AuthPageState extends State<AuthPage> {
                 Text(
                   _isLogin
                       ? 'Sign in to continue your journey'
-                      : 'Join the world\'s largest movie community',
+                      : 'Join the world\'s largest media community',
                   style: GoogleFonts.poppins(
                     fontSize: 13,
                     color: Colors.white60,

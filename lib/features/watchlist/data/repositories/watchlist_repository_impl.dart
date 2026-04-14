@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../movie_discovery/domain/entities/media.dart';
+import '../../../media_discovery/domain/entities/media.dart';
 import '../../domain/repositories/watchlist_repository.dart';
 
 class WatchlistRepositoryImpl implements WatchlistRepository {

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import '../../domain/repositories/watchlist_repository.dart';
-import '../../../movie_discovery/domain/entities/media.dart';
+import '../../../media_discovery/domain/entities/media.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../../../core/utils/snackbar_utils.dart';
 

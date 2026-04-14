@@ -1,4 +1,4 @@
-import '../../../movie_discovery/domain/entities/media.dart';
+import '../../../media_discovery/domain/entities/media.dart';
 
 abstract class WatchlistRepository {
   Future<void> addToWatchlist(String userId, Media media);

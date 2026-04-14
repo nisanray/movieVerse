@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import '../../features/movie_details/presentation/bindings/movie_details_binding.dart';
-import '../../features/movie_details/presentation/pages/movie_details_page.dart';
-import '../../features/movie_discovery/presentation/bindings/movie_discovery_binding.dart';
-import '../../features/movie_discovery/presentation/pages/movie_discovery_page.dart';
+import '../../features/media_details/presentation/bindings/media_details_binding.dart';
+import '../../features/media_details/presentation/pages/media_details_page.dart';
+import '../../features/media_discovery/presentation/bindings/media_discovery_binding.dart';
+import '../../features/media_discovery/presentation/pages/media_discovery_page.dart';
 import '../../features/onboarding/presentation/bindings/onboarding_binding.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/auth/presentation/bindings/auth_binding.dart';
@@ -31,14 +31,14 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.home,
-      page: () => const MovieDiscoveryPage(),
-      binding: MovieDiscoveryBinding(),
+      page: () => const MediaDiscoveryPage(),
+      binding: MediaDiscoveryBinding(),
       transition: Transition.fadeIn,
     ),
     GetPage(
-      name: AppRoutes.movieDetails,
-      page: () => const MovieDetailsPage(),
-      binding: MovieDetailsBinding(),
+      name: AppRoutes.mediaDetails,
+      page: () => const MediaDetailsPage(),
+      binding: MediaDetailsBinding(),
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
