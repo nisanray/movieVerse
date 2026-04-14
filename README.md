@@ -70,7 +70,7 @@ To learn more about the project's strategy and technical requirements, explore t
 
 ## 📸 Screenshots
 
-*(Add screenshots here after implementation)*
+*(Screenshots will be here after implementation)*
 
 ---
 
