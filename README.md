@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo/logo_512x512.png" alt="Movie Verse Logo" width="200"/>
+</p>
+
 # 🎬 Movie Verse
 
 **Movie Verse** is a high-performance, cinematic media discovery platform built with Flutter. It combines real-time data from TMDB with a premium glassmorphic UI to provide an immersive browsing experience for both Movies and TV Shows.
