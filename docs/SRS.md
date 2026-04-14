@@ -44,18 +44,18 @@ App --> Hive[Hive Cache]
 
 ---
 
-### FR2: Movie Retrieval
+### FR2: Media Retrieval
 
 * System shall fetch:
 
-  * Trending movies
-  * Popular movies
+  * Trending media
+  * Popular media
   * Search results
 * Data shall be displayed in list/grid format
 
 ---
 
-### FR3: Movie Details Display
+### FR3: Media Details Display
 
 * System shall display:
 
@@ -72,7 +72,7 @@ App --> Hive[Hive Cache]
 
 * Users shall:
 
-  * Add/remove movies
+  * Add/remove media
   * Mark as watched/unwatched
 * Data shall be stored in backend
 
@@ -82,9 +82,9 @@ App --> Hive[Hive Cache]
 
 * System shall:
 
-  * Analyze user preferences
+  * Analyze user preferences (Genre frequency)
   * Fetch recommendations via TMDB
-  * Display personalized content
+  * Display personalized content (For You Dashboard)
 
 ---
 
@@ -148,14 +148,32 @@ App --> Hive[Hive Cache]
 User {
   "userId": "string",
   "email": "string",
-  "preferences": ["genreIds"],
+  "displayName": "string",
+  "photoUrl": "string",
+  "bio": "string",
+  "preferences": {
+    "favGenres": ["int"],
+    "lastInteractedMediaId": "int"
+  },
   "watchlist": [
     {
-      "movieId": "int",
-      "watched": "boolean",
+      "mediaId": "int",
+      "type": "string",
       "addedAt": "timestamp"
     }
   ]
+}
+
+Media {
+  "id": "int",
+  "title": "string",
+  "overview": "string",
+  "posterPath": "string",
+  "backdropPath": "string",
+  "voteAverage": "double",
+  "releaseDate": "string",
+  "isMovie": "boolean",
+  "genreIds": ["int"]
 }
 ```
 

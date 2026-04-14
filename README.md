@@ -1,16 +1,18 @@
 # 🎬 Movie Verse
 
-**Movie Verse** is a high-performance, cinematic movie discovery platform built with Flutter. It combines real-time data from TMDB with a premium glassmorphic UI to provide an immersive browsing experience.
+**Movie Verse** is a high-performance, cinematic media discovery platform built with Flutter. It combines real-time data from TMDB with a premium glassmorphic UI to provide an immersive browsing experience for both Movies and TV Shows.
 
 ---
 
 ## 🌟 Key Features
 
-- **Premium Discovery**: Explore trending, popular, and top-rated movies/TV shows with a high-impact, glassmorphic UI.
+- **Premium Discovery**: Explore trending, popular, and top-rated media with a high-impact, glassmorphic UI.
 - **Firebase Authentication**: Secure user accounts with Email/Password and Google Sign-In integration.
+- **Profile Management**: Personalize your profile with custom bios and profile pictures (Cloud Persisted).
+- **Intelligent Recommendations**: Dedicated "For You" dashboard that suggests content based on your watchlist and preferences.
 - **Advanced Filtering**: Discover content by Genre, Country, Year, and Rating using a unified filtering engine.
 - **Unified Media Search**: Fast, real-time search across the entire TMDB database.
-- **Movie Details Navigation**: Tap Similar Content to jump to that title’s details seamlessly.
+- **Media Details Navigation**: Tap Similar Content to jump to that title’s details seamlessly.
 - **Clean Architecture**: Built using a modular GetX-based architecture for scalability and maintainability.
 
 ---

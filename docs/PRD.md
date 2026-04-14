@@ -48,15 +48,15 @@ To create a **personalized movie discovery ecosystem** that combines:
 
 ## 5. Key Features
 
-### 🔍 5.1 Movie Discovery
+### 🔍 5.1 Media Discovery
 
-* Trending, Popular, Top Rated movies
+* Trending, Popular, Top Rated content
 * Search functionality
 * Category-based browsing
 
 ---
 
-### 🎬 5.2 Movie Details
+### 🎬 5.2 Media Details
 
 * Poster & backdrop
 * Rating & genres
@@ -68,7 +68,7 @@ To create a **personalized movie discovery ecosystem** that combines:
 
 ### ❤️ 5.3 Watchlist Management
 
-* Add/remove movies
+* Add/remove media
 * Mark as watched/unwatched
 * Persistent storage (cloud backend)
 
@@ -89,16 +89,17 @@ To create a **personalized movie discovery ecosystem** that combines:
 
 ---
 
-### 🔐 5.5 Authentication
+### 🔐 5.5 Authentication & Profile
 
 * Email/password login
 * Optional OAuth (Google)
+* **Profile Management**: Custom bio and profile picture (Cloud Persisted).
 
 ---
 
 ### 💾 5.6 Offline Caching
 
-* Cache movie lists
+* Cache media lists
 * Store recent searches
 * Improve performance
 
@@ -110,8 +111,8 @@ To create a **personalized movie discovery ecosystem** that combines:
 graph TD
 User --> Signup/Login --> HomeFeed
 HomeFeed --> Browse/Search
-Browse/Search --> ViewMovieDetails
-ViewMovieDetails --> AddToWatchlist
+Browse/Search --> ViewMediaDetails
+ViewMediaDetails --> AddToWatchlist
 AddToWatchlist --> GetRecommendations
 ```
 
@@ -124,9 +125,10 @@ AddToWatchlist --> GetRecommendations
 * TMDB API integration
 * Home (Trending/Popular)
 * Search
-* Movie details
+* Media details
 * Watchlist (local + backend)
-* Basic recommendation system
+* Basic recommendation system (Similar Content)
+* Profile Management (Phase 1)
 
 ### ❌ Excluded (Future Scope)
 
@@ -143,3 +145,22 @@ AddToWatchlist --> GetRecommendations
 | API rate limits    | Implement caching (Hive) |
 | Slow network       | Loading states + retry   |
 | Data inconsistency | Sync logic with backend  |
+
+---
+
+## 9. Project Roadmap
+
+### 📦 Phase 1: Cloud Synergy [COMPLETED]
+* Real-time Watchlist persistence via Firestore.
+* Profile Management (Bio, Photo stub).
+* Unified Media Architecture.
+
+### 🚀 Phase 2: Intelligent Discovery [IN PROGRESS]
+* Dedicated "For You" Recommendations Dashboard.
+* Global Bottom Navigation System.
+* Advanced Genre-based Preference Engine.
+
+### 🎭 Phase 3: Immersive Experience [UPCOMING]
+* Enhanced Trailer Player features.
+* Social Sharing integrations.
+
