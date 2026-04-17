@@ -30,6 +30,8 @@ class SplashController extends GetxController {
       return;
     }
 
-    Get.offAllNamed(AppRoutes.auth);
+    // If onboarding is done, take them to Home (Guest Mode)
+    // AuthController will handle the authenticated state redirect if needed.
+    Get.offAllNamed(AppRoutes.home);
   }
 }

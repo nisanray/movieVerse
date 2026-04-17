@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../../domain/entities/user_entity.dart';
@@ -26,6 +27,11 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<void> updateProfile(UserEntity user) async {
+    if (kDebugMode) {
+      debugPrint('DEBUG: UserRepositoryImpl.updateProfile called for ${user.uid}');
+      debugPrint('DEBUG: Data to save: name=${user.displayName}, bio=${user.bio}');
+    }
+    
     final model = UserModel(
       uid: user.uid,
       email: user.email,
@@ -38,6 +44,10 @@ class UserRepositoryImpl implements UserRepository {
         .collection(_collection)
         .doc(user.uid)
         .set(model.toFirestore(), SetOptions(merge: true));
+
+    if (kDebugMode) {
+      debugPrint('DEBUG: Firestore save completed for ${user.uid}');
+    }
   }
 
   @override

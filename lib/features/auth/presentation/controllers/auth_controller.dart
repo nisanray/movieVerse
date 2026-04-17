@@ -27,20 +27,27 @@ class AuthController extends GetxController {
   }
 
   void _handleAuthRedirect(UserEntity? user) {
-    // 1. Check Auth State first (Implicit onboarding completion)
+    // 1. If user is authenticated, always take them home
     if (user != null) {
       _storageService.setOnboardingCompleted(true);
       Get.offAllNamed(AppRoutes.home);
       return;
     }
 
-    // 2. Check Explicit Onboarding Flag
+    // 2. If user is NOT authenticated, check onboarding
     if (!_storageService.isOnboardingCompleted()) {
       Get.offAllNamed(AppRoutes.onboarding);
       return;
     }
     
-    Get.offAllNamed(AppRoutes.auth);
+    // 3. If onboarding is complete, they can stay as Guests.
+    // We only force a redirect if they are currently on a restricted page 
+    // or if we're initializing and they aren't anywhere yet.
+    // For now, if they are null and onboarding is done, let them land on Home.
+    // IMPORTANT: Don't redirect if they are already on the Auth page!
+    if (Get.currentRoute != AppRoutes.auth && Get.currentRoute != AppRoutes.forgotPassword) {
+      Get.offAllNamed(AppRoutes.home);
+    }
   }
 
   Future<void> login(String email, String password) async {

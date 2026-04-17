@@ -70,26 +70,27 @@ class ProfilePage extends GetView<ProfileController> {
                         Stack(
                           children: [
                             _buildAvatar(),
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: GestureDetector(
-                                onTap: () => Get.toNamed(AppRoutes.profileManagement),
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.red,
-                                    shape: BoxShape.circle,
+                            if (controller.user != null)
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: GestureDetector(
+                                  onTap: () => Get.toNamed(AppRoutes.profileManagement),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.red,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(Icons.edit_rounded, color: Colors.white, size: 16),
                                   ),
-                                  child: const Icon(Icons.edit_rounded, color: Colors.white, size: 16),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                         const SizedBox(height: 20),
                         Obx(() => Text(
-                          controller.user?.displayName ?? 'Movie Enthusiast',
+                          controller.user?.displayName ?? 'Movie Guest',
                           style: GoogleFonts.poppins(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -97,7 +98,7 @@ class ProfilePage extends GetView<ProfileController> {
                           ),
                         )),
                         Obx(() => Text(
-                          controller.user?.email ?? 'explore@movieverse.com',
+                          controller.user?.email ?? 'Join the community to sync data',
                           style: GoogleFonts.poppins(
                             fontSize: 14,
                             color: Colors.white60,
@@ -107,7 +108,7 @@ class ProfilePage extends GetView<ProfileController> {
                         Obx(() => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 40),
                           child: Text(
-                            controller.user?.bio ?? 'Passionate about cinema and storytelling.',
+                            controller.user?.bio ?? 'Sign in to unlock personalized features and save your progress.',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                               fontSize: 13,
@@ -239,23 +240,30 @@ class ProfilePage extends GetView<ProfileController> {
   }
 
   Widget _buildLogoutButton() {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton.icon(
-        onPressed: () => controller.logout(),
-        icon: const Icon(Icons.logout_rounded),
-        label: const Text('SIGN OUT'),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white.withOpacity(0.05),
-          foregroundColor: Colors.red,
-          padding: const EdgeInsets.symmetric(vertical: 18),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: const BorderSide(color: Colors.red, width: 0.5),
+    return Obx(() {
+      final isGuest = controller.user == null;
+      return SizedBox(
+        width: double.infinity,
+        child: ElevatedButton.icon(
+          onPressed: () => isGuest ? controller.goToSignIn() : controller.logout(),
+          icon: Icon(isGuest ? Icons.login_rounded : Icons.logout_rounded),
+          label: Text(isGuest ? 'SIGN IN' : 'SIGN OUT'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: isGuest ? Colors.red : Colors.white.withOpacity(0.05),
+            foregroundColor: isGuest ? Colors.white : Colors.red,
+            padding: const EdgeInsets.symmetric(vertical: 18),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: BorderSide(
+                color: isGuest ? Colors.transparent : Colors.red,
+                width: 0.5,
+              ),
+            ),
+            elevation: isGuest ? 8 : 0,
+            shadowColor: isGuest ? Colors.red.withOpacity(0.4) : Colors.transparent,
           ),
-          elevation: 0,
         ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as getx;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -26,10 +27,12 @@ class ApiClient extends getx.GetxService {
     );
 
     /// Logging interceptor helps in debugging API requests and responses in development.
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    if (kDebugMode) {
+      dio.interceptors.add(LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+      ));
+    }
 
     return this;
   }

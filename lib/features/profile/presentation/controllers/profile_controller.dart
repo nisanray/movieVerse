@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart';
 import '../../../auth/domain/entities/user_entity.dart';
 import '../../../auth/domain/repositories/user_repository.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../../../core/utils/snackbar_utils.dart';
+import '../../../../core/navigation/app_routes.dart';
 
 class ProfileController extends GetxController {
   final AuthController _authController = Get.find<AuthController>();
@@ -25,9 +27,37 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // Reactively listen to user auth changes
+    // This handles the transition from Guest to Signed-in automatically
+    ever(_authController.user, (_) => _listenToProfileChanges());
+    _listenToProfileChanges(); // Initial check
+  }
+
+  void _listenToProfileChanges() {
     final currentUser = _authController.user.value;
+    if (kDebugMode) {
+      debugPrint('DEBUG: _listenToProfileChanges called. User: ${currentUser?.uid}');
+    }
+
     if (currentUser != null) {
-      profileData.bindStream(_userRepository.getUserProfile(currentUser.uid));
+      // Bind the observable to the Firestore stream for this user
+      if (kDebugMode) {
+        debugPrint('DEBUG: Binding Profile Stream for ${currentUser.uid}');
+      }
+      profileData.bindStream(
+        _userRepository.getUserProfile(currentUser.uid).map((data) {
+          if (kDebugMode) {
+            debugPrint('DEBUG: Profile Stream emitted: ${data?.displayName}, bio: ${data?.bio}');
+          }
+          return data;
+        }),
+      );
+    } else {
+      // Clear local profile data if user logs out or is a guest
+      if (kDebugMode) {
+        debugPrint('DEBUG: Clearing profile data (Guest/Logout)');
+      }
+      profileData.value = null;
     }
   }
 
@@ -91,5 +121,9 @@ class ProfileController extends GetxController {
 
   Future<void> logout() async {
     await _authController.logout();
+  }
+
+  void goToSignIn() {
+    Get.toNamed(AppRoutes.auth);
   }
 }
