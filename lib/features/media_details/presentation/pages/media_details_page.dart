@@ -217,6 +217,31 @@ class MediaDetailsPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Content Type Indicator
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: details.isMovie ? Colors.red : Colors.blue,
+            borderRadius: BorderRadius.circular(6),
+            boxShadow: [
+              BoxShadow(
+                color: (details.isMovie ? Colors.red : Colors.blue).withOpacity(0.3),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Text(
+            details.isMovie ? 'MOVIE' : 'TV SHOW',
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1,
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
         if (details.tagline != null && details.tagline!.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(bottom: 8),

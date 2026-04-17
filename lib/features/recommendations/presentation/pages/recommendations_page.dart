@@ -151,13 +151,17 @@ class RecommendationsPage extends GetView<RecommendationsController> {
           children: [
             Icon(icon, color: Colors.red, size: 20),
             const SizedBox(width: 12),
-            Text(
-              title.toUpperCase(),
-              style: GoogleFonts.poppins(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.white70,
-                letterSpacing: 1.2,
+            Expanded(
+              child: Text(
+                title.toUpperCase(),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white70,
+                  letterSpacing: 1.2,
+                ),
               ),
             ),
           ],

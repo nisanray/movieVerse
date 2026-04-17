@@ -17,8 +17,22 @@ class ProfileController extends GetxController {
   final RxBool isEditMode = false.obs;
   final Rx<UserEntity?> profileData = Rx<UserEntity?>(null);
 
-  // Use the user from AuthController as fallback
-  UserEntity? get user => profileData.value ?? _authController.user.value;
+  // Smart merge: Prioritize Firestore data but fallback to Auth data for missing fields
+  UserEntity? get user {
+    final firestoreUser = profileData.value;
+    final authUser = _authController.user.value;
+
+    if (firestoreUser == null) return authUser;
+    if (authUser == null) return firestoreUser;
+
+    return UserEntity(
+      uid: authUser.uid,
+      email: firestoreUser.email ?? authUser.email,
+      displayName: firestoreUser.displayName ?? authUser.displayName,
+      photoUrl: firestoreUser.photoUrl ?? authUser.photoUrl,
+      bio: firestoreUser.bio,
+    );
+  }
 
   void toggleEditMode() {
     isEditMode.value = !isEditMode.value;
