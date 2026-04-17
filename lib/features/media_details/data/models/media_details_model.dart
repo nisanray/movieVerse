@@ -15,6 +15,7 @@ class MediaDetailsModel extends MediaDetails {
     required super.cast,
     required super.videos,
     required super.isMovie,
+    required super.genreIds,
     super.numberOfSeasons,
     super.numberOfEpisodes,
     super.tagline,
@@ -27,6 +28,8 @@ class MediaDetailsModel extends MediaDetails {
     List<VideoModel> videos = const [],
     required bool isMovie,
   }) {
+    final genreList = (json['genres'] as List?) ?? [];
+    
     return MediaDetailsModel(
       id: json['id'] ?? 0,
       title: (isMovie ? json['title'] : json['name']) ?? '',
@@ -36,10 +39,8 @@ class MediaDetailsModel extends MediaDetails {
       voteAverage: (json['vote_average'] as num?)?.toDouble() ?? 0.0,
       releaseDate: (isMovie ? json['release_date'] : json['first_air_date']) ?? '',
       runtime: isMovie ? (json['runtime'] ?? 0) : (json['episode_run_time'] != null && (json['episode_run_time'] as List).isNotEmpty ? json['episode_run_time'][0] : 0),
-      genres: (json['genres'] as List?)
-              ?.map((g) => g['name'] as String)
-              .toList() ??
-          [],
+      genres: genreList.map((g) => g['name'] as String).toList(),
+      genreIds: genreList.map((g) => g['id'] as int).toList(),
       cast: cast,
       videos: videos,
       isMovie: isMovie,

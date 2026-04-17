@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:marquee/marquee.dart';
 import '../controllers/recommendations_controller.dart';
 import '../../../media_discovery/presentation/widgets/media_card.dart';
 
@@ -36,11 +37,13 @@ class RecommendationsPage extends GetView<RecommendationsController> {
                   _buildHeader(),
 
                   // Section 1: Personalized Picks
-                  const SliverToBoxAdapter(child: SizedBox(height: 24)),
-                  _buildSectionTitle(
-                    'Personalized Picks',
-                    Icons.auto_awesome_rounded,
-                  ),
+                  if (data?['personalized']?.isNotEmpty ?? false) ...[
+                    const SliverToBoxAdapter(child: SizedBox(height: 24)),
+                    _buildSectionTitle(
+                      'Personalized Picks',
+                      Icons.auto_awesome_rounded,
+                    ),
+                  ],
                   SliverPadding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 20,
@@ -72,6 +75,7 @@ class RecommendationsPage extends GetView<RecommendationsController> {
                     _buildSectionTitle(
                       'Because you liked ${controller.baseMediaTitle.value}',
                       Icons.favorite_rounded,
+                      isMarquee: true,
                     ),
                     SliverToBoxAdapter(
                       child: SizedBox(
@@ -143,7 +147,7 @@ class RecommendationsPage extends GetView<RecommendationsController> {
     );
   }
 
-  Widget _buildSectionTitle(String title, IconData icon) {
+  Widget _buildSectionTitle(String title, IconData icon, {bool isMarquee = false}) {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -152,16 +156,39 @@ class RecommendationsPage extends GetView<RecommendationsController> {
             Icon(icon, color: Colors.red, size: 20),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(
-                title.toUpperCase(),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white70,
-                  letterSpacing: 1.2,
-                ),
+              child: SizedBox(
+                height: 24,
+                child: isMarquee 
+                  ? Marquee(
+                      text: title.toUpperCase(),
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white70,
+                        letterSpacing: 1.2,
+                      ),
+                      scrollAxis: Axis.horizontal,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      blankSpace: 50.0,
+                      velocity: 30.0,
+                      pauseAfterRound: const Duration(seconds: 3),
+                      startPadding: 0.0,
+                      accelerationDuration: const Duration(seconds: 1),
+                      accelerationCurve: Curves.linear,
+                      decelerationDuration: const Duration(milliseconds: 500),
+                      decelerationCurve: Curves.easeOut,
+                    )
+                  : Text(
+                      title.toUpperCase(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white70,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
               ),
             ),
           ],

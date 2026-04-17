@@ -47,6 +47,7 @@ class MediaDetails {
   final List<Cast> cast;
   final List<Video> videos;
   final bool isMovie;
+  final List<int> genreIds; // Added to support recommendations
   final int? numberOfSeasons;
   final int? numberOfEpisodes;
   final String? tagline;
@@ -65,6 +66,7 @@ class MediaDetails {
     required this.cast,
     required this.videos,
     required this.isMovie,
+    this.genreIds = const [],
     this.numberOfSeasons,
     this.numberOfEpisodes,
     this.tagline,
@@ -85,6 +87,7 @@ class MediaDetails {
       voteAverage: voteAverage,
       releaseDate: releaseDate,
       isMovie: isMovie,
+      genreIds: genreIds,
     );
   }
 }
