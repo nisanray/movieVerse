@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:marquee/marquee.dart';
 import '../controllers/recommendations_controller.dart';
 import '../../../media_discovery/presentation/widgets/media_card.dart';
+import 'recommendations_list_page.dart';
 
 class RecommendationsPage extends GetView<RecommendationsController> {
   const RecommendationsPage({super.key});
@@ -42,6 +42,20 @@ class RecommendationsPage extends GetView<RecommendationsController> {
                     _buildSectionTitle(
                       'Personalized Picks',
                       Icons.auto_awesome_rounded,
+                      action: TextButton(
+                        onPressed: () => Get.to(() => RecommendationsListPage(
+                              title: 'Personalized Picks',
+                              items: data!['personalized']!,
+                            )),
+                        child: Text(
+                          'SEE ALL',
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                   SliverPadding(
@@ -52,20 +66,22 @@ class RecommendationsPage extends GetView<RecommendationsController> {
                     sliver: SliverGrid(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.7,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                          ),
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.7,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                      ),
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
                           final media = data!['personalized']![index];
                           return MediaCard(media: media)
                               .animate()
                               .fadeIn(delay: (index * 50).ms)
-                              .scale(begin: Offset(0.9, 0.9));
+                              .scale(begin: const Offset(0.9, 0.9));
                         },
-                        childCount: data?['personalized']?.take(6).length ?? 0,
+                        childCount: data!['personalized']!.length > 4
+                            ? 4
+                            : data!['personalized']!.length,
                       ),
                     ),
                   ),
@@ -76,20 +92,42 @@ class RecommendationsPage extends GetView<RecommendationsController> {
                       'Because you liked ${controller.baseMediaTitle.value}',
                       Icons.favorite_rounded,
                       isMarquee: true,
-                    ),
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 240,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 16,
+                      action: TextButton(
+                        onPressed: () => Get.to(() => RecommendationsListPage(
+                              title:
+                                  'Because you liked ${controller.baseMediaTitle.value}',
+                              items: data!['similar']!,
+                            )),
+                        child: Text(
+                          'SEE ALL',
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.redAccent,
                           ),
-                          itemCount: data?['similar']?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            return MediaCard(media: data!['similar']![index]);
+                        ),
+                      ),
+                    ),
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
+                      sliver: SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.7,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                        ),
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            return MediaCard(media: data['similar']![index]);
                           },
+                          childCount: data['similar']!.length > 4
+                              ? 4
+                              : data['similar']!.length,
                         ),
                       ),
                     ),
@@ -147,50 +185,68 @@ class RecommendationsPage extends GetView<RecommendationsController> {
     );
   }
 
-  Widget _buildSectionTitle(String title, IconData icon, {bool isMarquee = false}) {
+  Widget _buildSectionTitle(String title, IconData icon, {bool isMarquee = false, Widget? action}) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        padding: const EdgeInsets.only(left: 24, right: 12, top: 24, bottom: 8),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(icon, color: Colors.red, size: 20),
+            Icon(icon, color: Colors.red, size: 18),
             const SizedBox(width: 12),
             Expanded(
-              child: SizedBox(
-                height: 24,
-                child: isMarquee 
-                  ? Marquee(
-                      text: title.toUpperCase(),
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white70,
-                        letterSpacing: 1.2,
-                      ),
-                      scrollAxis: Axis.horizontal,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      blankSpace: 50.0,
-                      velocity: 30.0,
-                      pauseAfterRound: const Duration(seconds: 3),
-                      startPadding: 0.0,
-                      accelerationDuration: const Duration(seconds: 1),
-                      accelerationCurve: Curves.linear,
-                      decelerationDuration: const Duration(milliseconds: 500),
-                      decelerationCurve: Curves.easeOut,
-                    )
-                  : Text(
-                      title.toUpperCase(),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white70,
-                        letterSpacing: 1.2,
-                      ),
-                    ),
+              child: ShaderMask(
+                shaderCallback: (rect) {
+                  return const LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [Colors.black, Colors.black, Colors.transparent],
+                    stops: [0.0, 0.9, 1.0],
+                  ).createShader(rect);
+                },
+                blendMode: BlendMode.dstIn,
+                child: SizedBox(
+                  height: 24,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: isMarquee
+                        ? Marquee(
+                            text: title.toUpperCase(),
+                            style: GoogleFonts.poppins(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white70,
+                              letterSpacing: 1.2,
+                              height: 1.0,
+                            ),
+                            scrollAxis: Axis.horizontal,
+                            blankSpace: 40.0,
+                            velocity: 30.0,
+                            pauseAfterRound: const Duration(seconds: 3),
+                            startPadding: 0.0,
+                            accelerationDuration: const Duration(seconds: 1),
+                            accelerationCurve: Curves.linear,
+                            decelerationDuration:
+                                const Duration(milliseconds: 500),
+                            decelerationCurve: Curves.easeOut,
+                          )
+                        : Text(
+                            title.toUpperCase(),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: GoogleFonts.poppins(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white70,
+                              letterSpacing: 1.2,
+                              height: 1.0,
+                            ),
+                          ),
+                  ),
+                ),
               ),
             ),
+            if (action != null) action,
           ],
         ),
       ),

@@ -3,6 +3,7 @@ class RatingEntity {
   final int mediaId;
   final String mediaType;
   final double rating;
+  final List<int> genreIds;
   final DateTime updatedAt;
 
   RatingEntity({
@@ -10,6 +11,7 @@ class RatingEntity {
     required this.mediaId,
     required this.mediaType,
     required this.rating,
+    required this.genreIds,
     required this.updatedAt,
   });
 }

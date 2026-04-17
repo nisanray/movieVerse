@@ -285,7 +285,13 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             itemCount: items.length,
             itemBuilder: (context, index) {
-              return MediaCard(media: items[index]);
+              return SizedBox(
+                width: 156, // 140 (card) + 16 (spacing)
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: MediaCard(media: items[index]),
+                ),
+              );
             },
           ),
         ),

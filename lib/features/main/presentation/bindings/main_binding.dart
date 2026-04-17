@@ -8,6 +8,8 @@ import '../../../media_discovery/domain/repositories/media_repository.dart';
 import '../../../recommendations/data/repositories/recommendations_repository_impl.dart';
 import '../../../recommendations/domain/repositories/recommendations_repository.dart';
 import '../../../recommendations/presentation/controllers/recommendations_controller.dart';
+import '../../../ratings/data/repositories/rating_repository_impl.dart';
+import '../../../ratings/domain/repositories/rating_repository.dart';
 import '../../../../core/api/api_client.dart';
 
 class MainBinding extends Bindings {
@@ -33,12 +35,18 @@ class MainBinding extends Bindings {
     );
     Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
 
+    // Ratings (Global)
+    Get.lazyPut<RatingRepository>(() => RatingRepositoryImpl(), fenix: true);
+
     // Recommendations
     Get.lazyPut<RecommendationsRepository>(
       () => RecommendationsRepositoryImpl(Get.find<ApiClient>()),
     );
     Get.lazyPut<RecommendationsController>(
-      () => RecommendationsController(Get.find<RecommendationsRepository>()),
+      () => RecommendationsController(
+        Get.find<RecommendationsRepository>(),
+        Get.find<RatingRepository>(),
+      ),
       fenix: true,
     );
   }

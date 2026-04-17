@@ -38,7 +38,10 @@ class RatingController extends GetxController {
     }
   }
 
-  Future<void> submitRating(double rating) async {
+  Future<void> submitRating({
+    required double rating,
+    required List<int> genreIds,
+  }) async {
     final user = _authController.user.value;
     if (user == null) {
       SnackbarUtils.info(
@@ -55,6 +58,7 @@ class RatingController extends GetxController {
         mediaId: mediaId,
         mediaType: mediaType,
         rating: rating,
+        genreIds: genreIds,
         updatedAt: DateTime.now(),
       );
 

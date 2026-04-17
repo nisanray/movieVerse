@@ -14,6 +14,7 @@ class RatingRepositoryImpl implements RatingRepository {
       mediaId: rating.mediaId,
       mediaType: rating.mediaType,
       rating: rating.rating,
+      genreIds: rating.genreIds,
       updatedAt: DateTime.now(),
     );
 
@@ -35,5 +36,18 @@ class RatingRepositoryImpl implements RatingRepository {
       return RatingModel.fromFirestore(doc.data()!);
     }
     return null;
+  }
+
+  @override
+  Future<List<RatingEntity>> getAllUserRatings(String uid) async {
+    final snapshot = await _firestore
+        .collection(_collection)
+        .where('uid', isEqualTo: uid)
+        .orderBy('updatedAt', descending: true)
+        .get();
+
+    return snapshot.docs
+        .map((doc) => RatingModel.fromFirestore(doc.data()))
+        .toList();
   }
 }

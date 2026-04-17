@@ -48,8 +48,6 @@ class MediaCard extends StatelessWidget {
         }
       },
       child: Container(
-        width: 140,
-        margin: const EdgeInsets.only(right: 16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           boxShadow: [

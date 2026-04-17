@@ -160,7 +160,7 @@ class MediaDetailsPage extends StatelessWidget {
                 const SizedBox(height: 24),
                 _buildInfoChips(details),
                 const SizedBox(height: 16),
-                _buildRatingSection(),
+                _buildRatingSection(details),
                 const SizedBox(height: 16),
                 _buildOverview(details),
                 const SizedBox(height: 32),
@@ -503,7 +503,7 @@ class MediaDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildRatingSection() {
+  Widget _buildRatingSection(MediaDetails details) {
     final ratingController = _findRatingController();
     if (ratingController == null) return const SizedBox.shrink();
 
@@ -511,7 +511,10 @@ class MediaDetailsPage extends StatelessWidget {
           rating: ratingController.currentRating.value,
           isLoading: ratingController.isLoading.value,
           onRatingChanged: (newRating) {
-            ratingController.submitRating(newRating);
+            ratingController.submitRating(
+              rating: newRating,
+              genreIds: details.genreIds,
+            );
           },
         ));
   }
