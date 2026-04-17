@@ -9,4 +9,5 @@ abstract class AppRoutes {
   static const String profileManagement = '/profile/management';
   static const String forgotPassword = '/forgot-password';
   static const String watchlist = '/watchlist';
+  static const String myRatings = '/my-ratings';
 }

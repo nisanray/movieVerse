@@ -9,7 +9,8 @@ import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/profile/presentation/bindings/profile_binding.dart';
 import '../../features/profile/presentation/pages/profile_management_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
-import '../../features/watchlist/presentation/pages/watchlist_page.dart';
+import '../../features/library/presentation/pages/my_library_page.dart';
+import '../../features/library/presentation/bindings/library_binding.dart';
 import '../../features/main/presentation/bindings/main_binding.dart';
 import '../../features/main/presentation/pages/main_page.dart';
 import '../../features/splash/presentation/bindings/splash_binding.dart';
@@ -66,8 +67,15 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.watchlist,
-      page: () => const WatchlistPage(),
+      page: () => const MyLibraryPage(),
+      binding: LibraryBinding(),
       transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.myRatings,
+      page: () => const MyLibraryPage(),
+      binding: LibraryBinding(),
+      transition: Transition.rightToLeftWithFade,
     ),
   ];
 }

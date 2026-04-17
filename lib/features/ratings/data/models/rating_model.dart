@@ -7,6 +7,8 @@ class RatingModel extends RatingEntity {
     required super.mediaType,
     required super.rating,
     required super.genreIds,
+    super.title,
+    super.posterPath,
     required super.updatedAt,
   });
 
@@ -17,6 +19,8 @@ class RatingModel extends RatingEntity {
       'mediaType': mediaType,
       'rating': rating,
       'genreIds': genreIds,
+      'title': title,
+      'posterPath': posterPath,
       'updatedAt': updatedAt.toIso8601String(),
     };
   }
@@ -28,7 +32,10 @@ class RatingModel extends RatingEntity {
       mediaType: json['mediaType'] ?? 'movie',
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       genreIds: List<int>.from(json['genreIds'] ?? []),
-      updatedAt: DateTime.parse(json['updatedAt'] ?? DateTime.now().toIso8601String()),
+      title: json['title'],
+      posterPath: json['posterPath'],
+      updatedAt: DateTime.parse(
+          json['updatedAt'] ?? DateTime.now().toIso8601String()),
     );
   }
 }

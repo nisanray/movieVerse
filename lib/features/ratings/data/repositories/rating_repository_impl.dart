@@ -15,7 +15,9 @@ class RatingRepositoryImpl implements RatingRepository {
       mediaType: rating.mediaType,
       rating: rating.rating,
       genreIds: rating.genreIds,
-      updatedAt: DateTime.now(),
+      title: rating.title,
+      posterPath: rating.posterPath,
+      updatedAt: rating.updatedAt,
     );
 
     // Document ID is a combination of UID and MediaID for unique per-user ratings

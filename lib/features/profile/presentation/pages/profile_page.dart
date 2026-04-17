@@ -132,6 +132,10 @@ class ProfilePage extends GetView<ProfileController> {
                         onTap: () => Get.toNamed(AppRoutes.watchlist),
                         child: _buildGlassTile(Icons.bookmark_outline_rounded, 'My Watchlist'),
                       ),
+                      GestureDetector(
+                        onTap: () => Get.toNamed(AppRoutes.myRatings),
+                        child: _buildGlassTile(Icons.star_outline_rounded, 'My Ratings'),
+                      ),
                       
                       const SizedBox(height: 32),
                       _buildSectionTitle('ACCOUNT'),

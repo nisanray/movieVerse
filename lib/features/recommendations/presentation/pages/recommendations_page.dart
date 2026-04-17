@@ -38,7 +38,6 @@ class RecommendationsPage extends GetView<RecommendationsController> {
 
                   // Section 1: Personalized Picks
                   if (data?['personalized']?.isNotEmpty ?? false) ...[
-                    const SliverToBoxAdapter(child: SizedBox(height: 24)),
                     _buildSectionTitle(
                       'Personalized Picks',
                       Icons.auto_awesome_rounded,
@@ -156,7 +155,7 @@ class RecommendationsPage extends GetView<RecommendationsController> {
   Widget _buildHeader() {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -188,7 +187,7 @@ class RecommendationsPage extends GetView<RecommendationsController> {
   Widget _buildSectionTitle(String title, IconData icon, {bool isMarquee = false, Widget? action}) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.only(left: 24, right: 12, top: 24, bottom: 8),
+        padding: const EdgeInsets.only(left: 24, right: 12, top: 8, bottom: 8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

@@ -514,6 +514,8 @@ class MediaDetailsPage extends StatelessWidget {
             ratingController.submitRating(
               rating: newRating,
               genreIds: details.genreIds,
+              title: details.title,
+              posterPath: details.posterPath,
             );
           },
         ));

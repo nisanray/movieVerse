@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/main_controller.dart';
 import '../../../media_discovery/presentation/pages/media_discovery_page.dart';
-import '../../../watchlist/presentation/pages/watchlist_page.dart';
+import '../../../library/presentation/pages/my_library_page.dart';
 import '../../../profile/presentation/pages/profile_page.dart';
 import '../../../recommendations/presentation/pages/recommendations_page.dart';
 
@@ -15,7 +15,7 @@ class MainPage extends GetView<MainController> {
     final List<Widget> pages = [
       const MediaDiscoveryPage(),
       const RecommendationsPage(),
-      const WatchlistPage(),
+      const MyLibraryPage(),
       const ProfilePage(),
     ];
 
@@ -110,9 +110,9 @@ class MainPage extends GetView<MainController> {
                         label: 'For You',
                       ),
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.bookmark_border_rounded),
-                        activeIcon: Icon(Icons.bookmark_rounded),
-                        label: 'Watchlist',
+                        icon: Icon(Icons.video_library_outlined),
+                        activeIcon: Icon(Icons.video_library_rounded),
+                        label: 'Library',
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.person_outline_rounded),

@@ -10,6 +10,10 @@ import '../../../recommendations/domain/repositories/recommendations_repository.
 import '../../../recommendations/presentation/controllers/recommendations_controller.dart';
 import '../../../ratings/data/repositories/rating_repository_impl.dart';
 import '../../../ratings/domain/repositories/rating_repository.dart';
+import '../../../ratings/presentation/controllers/my_ratings_controller.dart';
+import '../../../watchlist/data/repositories/watchlist_repository_impl.dart';
+import '../../../watchlist/domain/repositories/watchlist_repository.dart';
+import '../../../watchlist/presentation/controllers/watchlist_controller.dart';
 import '../../../../core/api/api_client.dart';
 
 class MainBinding extends Bindings {
@@ -37,6 +41,24 @@ class MainBinding extends Bindings {
 
     // Ratings (Global)
     Get.lazyPut<RatingRepository>(() => RatingRepositoryImpl(), fenix: true);
+    Get.lazyPut(
+      () => MyRatingsController(Get.find<RatingRepository>()),
+      fenix: true,
+    );
+
+    // Watchlist (Global)
+    if (!Get.isRegistered<WatchlistRepository>()) {
+      Get.lazyPut<WatchlistRepository>(
+        () => WatchlistRepositoryImpl(),
+        fenix: true,
+      );
+    }
+    if (!Get.isRegistered<WatchlistController>()) {
+      Get.lazyPut(
+        () => WatchlistController(Get.find<WatchlistRepository>()),
+        fenix: true,
+      );
+    }
 
     // Recommendations
     Get.lazyPut<RecommendationsRepository>(

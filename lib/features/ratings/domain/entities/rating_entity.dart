@@ -4,6 +4,8 @@ class RatingEntity {
   final String mediaType;
   final double rating;
   final List<int> genreIds;
+  final String? title;
+  final String? posterPath;
   final DateTime updatedAt;
 
   RatingEntity({
@@ -12,6 +14,8 @@ class RatingEntity {
     required this.mediaType,
     required this.rating,
     required this.genreIds,
+    this.title,
+    this.posterPath,
     required this.updatedAt,
   });
 }

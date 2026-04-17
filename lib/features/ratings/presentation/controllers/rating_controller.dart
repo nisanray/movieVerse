@@ -41,6 +41,8 @@ class RatingController extends GetxController {
   Future<void> submitRating({
     required double rating,
     required List<int> genreIds,
+    String? title,
+    String? posterPath,
   }) async {
     final user = _authController.user.value;
     if (user == null) {
@@ -59,6 +61,8 @@ class RatingController extends GetxController {
         mediaType: mediaType,
         rating: rating,
         genreIds: genreIds,
+        title: title,
+        posterPath: posterPath,
         updatedAt: DateTime.now(),
       );
 
