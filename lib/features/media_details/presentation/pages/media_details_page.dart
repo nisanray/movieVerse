@@ -11,6 +11,8 @@ import '../../data/datasources/media_details_remote_data_source.dart';
 import '../../data/repositories/media_details_repository_impl.dart';
 import '../../domain/entities/media_details_entities.dart';
 import '../../domain/repositories/media_details_repository.dart';
+import '../../../../features/ratings/presentation/controllers/rating_controller.dart';
+import '../../../../features/ratings/presentation/widgets/star_rating_widget.dart';
 import '../controllers/media_details_controller.dart';
 
 class MediaDetailsPage extends StatelessWidget {
@@ -95,6 +97,20 @@ class MediaDetailsPage extends StatelessWidget {
     }
   }
 
+  /// Safely finds the RatingController using the mediaId from arguments.
+  RatingController? _findRatingController() {
+    final args = Get.arguments as Map<String, dynamic>?;
+    if (args == null) return null;
+    final int? mediaId = args['id'];
+    if (mediaId == null) return null;
+    final String tag = 'media_$mediaId';
+
+    if (Get.isRegistered<RatingController>(tag: tag)) {
+      return Get.find<RatingController>(tag: tag);
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = _findController();
@@ -143,7 +159,9 @@ class MediaDetailsPage extends StatelessWidget {
                 _buildTitleSection(details),
                 const SizedBox(height: 24),
                 _buildInfoChips(details),
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
+                _buildRatingSection(),
+                const SizedBox(height: 16),
                 _buildOverview(details),
                 const SizedBox(height: 32),
                 _buildCastList(details),
@@ -218,30 +236,8 @@ class MediaDetailsPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Content Type Indicator
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          decoration: BoxDecoration(
-            color: details.isMovie ? Colors.red : Colors.blue,
-            borderRadius: BorderRadius.circular(6),
-            boxShadow: [
-              BoxShadow(
-                color: (details.isMovie ? Colors.red : Colors.blue).withOpacity(0.3),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Text(
-            details.isMovie ? 'MOVIE' : 'TV SHOW',
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1,
-            ),
-          ),
-        ),
-        const SizedBox(height: 16),
+        _buildContentTypeIndicator(details),
+        const SizedBox(height: 12),
         if (details.tagline != null && details.tagline!.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
@@ -266,17 +262,27 @@ class MediaDetailsPage extends StatelessWidget {
         const SizedBox(height: 8),
         Row(
           children: [
-            const Icon(Icons.star, color: Colors.amber, size: 20),
+            // TMDB Rating
+            const Icon(Icons.star_rounded, color: Colors.amber, size: 20),
             const SizedBox(width: 4),
             Text(
               details.voteAverage.toStringAsFixed(1),
-              style: const TextStyle(color: Colors.white70, fontSize: 16),
+              style: const TextStyle(
+                color: Colors.white70,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(width: 16),
+            const Text('•', style: TextStyle(color: Colors.white24)),
+            const SizedBox(width: 16),
+            // Release Year
             Text(
               details.releaseDate.split('-').first,
               style: const TextStyle(color: Colors.white70, fontSize: 16),
             ),
+            const SizedBox(width: 16),
+            const Text('•', style: TextStyle(color: Colors.white24)),
             const SizedBox(width: 16),
             _buildStatusChip(details.status ?? ''),
           ],
@@ -469,5 +475,44 @@ class MediaDetailsPage extends StatelessWidget {
         ],
       );
     });
+  }
+
+  Widget _buildContentTypeIndicator(MediaDetails details) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: details.isMovie ? Colors.red : Colors.blue,
+        borderRadius: BorderRadius.circular(6),
+        boxShadow: [
+          BoxShadow(
+            color: (details.isMovie ? Colors.red : Colors.blue).withOpacity(0.3),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Text(
+        details.isMovie ? 'MOVIE' : 'TV SHOW',
+        style: GoogleFonts.poppins(
+          color: Colors.white,
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 1,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRatingSection() {
+    final ratingController = _findRatingController();
+    if (ratingController == null) return const SizedBox.shrink();
+
+    return Obx(() => StarRatingWidget(
+          rating: ratingController.currentRating.value,
+          isLoading: ratingController.isLoading.value,
+          onRatingChanged: (newRating) {
+            ratingController.submitRating(newRating);
+          },
+        ));
   }
 }

@@ -4,6 +4,9 @@ import '../../../../core/api/api_client.dart';
 import '../../data/datasources/media_details_remote_data_source.dart';
 import '../../data/repositories/media_details_repository_impl.dart';
 import '../../domain/repositories/media_details_repository.dart';
+import '../../../../features/ratings/data/repositories/rating_repository_impl.dart';
+import '../../../../features/ratings/domain/repositories/rating_repository.dart';
+import '../../../../features/ratings/presentation/controllers/rating_controller.dart';
 import '../controllers/media_details_controller.dart';
 
 class MediaDetailsBinding extends Bindings {
@@ -51,6 +54,21 @@ class MediaDetailsBinding extends Bindings {
     Get.put(
       MediaDetailsController(
         Get.find<MediaDetailsRepository>(tag: tag),
+        mediaId,
+        mediaType,
+      ),
+      tag: tag,
+    );
+
+    // Setup Rating Controller
+    Get.lazyPut<RatingRepository>(
+      () => RatingRepositoryImpl(),
+      tag: tag,
+    );
+
+    Get.put(
+      RatingController(
+        Get.find<RatingRepository>(tag: tag),
         mediaId,
         mediaType,
       ),
