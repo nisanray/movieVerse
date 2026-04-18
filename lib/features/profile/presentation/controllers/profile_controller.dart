@@ -116,11 +116,6 @@ class ProfileController extends GetxController {
   }
 
   Future<void> pickAndUploadImage() async {
-    SnackbarUtils.info(
-      title: 'Coming Soon',
-      message: 'Profile picture uploads will be available in the next update!',
-    );
-    /* 
     if (user == null) return;
     try {
       final XFile? image = await _picker.pickImage(
@@ -128,9 +123,34 @@ class ProfileController extends GetxController {
         imageQuality: 70,
         maxWidth: 512,
       );
-      // ... rest of the code is already commented out
-    } catch (e) { ... }
-    */
+      
+      if (image == null) return;
+
+      isLoading.value = true;
+      final file = File(image.path);
+      
+      // Upload to Firebase Storage
+      final downloadUrl = await _userRepository.uploadProfilePicture(user!.uid, file);
+      
+      // Update Firestore user document
+      final updatedUser = UserEntity(
+        uid: user!.uid,
+        email: user!.email,
+        displayName: user!.displayName,
+        photoUrl: downloadUrl,
+        bio: user!.bio,
+      );
+      await _userRepository.updateProfile(updatedUser);
+      
+      SnackbarUtils.success(title: 'Success', message: 'Profile picture updated!');
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint('Error uploading profile picture: $e');
+      }
+      SnackbarUtils.error(title: 'Error', message: 'Failed to upload profile picture');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<void> logout() async {
