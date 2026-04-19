@@ -434,28 +434,7 @@ class MediaDetailsPage extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.fullscreen,
-                      color: Colors.white70,
-                      size: 20,
-                    ),
-                    onPressed: controller.toggleFullScreen,
-                    tooltip: 'Full Screen',
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.picture_in_picture_alt,
-                      color: Colors.white70,
-                      size: 20,
-                    ),
-                    onPressed: controller.togglePiP,
-                    tooltip: 'Picture in Picture',
-                  ),
-                ],
-              ),
+              const SizedBox.shrink(),
             ],
           ),
           const SizedBox(height: 16),
@@ -495,13 +474,11 @@ class MediaDetailsPage extends StatelessWidget {
                   },
                 ),
                 const SizedBox(width: 8),
-                const Expanded(
-                  child: ProgressBar(
-                    isExpanded: true,
-                    colors: ProgressBarColors(
-                      playedColor: Colors.red,
-                      handleColor: Colors.red,
-                    ),
+                ProgressBar(
+                  isExpanded: true,
+                  colors: ProgressBarColors(
+                    playedColor: Colors.red,
+                    handleColor: Colors.red,
                   ),
                 ),
                 const SizedBox(width: 8),

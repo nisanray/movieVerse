@@ -29,12 +29,6 @@ class MediaDetailsController extends GetxController
   /// Currently selected video index.
   final RxInt currentVideoIndex = 0.obs;
 
-  /// Observable for fullscreen mode.
-  final RxBool isFullScreen = false.obs;
-
-  /// Observable for picture-in-picture mode.
-  final RxBool isPiPMode = false.obs;
-
   @override
   void onInit() {
     super.onInit();
@@ -84,6 +78,7 @@ class MediaDetailsController extends GetxController
         autoPlay: false,
         mute: false,
         enableCaption: true,
+        forceHD: true,
       ),
     );
     isTrailerReady.value = true;
@@ -95,16 +90,6 @@ class MediaDetailsController extends GetxController
       currentVideoIndex.value = index;
       _initializePlayer(allVideos[index].key);
     }
-  }
-
-  /// Toggles fullscreen mode.
-  void toggleFullScreen() {
-    isFullScreen.value = !isFullScreen.value;
-  }
-
-  /// Toggles picture-in-picture mode.
-  void togglePiP() {
-    isPiPMode.value = !isPiPMode.value;
   }
 
   @override
