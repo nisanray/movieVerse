@@ -15,12 +15,29 @@ class AiScoutController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Add initial greeting
-    messages.add(AiMessageEntity(
-      text: "Hello! I am your AI Movie Scout. Tell me what kind of movies or shows you're in the mood for, and I'll find the perfect match for you!",
-      isUser: false,
-      timestamp: DateTime.now(),
-    ));
+    _loadHistory();
+  }
+
+  Future<void> _loadHistory() async {
+    isLoading.value = true;
+    try {
+      final history = await _repository.getHistory();
+      if (history.isNotEmpty) {
+        messages.addAll(history);
+      } else {
+        // Add initial greeting if first time
+        messages.add(AiMessageEntity(
+          text: "Hello! I am your AI Movie Scout. Tell me what kind of movies or shows you're in the mood for, and I'll find the perfect match for you!",
+          isUser: false,
+          timestamp: DateTime.now(),
+        ));
+      }
+      _scrollToBottom();
+    } catch (e) {
+      debugPrint('Error loading chat history: $e');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<void> sendMessage() async {
@@ -42,6 +59,9 @@ class AiScoutController extends GetxController {
 
     debugPrint('Controller: Attempting to send message: $text');
     try {
+      // Save user message to persistent storage
+      await _repository.saveMessage(userMessage);
+
       final response = await _repository.getAiResponse(text, messages);
       debugPrint('Controller: Response received from repository');
       messages.add(response);
@@ -50,7 +70,7 @@ class AiScoutController extends GetxController {
       debugPrint('Controller: Error caught in sendMessage: $e');
       SnackbarUtils.error(
         title: 'Error',
-        message: 'Could not reach Movie Scout. Please check your connection or API key.',
+        message: 'Could not reach Movie Scout. Please check your connection.',
       );
       // Remove the last user message or add an error message? 
       // Let's add an error message for clarity
@@ -63,6 +83,16 @@ class AiScoutController extends GetxController {
       isLoading.value = false;
       debugPrint('Controller: Message processing finished');
     }
+  }
+
+  Future<void> clearChat() async {
+    await _repository.clearHistory();
+    messages.clear();
+    messages.add(AiMessageEntity(
+      text: "Chat history cleared. How can I help you discover something new today?",
+      isUser: false,
+      timestamp: DateTime.now(),
+    ));
   }
 
   void _scrollToBottom() {

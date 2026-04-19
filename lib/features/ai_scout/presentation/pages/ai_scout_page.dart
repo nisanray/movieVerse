@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../controllers/ai_scout_controller.dart';
 import '../../domain/entities/ai_message_entity.dart';
 
@@ -87,32 +89,63 @@ class AiScoutPage extends GetView<AiScoutController> {
                 child: const Icon(Icons.auto_awesome_rounded, color: Colors.red, size: 20),
               ),
               const SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'MOVIE SCOUT',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.white,
-                      letterSpacing: 1.2,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'MOVIE SCOUT',
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.white,
+                        letterSpacing: 1.2,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'AI Intelligence',
-                    style: GoogleFonts.poppins(
-                      fontSize: 10,
-                      color: Colors.red,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1,
+                    Text(
+                      'AI Intelligence',
+                      style: GoogleFonts.poppins(
+                        fontSize: 10,
+                        color: Colors.red,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.delete_sweep_rounded, color: Colors.white.withOpacity(0.5)),
+                onPressed: () => _showClearDialog(),
+                tooltip: 'Clear History',
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _showClearDialog() {
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: const Color(0xFF1A1A2E),
+        title: Text('Clear History?', style: GoogleFonts.poppins(color: Colors.white)),
+        content: Text('This will permanently delete your chat history with the Scout.', 
+          style: GoogleFonts.poppins(color: Colors.white70)),
+        actions: [
+          TextButton(
+            child: Text('Cancel', style: GoogleFonts.poppins(color: Colors.white)),
+            onPressed: () => Get.back(),
+          ),
+          TextButton(
+            child: Text('Clear', style: GoogleFonts.poppins(color: Colors.red)),
+            onPressed: () {
+              controller.clearChat();
+              Get.back();
+            },
+          ),
+        ],
       ),
     );
   }
@@ -142,14 +175,32 @@ class AiScoutPage extends GetView<AiScoutController> {
               : Colors.white.withOpacity(0.1),
           ),
         ),
-        child: Text(
-          message.text,
-          style: GoogleFonts.poppins(
-            color: Colors.white,
-            fontSize: 14,
-            height: 1.5,
-          ),
-        ),
+        child: isUser 
+          ? Text(
+              message.text,
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 14,
+                height: 1.5,
+              ),
+            )
+          : MarkdownBody(
+              data: message.text,
+              selectable: true,
+              styleSheet: MarkdownStyleSheet(
+                p: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: 14,
+                  height: 1.5,
+                ),
+                strong: GoogleFonts.poppins(
+                  color: Colors.redAccent,
+                  fontWeight: FontWeight.bold,
+                ),
+                listBullet: GoogleFonts.poppins(color: Colors.red),
+                em: const TextStyle(fontStyle: FontStyle.italic, color: Colors.white70),
+              ),
+            ),
       ).animate().fadeIn(duration: 400.ms).slideX(begin: isUser ? 0.2 : -0.2, end: 0),
     );
   }
@@ -157,26 +208,34 @@ class AiScoutPage extends GetView<AiScoutController> {
   Widget _buildLoadingIndicator() {
     return Obx(() => controller.isLoading.value 
       ? Padding(
-          padding: const EdgeInsets.only(left: 20, bottom: 12),
+          padding: const EdgeInsets.only(left: 16, bottom: 16),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.05),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(4),
+                  bottomRight: Radius.circular(20),
+                ),
+                border: Border.all(color: Colors.white.withOpacity(0.1)),
               ),
               child: const SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
+                width: 40,
+                child: SpinKitThreeBounce(
                   color: Colors.red,
+                  size: 10,
                 ),
               ),
-            ),
+            )
+            .animate()
+            .fadeIn()
+            .shimmer(color: Colors.red.withOpacity(0.2), duration: const Duration(seconds: 2)),
           ),
-        ).animate().fadeIn()
+        )
       : const SizedBox.shrink()
     );
   }
