@@ -15,6 +15,7 @@ import '../../features/main/presentation/bindings/main_binding.dart';
 import '../../features/main/presentation/pages/main_page.dart';
 import '../../features/splash/presentation/bindings/splash_binding.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
+import '../../features/recommendations/presentation/bindings/recommendations_binding.dart';
 import '../../features/ai_scout/presentation/bindings/ai_scout_binding.dart';
 import '../../features/ai_scout/presentation/pages/ai_scout_page.dart';
 import 'app_routes.dart';
@@ -41,7 +42,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.mediaDetails,
       page: () => const MediaDetailsPage(),
-      binding: MediaDetailsBinding(),
+      bindings: [
+        MediaDetailsBinding(),
+        RecommendationsBinding(),
+      ],
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(

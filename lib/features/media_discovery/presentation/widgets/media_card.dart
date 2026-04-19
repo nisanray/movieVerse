@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/navigation/app_routes.dart';
 import '../../domain/entities/media.dart';
+import '../../../recommendations/presentation/controllers/recommendations_controller.dart';
 
 class MediaCard extends StatelessWidget {
   final Media media;
@@ -146,6 +149,43 @@ class MediaCard extends StatelessWidget {
                   ],
                 ),
               ),
+              // Personal Match % Badge
+              if (Get.isRegistered<RecommendationsController>())
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: GetBuilder<RecommendationsController>(
+                    builder: (recController) {
+                      final match = recController.getMatchPercentage(media);
+                      return Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Colors.greenAccent.withOpacity(0.5),
+                            width: 1,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.greenAccent.withOpacity(0.2),
+                              blurRadius: 4,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          '$match% Match',
+                          style: GoogleFonts.poppins(
+                            color: Colors.greenAccent,
+                            fontSize: 9,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ).animate().fadeIn().scale(delay: 400.ms);
+                    },
+                  ),
+                ),
             ],
           ),
         ),

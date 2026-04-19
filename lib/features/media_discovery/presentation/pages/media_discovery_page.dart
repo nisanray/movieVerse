@@ -10,6 +10,7 @@ import '../widgets/media_card.dart';
 import '../widgets/discovery_header.dart';
 import '../widgets/filter_drawer.dart';
 import '../../domain/entities/media.dart';
+import '../../../recommendations/presentation/controllers/recommendations_controller.dart';
 
 class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
   const MediaDiscoveryPage({super.key});
@@ -46,6 +47,39 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
                 else ...[
                   // Discovery View (Default)
                   SliverToBoxAdapter(child: _buildHeroSection()),
+
+                  // Smart Recommendations Section (New "For You" Hub)
+                  GetBuilder<RecommendationsController>(
+                    init: Get.isRegistered<RecommendationsController>() 
+                        ? Get.find<RecommendationsController>() 
+                        : null,
+                    builder: (recController) {
+                      return recController.obx(
+                        (data) {
+                          if (data == null || data.isEmpty) return const SliverToBoxAdapter(child: SizedBox.shrink());
+                          
+                          return SliverList(
+                            delegate: SliverChildListDelegate([
+                              if (data['personalized']?.isNotEmpty ?? false)
+                                _buildMediaSection(
+                                  title: 'Picks For You',
+                                  items: data['personalized'] ?? [],
+                                ),
+                              if (data['similar']?.isNotEmpty ?? false)
+                                _buildMediaSection(
+                                  title: 'Because you liked ${recController.baseMediaTitle.value}',
+                                  items: data['similar'] ?? [],
+                                ),
+                            ]),
+                          );
+                        },
+                        onLoading: const SliverToBoxAdapter(child: SizedBox.shrink()),
+                        onEmpty: const SliverToBoxAdapter(child: SizedBox.shrink()),
+                        onError: (_) => const SliverToBoxAdapter(child: SizedBox.shrink()),
+                      );
+                    },
+                  ),
+
                   SliverToBoxAdapter(
                     child: _buildMediaSection(
                       title: controller.selectedMediaType.value == 'movie'

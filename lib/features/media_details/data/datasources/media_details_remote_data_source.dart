@@ -47,7 +47,7 @@ class MediaDetailsRemoteDataSourceImpl implements MediaDetailsRemoteDataSource {
 
   @override
   Future<List<MediaModel>> getSimilarMedia(int id, String type) async {
-    final response = await apiClient.getData('/$type/$id/similar');
+    final response = await apiClient.getData('/$type/$id/recommendations');
     
     if (response.data != null && response.data['results'] != null) {
       final List results = response.data['results'];

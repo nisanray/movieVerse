@@ -44,7 +44,7 @@ class RecommendationsPage extends GetView<RecommendationsController> {
                       action: TextButton(
                         onPressed: () => Get.to(() => RecommendationsListPage(
                               title: 'Personalized Picks',
-                              items: data!['personalized']!,
+                              items: data?['personalized'] ?? [],
                             )),
                         child: Text(
                           'SEE ALL',
@@ -72,15 +72,17 @@ class RecommendationsPage extends GetView<RecommendationsController> {
                       ),
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
-                          final media = data!['personalized']![index];
+                          final personalized = data?['personalized'] ?? [];
+                          if (index >= personalized.length) return const SizedBox.shrink();
+                          final media = personalized[index];
                           return MediaCard(media: media)
                               .animate()
                               .fadeIn(delay: (index * 50).ms)
                               .scale(begin: const Offset(0.9, 0.9));
                         },
-                        childCount: data!['personalized']!.length > 4
+                        childCount: (data?['personalized']?.length ?? 0) > 4
                             ? 4
-                            : data!['personalized']!.length,
+                            : (data?['personalized']?.length ?? 0),
                       ),
                     ),
                   ),
@@ -95,7 +97,7 @@ class RecommendationsPage extends GetView<RecommendationsController> {
                         onPressed: () => Get.to(() => RecommendationsListPage(
                               title:
                                   'Because you liked ${controller.baseMediaTitle.value}',
-                              items: data!['similar']!,
+                              items: data?['similar'] ?? [],
                             )),
                         child: Text(
                           'SEE ALL',
@@ -122,11 +124,13 @@ class RecommendationsPage extends GetView<RecommendationsController> {
                         ),
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
-                            return MediaCard(media: data['similar']![index]);
+                            final similar = data?['similar'] ?? [];
+                            if (index >= similar.length) return const SizedBox.shrink();
+                            return MediaCard(media: similar[index]);
                           },
-                          childCount: data['similar']!.length > 4
+                          childCount: (data?['similar']?.length ?? 0) > 4
                               ? 4
-                              : data['similar']!.length,
+                              : (data?['similar']?.length ?? 0),
                         ),
                       ),
                     ),

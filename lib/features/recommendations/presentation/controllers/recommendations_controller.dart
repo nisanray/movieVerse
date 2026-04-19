@@ -19,12 +19,43 @@ class RecommendationsController extends GetxController with StateMixin<Map<Strin
   final RxList<Media> basedOnMediaRecs = <Media>[].obs;
   final RxString baseMediaTitle = ''.obs;
 
+  // Personal Taste Profile for Match % calculations
+  final RxMap<int, double> genreScores = <int, double>{}.obs;
+
   @override
   void onInit() {
     super.onInit();
     // Reactively refresh when watchlist changes
     ever(_watchlistController.watchlistIds, (_) => fetchRecommendations());
     fetchRecommendations();
+  }
+
+  /// Calculates a personalized match percentage (0-100) for a given media item.
+  int getMatchPercentage(Media media) {
+    if (genreScores.isEmpty) return 70; // Default "discovery" match score
+
+    double totalScore = 0;
+    int matches = 0;
+
+    for (var genreId in media.genreIds) {
+      if (genreScores.containsKey(genreId)) {
+        totalScore += genreScores[genreId]!;
+        matches++;
+      }
+    }
+
+    if (matches == 0) return 65; // Neutral match for unfamiliar genres
+
+    // Normalize score. Average genre score of 3.0 (5-star signal) = 100%
+    // Average score of 1.0 (Watchlist signal) = 85%
+    // Average score of 0.0 = 50%
+    double avgScore = totalScore / matches;
+    
+    // Simple linear mapping: 0 -> 70, 3 -> 98
+    // Note: We use 98 as max to feel more "calculated" than a flat 100
+    int percentage = (70 + (avgScore * 9.3)).clamp(40, 98).toInt();
+    
+    return percentage;
   }
 
   Future<void> fetchRecommendations() async {
@@ -46,14 +77,14 @@ class RecommendationsController extends GetxController with StateMixin<Map<Strin
           : [];
 
       // 2. Calculate Weighted Genre Scores
-      final Map<int, double> genreScores = {};
+      final Map<int, double> tempScores = {};
       final Set<int> seenMediaIds = {};
 
       // Watchlist Influence (Base interest)
       for (var media in watchlist) {
         seenMediaIds.add(media.id);
         for (var genreId in media.genreIds) {
-          genreScores[genreId] = (genreScores[genreId] ?? 0) + 1.0;
+          tempScores[genreId] = (tempScores[genreId] ?? 0) + 1.0;
         }
       }
 
@@ -70,13 +101,16 @@ class RecommendationsController extends GetxController with StateMixin<Map<Strin
 
         if (weight != 0) {
           for (var genreId in rating.genreIds) {
-            genreScores[genreId] = (genreScores[genreId] ?? 0) + weight;
+            tempScores[genreId] = (tempScores[genreId] ?? 0) + weight;
           }
         }
       }
 
+      // Store in observable map for Match % calculations
+      genreScores.assignAll(tempScores);
+
       // Sort and take top 3 genres
-      final sortedGenres = genreScores.entries.toList()
+      final sortedGenres = tempScores.entries.toList()
         ..sort((a, b) => b.value.compareTo(a.value));
       
       final topGenres = sortedGenres
@@ -101,7 +135,7 @@ class RecommendationsController extends GetxController with StateMixin<Map<Strin
       if (bestRatedRecent != null) {
         baseMediaId = bestRatedRecent.mediaId;
         baseMediaType = bestRatedRecent.mediaType;
-        baseMediaTitle.value = "Highly Rated Picks"; // Optional: could fetch title
+        baseMediaTitle.value = "Highly Rated"; 
       } else if (watchlist.isNotEmpty) {
         final lastMedia = watchlist.last;
         baseMediaId = lastMedia.id;

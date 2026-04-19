@@ -465,10 +465,17 @@ class MediaDetailsPage extends StatelessWidget {
             height: 220,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 0),
               itemCount: controller.similarMedia.length,
               itemBuilder: (context, index) {
                 final media = controller.similarMedia[index];
-                return MediaCard(media: media);
+                return SizedBox(
+                  width: 150,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: MediaCard(media: media),
+                  ),
+                );
               },
             ),
           ),
