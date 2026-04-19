@@ -10,4 +10,5 @@ abstract class AppRoutes {
   static const String forgotPassword = '/forgot-password';
   static const String watchlist = '/watchlist';
   static const String myRatings = '/my-ratings';
+  static const String aiScout = '/ai-scout';
 }

@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../core/navigation/app_routes.dart';
 import '../controllers/media_discovery_controller.dart';
 import '../widgets/media_card.dart';
@@ -73,6 +74,35 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
           const DiscoveryHeader(),
         ],
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 70), // Avoid bottom nav overlap
+        child: FloatingActionButton(
+          onPressed: () => Get.toNamed(AppRoutes.aiScout),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFFE50914), Color(0xFF0F0C29)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.red.withOpacity(0.3),
+                  blurRadius: 15,
+                  spreadRadius: 2,
+                ),
+              ],
+              border: Border.all(color: Colors.white.withOpacity(0.1)),
+            ),
+            child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 28),
+          ),
+        ),
+      ).animate().scale(delay: const Duration(seconds: 1), duration: const Duration(milliseconds: 500), curve: Curves.elasticOut),
     );
   }
 

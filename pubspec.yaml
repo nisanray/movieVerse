@@ -46,6 +46,7 @@ dependencies:
   google_sign_in: ^6.2.2
   firebase_storage: ^12.4.10
   image_picker: ^1.1.2
+  google_generative_ai: ^0.4.7
 
   # UI & Animations
   cupertino_icons: ^1.0.8
