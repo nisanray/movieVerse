@@ -423,13 +423,40 @@ class MediaDetailsPage extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Trailer',
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Trailer',
+                style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.fullscreen,
+                      color: Colors.white70,
+                      size: 20,
+                    ),
+                    onPressed: controller.toggleFullScreen,
+                    tooltip: 'Full Screen',
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.picture_in_picture_alt,
+                      color: Colors.white70,
+                      size: 20,
+                    ),
+                    onPressed: controller.togglePiP,
+                    tooltip: 'Picture in Picture',
+                  ),
+                ],
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           ClipRRect(
@@ -438,11 +465,144 @@ class MediaDetailsPage extends StatelessWidget {
               controller: controller.youtubeController!,
               showVideoProgressIndicator: true,
               progressIndicatorColor: Colors.red,
+              bottomActions: [
+                const SizedBox(width: 8),
+                IconButton(
+                  icon: const Icon(
+                    Icons.replay_10,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    controller.youtubeController!.seekTo(
+                      controller.youtubeController!.value.position -
+                          const Duration(seconds: 10),
+                    );
+                  },
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  icon: const Icon(
+                    Icons.forward_10,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    controller.youtubeController!.seekTo(
+                      controller.youtubeController!.value.position +
+                          const Duration(seconds: 10),
+                    );
+                  },
+                ),
+                const SizedBox(width: 8),
+                const Expanded(
+                  child: ProgressBar(
+                    isExpanded: true,
+                    colors: ProgressBarColors(
+                      playedColor: Colors.red,
+                      handleColor: Colors.red,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                RemainingDuration(),
+                const SizedBox(width: 8),
+                FullScreenButton(),
+              ],
             ),
           ),
+          if (controller.allVideos.length > 1) ...[
+            const SizedBox(height: 16),
+            _buildRelatedTrailers(controller),
+          ],
         ],
       );
     });
+  }
+
+  Widget _buildRelatedTrailers(MediaDetailsController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Related Videos',
+          style: GoogleFonts.poppins(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.white70,
+          ),
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 80,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: controller.allVideos.length,
+            itemBuilder: (context, index) {
+              final video = controller.allVideos[index];
+              final isSelected = controller.currentVideoIndex.value == index;
+              return GestureDetector(
+                onTap: () => controller.changeVideo(index),
+                child: Container(
+                  width: 200,
+                  margin: const EdgeInsets.only(right: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? Colors.red.withOpacity(0.2)
+                        : Colors.white10,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: isSelected ? Colors.red : Colors.white24,
+                      width: isSelected ? 2 : 1,
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.play_circle_outline,
+                            color: isSelected ? Colors.red : Colors.white70,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              video.type,
+                              style: TextStyle(
+                                color: isSelected ? Colors.red : Colors.white70,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        video.name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _buildSimilarSection(MediaDetailsController controller) {
@@ -492,7 +652,9 @@ class MediaDetailsPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
         boxShadow: [
           BoxShadow(
-            color: (details.isMovie ? Colors.red : Colors.blue).withOpacity(0.3),
+            color: (details.isMovie ? Colors.red : Colors.blue).withOpacity(
+              0.3,
+            ),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -514,17 +676,19 @@ class MediaDetailsPage extends StatelessWidget {
     final ratingController = _findRatingController();
     if (ratingController == null) return const SizedBox.shrink();
 
-    return Obx(() => StarRatingWidget(
-          rating: ratingController.currentRating.value,
-          isLoading: ratingController.isLoading.value,
-          onRatingChanged: (newRating) {
-            ratingController.submitRating(
-              rating: newRating,
-              genreIds: details.genreIds,
-              title: details.title,
-              posterPath: details.posterPath,
-            );
-          },
-        ));
+    return Obx(
+      () => StarRatingWidget(
+        rating: ratingController.currentRating.value,
+        isLoading: ratingController.isLoading.value,
+        onRatingChanged: (newRating) {
+          ratingController.submitRating(
+            rating: newRating,
+            genreIds: details.genreIds,
+            title: details.title,
+            posterPath: details.posterPath,
+          );
+        },
+      ),
+    );
   }
 }

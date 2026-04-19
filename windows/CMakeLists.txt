@@ -1,5 +1,8 @@
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.14)
+# Set CMake policy version minimum to fix Firebase SDK compatibility
+# Firebase SDK uses older CMake version requirements, this allows it to work with newer CMake
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 project(movie_verse LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
