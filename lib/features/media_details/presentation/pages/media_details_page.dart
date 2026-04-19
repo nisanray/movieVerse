@@ -12,6 +12,7 @@ import '../../data/datasources/media_details_remote_data_source.dart';
 import '../../data/repositories/media_details_repository_impl.dart';
 import '../../domain/entities/media_details_entities.dart';
 import '../../domain/repositories/media_details_repository.dart';
+import '../widgets/full_screen_player_page.dart';
 import '../../../../features/ratings/presentation/controllers/rating_controller.dart';
 import '../../../../features/ratings/presentation/widgets/star_rating_widget.dart';
 import '../controllers/media_details_controller.dart';
@@ -507,7 +508,7 @@ class MediaDetailsPage extends StatelessWidget {
   }
 
   void _showFullScreenOverlay(MediaDetailsController controller) {
-    Get.to(() => _FullScreenPlayerPage(controller: controller));
+    Get.to(() => FullScreenPlayerPage(controller: controller));
   }
 
   Widget _buildRelatedTrailers(MediaDetailsController controller) {
@@ -678,118 +679,6 @@ class MediaDetailsPage extends StatelessWidget {
             posterPath: details.posterPath,
           );
         },
-      ),
-    );
-  }
-}
-
-class _FullScreenPlayerPage extends StatefulWidget {
-  final MediaDetailsController controller;
-
-  const _FullScreenPlayerPage({required this.controller});
-
-  @override
-  State<_FullScreenPlayerPage> createState() => _FullScreenPlayerPageState();
-}
-
-class _FullScreenPlayerPageState extends State<_FullScreenPlayerPage> {
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Center(
-              child: YoutubePlayer(
-                controller: widget.controller.youtubeController!,
-                showVideoProgressIndicator: true,
-                progressIndicatorColor: Colors.red,
-                bottomActions: [
-                  const SizedBox(width: 8),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.replay_10,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      widget.controller.youtubeController!.seekTo(
-                        widget.controller.youtubeController!.value.position -
-                            const Duration(seconds: 10),
-                      );
-                    },
-                  ),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.forward_10,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      widget.controller.youtubeController!.seekTo(
-                        widget.controller.youtubeController!.value.position +
-                            const Duration(seconds: 10),
-                      );
-                    },
-                  ),
-                  const SizedBox(width: 8),
-                  ProgressBar(
-                    isExpanded: true,
-                    colors: ProgressBarColors(
-                      playedColor: Colors.red,
-                      handleColor: Colors.red,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  RemainingDuration(),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.fullscreen_exit,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    onPressed: () => Get.back(),
-                    tooltip: 'Exit Full Screen',
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: 8,
-              right: 8,
-              child: IconButton(
-                icon: const Icon(Icons.close, color: Colors.white, size: 28),
-                onPressed: () => Get.back(),
-                tooltip: 'Exit Full Screen',
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
