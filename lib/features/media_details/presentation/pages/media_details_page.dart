@@ -236,7 +236,8 @@ class MediaDetailsPage extends StatelessWidget {
             color: isInWatchLater ? Colors.red : Colors.white,
           ),
         ),
-        onPressed: () => watchLaterController.toggleWatchLater(details.toMedia()),
+        onPressed: () =>
+            watchLaterController.toggleWatchLater(details.toMedia()),
       );
     });
   }

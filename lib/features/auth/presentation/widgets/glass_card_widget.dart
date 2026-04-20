@@ -166,35 +166,38 @@ class _GlassCardWidgetState extends State<GlassCardWidget> {
                         )
                       : const SizedBox.shrink(),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (widget.formKey.currentState!.validate()) {
-                      if (widget.isLogin) {
-                        controller.login(
-                          widget.emailController.text,
-                          widget.passwordController.text,
-                        );
-                      } else {
-                        controller.signup(
-                          widget.emailController.text,
-                          widget.passwordController.text,
-                        );
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (widget.formKey.currentState!.validate()) {
+                        if (widget.isLogin) {
+                          controller.login(
+                            widget.emailController.text,
+                            widget.passwordController.text,
+                          );
+                        } else {
+                          controller.signup(
+                            widget.emailController.text,
+                            widget.passwordController.text,
+                          );
+                        }
                       }
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 8,
+                      shadowColor: Colors.red.withOpacity(0.4),
                     ),
-                    elevation: 8,
-                    shadowColor: Colors.red.withOpacity(0.4),
-                  ),
-                  child: Text(
-                    widget.isLogin ? 'SIGN IN' : 'SIGN UP',
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 16),
+                    child: Text(
+                      widget.isLogin ? 'SIGN IN' : 'SIGN UP',
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24),

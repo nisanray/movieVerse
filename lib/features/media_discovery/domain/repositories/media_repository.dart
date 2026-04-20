@@ -1,5 +1,5 @@
-import '../entities/media.dart';
-import '../entities/genre.dart';
+import '../../../../core/domain/entities/media.dart';
+import '../../../../core/domain/entities/genre.dart';
 
 abstract class MediaRepository {
   Future<List<Media>> getTrendingMovies();

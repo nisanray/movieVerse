@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:marquee/marquee.dart';
-import '../../../media_discovery/domain/entities/media.dart';
+import '../../../../core/domain/entities/media.dart';
 import '../../../media_discovery/presentation/widgets/media_card.dart';
 
 class RecommendationsListPage extends StatelessWidget {
@@ -134,3 +134,4 @@ class RecommendationsListPage extends StatelessWidget {
     );
   }
 }
+

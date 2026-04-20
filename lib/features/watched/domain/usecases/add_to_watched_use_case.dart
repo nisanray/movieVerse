@@ -1,4 +1,4 @@
-import '../../../media_discovery/domain/entities/media.dart';
+﻿import '../../../../core/domain/entities/media.dart';
 import '../repositories/watched_repository.dart';
 import '../../../watch_later/domain/repositories/watch_later_repository.dart';
 
@@ -19,3 +19,4 @@ class AddToWatchedUseCase {
     await watchLaterRepository.removeFromWatchLater(userId, media.id);
   }
 }
+

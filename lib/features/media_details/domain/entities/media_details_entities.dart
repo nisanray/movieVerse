@@ -1,4 +1,4 @@
-import '../../../media_discovery/domain/entities/media.dart';
+﻿import '../../../../core/domain/entities/media.dart';
 
 class Cast {
   final int id;
@@ -111,3 +111,4 @@ class MediaDetails {
     );
   }
 }
+

@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
-import '../../domain/entities/media.dart';
-import '../../domain/entities/genre.dart';
+import '../../../../core/domain/entities/media.dart';
+import '../../../../core/domain/entities/genre.dart';
 import '../../domain/repositories/media_repository.dart';
 
 /// [MediaDiscoveryController] handles the state and data fetching for the Discovery (Home) screen.
@@ -223,3 +223,4 @@ class MediaDiscoveryController extends GetxController with StateMixin<List<Media
     }
   }
 }
+

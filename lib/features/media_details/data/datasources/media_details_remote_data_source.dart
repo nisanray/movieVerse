@@ -1,5 +1,5 @@
-import '../../../../core/api/api_client.dart';
-import '../../../media_discovery/data/models/media_model.dart';
+﻿import '../../../../core/api/api_client.dart';
+import '../../../../core/data/models/media_model.dart';
 import '../models/media_details_model.dart';
 import '../models/media_details_submodels.dart';
 
@@ -82,3 +82,4 @@ class MediaDetailsRemoteDataSourceImpl implements MediaDetailsRemoteDataSource {
     return [];
   }
 }
+

@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../media_discovery/domain/entities/media.dart';
+﻿import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../../core/domain/entities/media.dart';
 import '../../domain/repositories/watch_later_repository.dart';
 
 class WatchLaterRepositoryImpl implements WatchLaterRepository {
@@ -61,3 +61,4 @@ class WatchLaterRepositoryImpl implements WatchLaterRepository {
     }
   }
 }
+

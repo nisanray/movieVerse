@@ -1,4 +1,4 @@
-import '../../../media_discovery/domain/entities/media.dart';
+﻿import '../../../../core/domain/entities/media.dart';
 import '../../../ratings/domain/entities/rating_entity.dart';
 
 class CalculateRecommendationsUseCase {
@@ -94,3 +94,4 @@ class CalculateRecommendationsUseCase {
     return (mediaId: null, mediaType: 'movie', title: '');
   }
 }
+

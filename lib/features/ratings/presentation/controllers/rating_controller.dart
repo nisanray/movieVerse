@@ -5,7 +5,7 @@ import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../../../core/utils/snackbar_utils.dart';
 
 import '../../../watched/domain/usecases/add_to_watched_use_case.dart';
-import '../../../media_discovery/domain/entities/media.dart';
+import '../../../../../core/domain/entities/media.dart';
 
 class RatingController extends GetxController {
   final RatingRepository _repository;

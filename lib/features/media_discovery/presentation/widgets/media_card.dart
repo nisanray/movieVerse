@@ -1,11 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
+﻿import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/navigation/app_routes.dart';
-import '../../domain/entities/media.dart';
+import '../../../../core/domain/entities/media.dart';
 import '../../../watched/presentation/controllers/watched_controller.dart';
 import '../../../recommendations/presentation/controllers/recommendations_controller.dart';
 
@@ -233,3 +233,4 @@ class MediaCard extends StatelessWidget {
     );
   }
 }
+

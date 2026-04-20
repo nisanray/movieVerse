@@ -1,5 +1,5 @@
-import '../../domain/entities/media.dart';
-import '../../domain/entities/genre.dart';
+import '../../../../core/domain/entities/media.dart';
+import '../../../../core/domain/entities/genre.dart';
 import '../../domain/repositories/media_repository.dart';
 import '../datasources/media_remote_data_source.dart';
 

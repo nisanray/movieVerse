@@ -1,6 +1,6 @@
-import 'package:get/get.dart';
+﻿import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import '../../../media_discovery/domain/entities/media.dart';
+import '../../../../core/domain/entities/media.dart';
 import '../../domain/entities/media_details_entities.dart';
 import '../../domain/repositories/media_details_repository.dart';
 
@@ -98,3 +98,4 @@ class MediaDetailsController extends GetxController
     super.onClose();
   }
 }
+

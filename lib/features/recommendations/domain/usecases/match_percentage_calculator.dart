@@ -1,4 +1,4 @@
-import '../../../media_discovery/domain/entities/media.dart';
+﻿import '../../../../core/domain/entities/media.dart';
 
 class MatchPercentageCalculator {
   /// Calculates a personalized match percentage (0-100) for a given media item.
@@ -29,3 +29,4 @@ class MatchPercentageCalculator {
     return percentage;
   }
 }
+

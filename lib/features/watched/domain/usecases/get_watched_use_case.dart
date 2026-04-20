@@ -1,4 +1,4 @@
-import '../../../media_discovery/domain/entities/media.dart';
+﻿import '../../../../core/domain/entities/media.dart';
 import '../repositories/watched_repository.dart';
 
 class GetWatchedUseCase {
@@ -9,3 +9,4 @@ class GetWatchedUseCase {
     return repository.getWatched(userId);
   }
 }
+

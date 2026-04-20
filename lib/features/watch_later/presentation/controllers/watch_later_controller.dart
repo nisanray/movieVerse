@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import '../../../media_discovery/domain/entities/media.dart';
+import '../../../../../core/domain/entities/media.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../../../core/utils/snackbar_utils.dart';
 import '../../domain/usecases/get_watch_later_use_case.dart';

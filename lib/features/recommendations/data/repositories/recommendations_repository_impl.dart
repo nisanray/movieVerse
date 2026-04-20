@@ -1,6 +1,6 @@
-import '../../../../core/api/api_client.dart';
-import '../../../media_discovery/data/models/media_model.dart';
-import '../../../media_discovery/domain/entities/media.dart';
+﻿import '../../../../core/api/api_client.dart';
+import '../../../../core/data/models/media_model.dart';
+import '../../../../core/domain/entities/media.dart';
 import '../../domain/repositories/recommendations_repository.dart';
 
 class RecommendationsRepositoryImpl implements RecommendationsRepository {
@@ -37,3 +37,4 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     }
   }
 }
+

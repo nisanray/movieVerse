@@ -1,8 +1,8 @@
-import 'package:get/get.dart';
+﻿import 'package:get/get.dart';
 import '../../domain/repositories/recommendations_repository.dart';
 import '../../domain/usecases/calculate_recommendations_usecase.dart';
 import '../../domain/usecases/match_percentage_calculator.dart';
-import '../../../media_discovery/domain/entities/media.dart';
+import '../../../../core/domain/entities/media.dart';
 import '../../../watch_later/presentation/controllers/watch_later_controller.dart';
 import '../../../watched/presentation/controllers/watched_controller.dart';
 import '../../../ratings/domain/repositories/rating_repository.dart';
@@ -122,3 +122,4 @@ class RecommendationsController extends GetxController
     }
   }
 }
+

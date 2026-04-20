@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
+﻿import 'package:dio/dio.dart';
 import '../../../../core/api/api_client.dart';
-import '../models/media_model.dart';
-import '../../domain/entities/genre.dart';
+import '../../../../core/data/models/media_model.dart';
+import '../../../../core/domain/entities/genre.dart';
 
 abstract class MediaRemoteDataSource {
   Future<List<MediaModel>> getTrendingMovies();
@@ -137,3 +137,5 @@ class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
     return null;
   }
 }
+
+

@@ -1,4 +1,4 @@
-import '../../../media_discovery/domain/entities/media.dart';
+﻿import '../../../../core/domain/entities/media.dart';
 import '../repositories/watch_later_repository.dart';
 
 class AddToWatchLaterUseCase {
@@ -9,3 +9,4 @@ class AddToWatchLaterUseCase {
     return repository.addToWatchLater(userId, media);
   }
 }
+

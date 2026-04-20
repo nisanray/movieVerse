@@ -1,4 +1,4 @@
-import '../../../media_discovery/domain/entities/media.dart';
+﻿import '../../../../core/domain/entities/media.dart';
 
 abstract class RecommendationsRepository {
   /// Fetches media based on a list of genre IDs.
@@ -7,3 +7,4 @@ abstract class RecommendationsRepository {
   /// Fetches media similar/recommended for a specific media ID.
   Future<List<Media>> getRecommendationsByMedia(int mediaId, String type);
 }
+

@@ -1,4 +1,4 @@
-import 'dart:ui';
+﻿import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +9,7 @@ import '../controllers/media_discovery_controller.dart';
 import '../widgets/media_card.dart';
 import '../widgets/discovery_header.dart';
 import '../widgets/filter_drawer.dart';
-import '../../domain/entities/media.dart';
+import '../../../../core/domain/entities/media.dart';
 import '../../../recommendations/presentation/controllers/recommendations_controller.dart';
 
 class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
@@ -400,3 +400,4 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
     );
   }
 }
+

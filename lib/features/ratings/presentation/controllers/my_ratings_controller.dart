@@ -1,9 +1,9 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'package:get/get.dart';
 import '../../domain/repositories/rating_repository.dart';
 import '../../domain/entities/rating_entity.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
-import '../../../media_discovery/domain/entities/media.dart';
+import '../../../../core/domain/entities/media.dart';
 import '../../../media_discovery/domain/repositories/media_repository.dart';
 
 class MyRatingsController extends GetxController {
@@ -108,3 +108,4 @@ class MyRatingsController extends GetxController {
     );
   }
 }
+
