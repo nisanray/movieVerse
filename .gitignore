@@ -46,11 +46,4 @@ app.*.map.json
 
 # Env variables
 .env
-
-# Project Tracking
-development_roadmap.md
-dev_tools/
-CHANGELOG.md
-FEATURE_REGISTRY.md
-DEVELOPER_INSTRUCTIONS.md
-DEV_LOG.md
+project-rules.md

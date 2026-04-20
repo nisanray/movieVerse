@@ -1,12 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../controllers/ai_scout_controller.dart';
-import '../../domain/entities/ai_message_entity.dart';
+import '../widgets/app_bar_widget.dart';
+import '../widgets/message_bubble_widget.dart';
+import '../widgets/loading_indicator_widget.dart';
+import '../widgets/input_area_widget.dart';
 
 class AiScoutPage extends GetView<AiScoutController> {
   const AiScoutPage({super.key});
@@ -38,248 +37,26 @@ class AiScoutPage extends GetView<AiScoutController> {
           SafeArea(
             child: Column(
               children: [
-                _buildAppBar(),
+                AiScoutAppBarWidget(controller: controller),
                 Expanded(
-                  child: Obx(() => ListView.builder(
-                    controller: controller.scrollController,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                    itemCount: controller.messages.length,
-                    itemBuilder: (context, index) {
-                      final message = controller.messages[index];
-                      return _buildMessageBubble(message);
-                    },
-                  )),
+                  child: Obx(
+                    () => ListView.builder(
+                      controller: controller.scrollController,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 20,
+                      ),
+                      itemCount: controller.messages.length,
+                      itemBuilder: (context, index) {
+                        final message = controller.messages[index];
+                        return MessageBubbleWidget(message: message);
+                      },
+                    ),
+                  ),
                 ),
-                _buildLoadingIndicator(),
-                _buildInputArea(),
+                LoadingIndicatorWidget(controller: controller),
+                InputAreaWidget(controller: controller),
               ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAppBar() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.3),
-        border: Border(
-          bottom: BorderSide(color: Colors.white.withOpacity(0.05)),
-        ),
-      ),
-      child: ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
-                onPressed: () => Get.back(),
-              ),
-              const SizedBox(width: 8),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.2),
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.red.withOpacity(0.5)),
-                ),
-                child: const Icon(Icons.auto_awesome_rounded, color: Colors.red, size: 20),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'MOVIE SCOUT',
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.white,
-                        letterSpacing: 1.2,
-                      ),
-                    ),
-                    Text(
-                      'AI Intelligence',
-                      style: GoogleFonts.poppins(
-                        fontSize: 10,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              IconButton(
-                icon: Icon(Icons.delete_sweep_rounded, color: Colors.white.withOpacity(0.5)),
-                onPressed: () => _showClearDialog(),
-                tooltip: 'Clear History',
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showClearDialog() {
-    Get.dialog(
-      AlertDialog(
-        backgroundColor: const Color(0xFF1A1A2E),
-        title: Text('Clear History?', style: GoogleFonts.poppins(color: Colors.white)),
-        content: Text('This will permanently delete your chat history with the Scout.', 
-          style: GoogleFonts.poppins(color: Colors.white70)),
-        actions: [
-          TextButton(
-            child: Text('Cancel', style: GoogleFonts.poppins(color: Colors.white)),
-            onPressed: () => Get.back(),
-          ),
-          TextButton(
-            child: Text('Clear', style: GoogleFonts.poppins(color: Colors.red)),
-            onPressed: () {
-              controller.clearChat();
-              Get.back();
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMessageBubble(AiMessageEntity message) {
-    final isUser = message.isUser;
-    
-    return Align(
-      alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        constraints: BoxConstraints(maxWidth: Get.width * 0.75),
-        decoration: BoxDecoration(
-          color: isUser 
-            ? Colors.red.withOpacity(0.9) 
-            : Colors.white.withOpacity(0.05),
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(20),
-            topRight: const Radius.circular(20),
-            bottomLeft: Radius.circular(isUser ? 20 : 4),
-            bottomRight: Radius.circular(isUser ? 4 : 20),
-          ),
-          border: Border.all(
-            color: isUser 
-              ? Colors.red.withOpacity(0.5) 
-              : Colors.white.withOpacity(0.1),
-          ),
-        ),
-        child: isUser 
-          ? Text(
-              message.text,
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 14,
-                height: 1.5,
-              ),
-            )
-          : MarkdownBody(
-              data: message.text,
-              selectable: true,
-              styleSheet: MarkdownStyleSheet(
-                p: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 14,
-                  height: 1.5,
-                ),
-                strong: GoogleFonts.poppins(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.bold,
-                ),
-                listBullet: GoogleFonts.poppins(color: Colors.red),
-                em: const TextStyle(fontStyle: FontStyle.italic, color: Colors.white70),
-              ),
-            ),
-      ).animate().fadeIn(duration: 400.ms).slideX(begin: isUser ? 0.2 : -0.2, end: 0),
-    );
-  }
-
-  Widget _buildLoadingIndicator() {
-    return Obx(() => controller.isLoading.value 
-      ? Padding(
-          padding: const EdgeInsets.only(left: 16, bottom: 16),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                  bottomLeft: Radius.circular(4),
-                  bottomRight: Radius.circular(20),
-                ),
-                border: Border.all(color: Colors.white.withOpacity(0.1)),
-              ),
-              child: const SizedBox(
-                width: 40,
-                child: SpinKitThreeBounce(
-                  color: Colors.red,
-                  size: 10,
-                ),
-              ),
-            )
-            .animate()
-            .fadeIn()
-            .shimmer(color: Colors.red.withOpacity(0.2), duration: const Duration(seconds: 2)),
-          ),
-        )
-      : const SizedBox.shrink()
-    );
-  }
-
-  Widget _buildInputArea() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.black,
-        border: Border(
-          top: BorderSide(color: Colors.white.withOpacity(0.05)),
-        ),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(color: Colors.white.withOpacity(0.1)),
-              ),
-              child: TextField(
-                controller: controller.textController,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: 'Ask the Scout...',
-                  hintStyle: TextStyle(color: Colors.white.withOpacity(0.3)),
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          GestureDetector(
-            onTap: controller.sendMessage,
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: const BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(Icons.send_rounded, color: Colors.white, size: 20),
             ),
           ),
         ],

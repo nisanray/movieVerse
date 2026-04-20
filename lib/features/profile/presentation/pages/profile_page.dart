@@ -4,6 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/navigation/app_routes.dart';
 import '../../../auth/domain/entities/user_entity.dart';
 import '../controllers/profile_controller.dart';
+import '../widgets/glass_icon_widget.dart';
+import '../widgets/avatar_widget.dart';
+import '../widgets/section_title_widget.dart';
+import '../widgets/glass_tile_widget.dart';
+import '../widgets/logout_button_widget.dart';
 
 class ProfilePage extends GetView<ProfileController> {
   const ProfilePage({super.key});
@@ -30,7 +35,7 @@ class ProfilePage extends GetView<ProfileController> {
               ),
             ),
           ),
-          
+
           SafeArea(
             child: CustomScrollView(
               physics: const BouncingScrollPhysics(),
@@ -42,9 +47,9 @@ class ProfilePage extends GetView<ProfileController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        GestureDetector(
+                        GlassIconWidget(
+                          icon: Icons.arrow_back_ios_new_rounded,
                           onTap: () => Get.back(),
-                          child: _buildGlassIcon(Icons.arrow_back_ios_new_rounded),
                         ),
                         Text(
                           'MY PROFILE',
@@ -55,7 +60,7 @@ class ProfilePage extends GetView<ProfileController> {
                             letterSpacing: 2,
                           ),
                         ),
-                        _buildGlassIcon(Icons.settings_outlined),
+                        const GlassIconWidget(icon: Icons.settings_outlined),
                       ],
                     ),
                   ),
@@ -69,54 +74,67 @@ class ProfilePage extends GetView<ProfileController> {
                       children: [
                         Stack(
                           children: [
-                            _buildAvatar(),
+                            AvatarWidget(controller: controller),
                             if (controller.user != null)
                               Positioned(
                                 bottom: 0,
                                 right: 0,
                                 child: GestureDetector(
-                                  onTap: () => Get.toNamed(AppRoutes.profileManagement),
+                                  onTap: () =>
+                                      Get.toNamed(AppRoutes.profileManagement),
                                   child: Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: const BoxDecoration(
                                       color: Colors.red,
                                       shape: BoxShape.circle,
                                     ),
-                                    child: const Icon(Icons.edit_rounded, color: Colors.white, size: 16),
+                                    child: const Icon(
+                                      Icons.edit_rounded,
+                                      color: Colors.white,
+                                      size: 16,
+                                    ),
                                   ),
                                 ),
                               ),
                           ],
                         ),
                         const SizedBox(height: 20),
-                        Obx(() => Text(
-                          controller.user?.displayName ?? 'Movie Guest',
-                          style: GoogleFonts.poppins(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        )),
-                        Obx(() => Text(
-                          controller.user?.email ?? 'Join the community to sync data',
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            color: Colors.white60,
-                          ),
-                        )),
-                        const SizedBox(height: 12),
-                        Obx(() => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
-                          child: Text(
-                            controller.user?.bio ?? 'Sign in to unlock personalized features and save your progress.',
-                            textAlign: TextAlign.center,
+                        Obx(
+                          () => Text(
+                            controller.user?.displayName ?? 'Movie Guest',
                             style: GoogleFonts.poppins(
-                              fontSize: 13,
-                              color: Colors.white70,
-                              fontStyle: FontStyle.italic,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                           ),
-                        )),
+                        ),
+                        Obx(
+                          () => Text(
+                            controller.user?.email ??
+                                'Join the community to sync data',
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: Colors.white60,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Obx(
+                          () => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: Text(
+                              controller.user?.bio ??
+                                  'Sign in to unlock personalized features and save your progress.',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                fontSize: 13,
+                                color: Colors.white70,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -127,33 +145,50 @@ class ProfilePage extends GetView<ProfileController> {
                   padding: const EdgeInsets.all(24),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
-                      _buildSectionTitle('COLLECTIONS'),
-                      GestureDetector(
+                      const SectionTitleWidget(title: 'COLLECTIONS'),
+                      GlassTileWidget(
+                        icon: Icons.bookmark_outline_rounded,
+                        title: 'My Watchlist',
                         onTap: () => Get.toNamed(AppRoutes.watchlist),
-                        child: _buildGlassTile(Icons.bookmark_outline_rounded, 'My Watchlist'),
                       ),
-                      GestureDetector(
+                      GlassTileWidget(
+                        icon: Icons.star_outline_rounded,
+                        title: 'My Ratings',
                         onTap: () => Get.toNamed(AppRoutes.myRatings),
-                        child: _buildGlassTile(Icons.star_outline_rounded, 'My Ratings'),
                       ),
-                      
                       const SizedBox(height: 32),
-                      _buildSectionTitle('ACCOUNT'),
-                      GestureDetector(
+                      const SectionTitleWidget(title: 'ACCOUNT'),
+                      GlassTileWidget(
+                        icon: Icons.person_outline,
+                        title: 'Personal Information',
                         onTap: () => Get.toNamed(AppRoutes.profileManagement),
-                        child: _buildGlassTile(Icons.person_outline, 'Personal Information'),
                       ),
-                      _buildGlassTile(Icons.notifications_none_rounded, 'Notifications'),
-                      _buildGlassTile(Icons.security_rounded, 'Security & Privacy'),
-                      
+                      const GlassTileWidget(
+                        icon: Icons.notifications_none_rounded,
+                        title: 'Notifications',
+                      ),
+                      const GlassTileWidget(
+                        icon: Icons.security_rounded,
+                        title: 'Security & Privacy',
+                      ),
                       const SizedBox(height: 32),
-                      _buildSectionTitle('PREFERENCES'),
-                      _buildGlassTile(Icons.palette_outlined, 'Dynamic Theming', trailing: 'ON'),
-                      _buildGlassTile(Icons.language_rounded, 'Language', trailing: 'English'),
-                      _buildGlassTile(Icons.download_done_rounded, 'Downloads'),
-
+                      const SectionTitleWidget(title: 'PREFERENCES'),
+                      const GlassTileWidget(
+                        icon: Icons.palette_outlined,
+                        title: 'Dynamic Theming',
+                        trailing: 'ON',
+                      ),
+                      const GlassTileWidget(
+                        icon: Icons.language_rounded,
+                        title: 'Language',
+                        trailing: 'English',
+                      ),
+                      const GlassTileWidget(
+                        icon: Icons.download_done_rounded,
+                        title: 'Downloads',
+                      ),
                       const SizedBox(height: 48),
-                      _buildLogoutButton(),
+                      LogoutButtonWidget(controller: controller),
                       const SizedBox(height: 40),
                     ]),
                   ),
@@ -164,110 +199,5 @@ class ProfilePage extends GetView<ProfileController> {
         ],
       ),
     );
-  }
-
-  Widget _buildGlassIcon(IconData icon) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
-      ),
-      child: Icon(icon, color: Colors.white, size: 20),
-    );
-  }
-
-  Widget _buildAvatar() {
-    return Container(
-      padding: const EdgeInsets.all(6),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: const LinearGradient(
-          colors: [Colors.red, Colors.orange],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.red.withOpacity(0.4),
-            blurRadius: 20,
-            spreadRadius: 2,
-          ),
-        ],
-      ),
-      child: CircleAvatar(
-        radius: 60,
-        backgroundColor: Colors.grey[900],
-        backgroundImage: controller.user?.photoUrl != null 
-          ? NetworkImage(controller.user!.photoUrl!) 
-          : null,
-        child: controller.user?.photoUrl == null 
-          ? const Icon(Icons.person, size: 60, color: Colors.white24) 
-          : null,
-      ),
-    );
-  }
-
-  Widget _buildSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8, bottom: 12),
-      child: Text(
-        title,
-        style: GoogleFonts.poppins(
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-          color: Colors.red,
-          letterSpacing: 1.5,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildGlassTile(IconData icon, String title, {String? trailing}) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.03),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.05)),
-      ),
-      child: ListTile(
-        leading: Icon(icon, color: Colors.white70, size: 22),
-        title: Text(
-          title,
-          style: GoogleFonts.poppins(color: Colors.white, fontSize: 15),
-        ),
-        trailing: trailing != null 
-          ? Text(trailing, style: const TextStyle(color: Colors.red, fontSize: 12))
-          : const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white24, size: 14),
-      ),
-    );
-  }
-
-  Widget _buildLogoutButton() {
-    return Obx(() {
-      final isGuest = controller.user == null;
-      return SizedBox(
-        width: double.infinity,
-        child: ElevatedButton.icon(
-          onPressed: () => isGuest ? controller.goToSignIn() : controller.logout(),
-          icon: Icon(isGuest ? Icons.login_rounded : Icons.logout_rounded),
-          label: Text(isGuest ? 'SIGN IN' : 'SIGN OUT'),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: isGuest ? Colors.red : Colors.white.withOpacity(0.05),
-            foregroundColor: isGuest ? Colors.white : Colors.red,
-            padding: const EdgeInsets.symmetric(vertical: 18),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-              side: BorderSide(
-                color: isGuest ? Colors.transparent : Colors.red,
-                width: 0.5,
-              ),
-            ),
-            elevation: isGuest ? 8 : 0,
-            shadowColor: isGuest ? Colors.red.withOpacity(0.4) : Colors.transparent,
-          ),
-        ),
-      );
-    });
   }
 }
