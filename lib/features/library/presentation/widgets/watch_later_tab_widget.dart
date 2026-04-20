@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../../../watchlist/presentation/controllers/watchlist_controller.dart';
+import '../../../watch_later/presentation/controllers/watch_later_controller.dart';
 import '../../../media_discovery/presentation/widgets/media_card.dart';
 import 'empty_state_widget.dart';
 
-class WatchlistTabWidget extends StatelessWidget {
-  final WatchlistController controller;
+class WatchLaterTabWidget extends StatelessWidget {
+  final WatchLaterController controller;
 
-  const WatchlistTabWidget({required this.controller});
+  const WatchLaterTabWidget({required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return controller.obx(
-      (watchlist) => GridView.builder(
+      (watchLaterList) => GridView.builder(
         padding: const EdgeInsets.all(20),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -21,9 +21,9 @@ class WatchlistTabWidget extends StatelessWidget {
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
         ),
-        itemCount: watchlist!.length,
+        itemCount: watchLaterList!.length,
         itemBuilder: (context, index) {
-          return MediaCard(media: watchlist[index])
+          return MediaCard(media: watchLaterList[index])
               .animate(delay: (index * 50).ms)
               .fadeIn(duration: 400.ms)
               .slideY(begin: 0.1, end: 0);
@@ -32,10 +32,10 @@ class WatchlistTabWidget extends StatelessWidget {
       onLoading: const Center(
         child: CircularProgressIndicator(color: Colors.red),
       ),
-      onEmpty: EmptyStateWidget(
+      onEmpty: const EmptyStateWidget(
         icon: Icons.bookmark_border_rounded,
-        title: 'Your Watchlist is Empty',
-        message: 'Start adding movies and shows to keep track of them!',
+        title: 'Your Watch Later is Empty',
+        message: 'Start adding movies and shows to watch them later!',
       ),
     );
   }

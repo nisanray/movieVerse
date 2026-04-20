@@ -17,7 +17,8 @@ import '../widgets/title_section_widget.dart';
 import '../../../../features/ratings/presentation/controllers/rating_controller.dart';
 import '../../../../features/ratings/presentation/widgets/star_rating_widget.dart';
 import '../controllers/media_details_controller.dart';
-import '../../../watchlist/presentation/controllers/watchlist_controller.dart';
+import '../../../watch_later/presentation/controllers/watch_later_controller.dart';
+import '../../../watched/presentation/controllers/watched_controller.dart';
 
 class MediaDetailsPage extends StatelessWidget {
   const MediaDetailsPage({super.key});
@@ -155,7 +156,11 @@ class MediaDetailsPage extends StatelessWidget {
       slivers: [
         SliverAppBarWidget(
           details: details,
-          actions: [_buildWatchlistButton(details), const SizedBox(width: 8)],
+          actions: [
+            _buildWatchedButton(details),
+            _buildWatchLaterButton(details),
+            const SizedBox(width: 8),
+          ],
         ),
         SliverToBoxAdapter(
           child: Padding(
@@ -207,16 +212,16 @@ class MediaDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildWatchlistButton(MediaDetails details) {
-    if (!Get.isRegistered<WatchlistController>()) {
+  Widget _buildWatchLaterButton(MediaDetails details) {
+    if (!Get.isRegistered<WatchLaterController>()) {
       return const SizedBox.shrink();
     }
 
-    final WatchlistController watchlistController =
-        Get.find<WatchlistController>();
+    final WatchLaterController watchLaterController =
+        Get.find<WatchLaterController>();
 
     return Obx(() {
-      final isInWatchlist = watchlistController.isInWatchlist(details.id);
+      final isInWatchLater = watchLaterController.isInWatchLater(details.id);
       return IconButton(
         icon: Container(
           padding: const EdgeInsets.all(8),
@@ -225,13 +230,39 @@ class MediaDetailsPage extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: Icon(
-            isInWatchlist
+            isInWatchLater
                 ? Icons.bookmark_added_rounded
                 : Icons.bookmark_add_outlined,
-            color: isInWatchlist ? Colors.red : Colors.white,
+            color: isInWatchLater ? Colors.red : Colors.white,
           ),
         ),
-        onPressed: () => watchlistController.toggleWatchlist(details.toMedia()),
+        onPressed: () => watchLaterController.toggleWatchLater(details.toMedia()),
+      );
+    });
+  }
+
+  Widget _buildWatchedButton(MediaDetails details) {
+    if (!Get.isRegistered<WatchedController>()) {
+      return const SizedBox.shrink();
+    }
+
+    final WatchedController watchedController = Get.find<WatchedController>();
+
+    return Obx(() {
+      final isWatched = watchedController.isWatched(details.id);
+      return IconButton(
+        icon: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.5),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            isWatched ? Icons.visibility_rounded : Icons.visibility_outlined,
+            color: isWatched ? Colors.greenAccent : Colors.white,
+          ),
+        ),
+        onPressed: () => watchedController.toggleWatched(details.toMedia()),
       );
     });
   }

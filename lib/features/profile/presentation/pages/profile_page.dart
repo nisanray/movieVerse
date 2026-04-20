@@ -148,8 +148,13 @@ class ProfilePage extends GetView<ProfileController> {
                       const SectionTitleWidget(title: 'COLLECTIONS'),
                       GlassTileWidget(
                         icon: Icons.bookmark_outline_rounded,
-                        title: 'My Watchlist',
-                        onTap: () => Get.toNamed(AppRoutes.watchlist),
+                        title: 'Watch Later',
+                        onTap: () => Get.toNamed(AppRoutes.watchLater),
+                      ),
+                      GlassTileWidget(
+                        icon: Icons.visibility_outlined,
+                        title: 'Watched',
+                        onTap: () => Get.toNamed(AppRoutes.watchLater), // Both point to Library with tabs
                       ),
                       GlassTileWidget(
                         icon: Icons.star_outline_rounded,

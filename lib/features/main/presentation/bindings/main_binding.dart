@@ -11,9 +11,12 @@ import '../../../recommendations/presentation/controllers/recommendations_contro
 import '../../../ratings/data/repositories/rating_repository_impl.dart';
 import '../../../ratings/domain/repositories/rating_repository.dart';
 import '../../../ratings/presentation/controllers/my_ratings_controller.dart';
-import '../../../watchlist/data/repositories/watchlist_repository_impl.dart';
-import '../../../watchlist/domain/repositories/watchlist_repository.dart';
-import '../../../watchlist/presentation/controllers/watchlist_controller.dart';
+import '../../../watch_later/data/repositories/watch_later_repository_impl.dart';
+import '../../../watch_later/domain/repositories/watch_later_repository.dart';
+import '../../../watch_later/presentation/controllers/watch_later_controller.dart';
+import '../../../watch_later/domain/usecases/get_watch_later_use_case.dart';
+import '../../../watch_later/domain/usecases/add_to_watch_later_use_case.dart';
+import '../../../watch_later/domain/usecases/remove_from_watch_later_use_case.dart';
 import '../../../../core/api/api_client.dart';
 
 class MainBinding extends Bindings {
@@ -46,16 +49,23 @@ class MainBinding extends Bindings {
       fenix: true,
     );
 
-    // Watchlist (Global)
-    if (!Get.isRegistered<WatchlistRepository>()) {
-      Get.lazyPut<WatchlistRepository>(
-        () => WatchlistRepositoryImpl(),
+    // Watch Later (Global)
+    if (!Get.isRegistered<WatchLaterRepository>()) {
+      Get.lazyPut<WatchLaterRepository>(
+        () => WatchLaterRepositoryImpl(),
         fenix: true,
       );
     }
-    if (!Get.isRegistered<WatchlistController>()) {
+    if (!Get.isRegistered<WatchLaterController>()) {
       Get.lazyPut(
-        () => WatchlistController(Get.find<WatchlistRepository>()),
+        () {
+          final repo = Get.find<WatchLaterRepository>();
+          return WatchLaterController(
+            GetWatchLaterUseCase(repo),
+            AddToWatchLaterUseCase(repo),
+            RemoveFromWatchLaterUseCase(repo),
+          );
+        },
         fenix: true,
       );
     }

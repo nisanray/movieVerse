@@ -7,6 +7,11 @@ import '../../domain/repositories/media_details_repository.dart';
 import '../../../../features/ratings/data/repositories/rating_repository_impl.dart';
 import '../../../../features/ratings/domain/repositories/rating_repository.dart';
 import '../../../../features/ratings/presentation/controllers/rating_controller.dart';
+import '../../../../features/watched/domain/repositories/watched_repository.dart';
+import '../../../../features/watched/data/repositories/watched_repository_impl.dart';
+import '../../../../features/watched/domain/usecases/add_to_watched_use_case.dart';
+import '../../../../features/watch_later/domain/repositories/watch_later_repository.dart';
+import '../../../../features/watch_later/data/repositories/watch_later_repository_impl.dart';
 import '../controllers/media_details_controller.dart';
 
 class MediaDetailsBinding extends Bindings {
@@ -66,11 +71,23 @@ class MediaDetailsBinding extends Bindings {
       tag: tag,
     );
 
+    // Ensure repositories are available for use case
+    if (!Get.isRegistered<WatchedRepository>()) {
+      Get.lazyPut<WatchedRepository>(() => WatchedRepositoryImpl());
+    }
+    if (!Get.isRegistered<WatchLaterRepository>()) {
+      Get.lazyPut<WatchLaterRepository>(() => WatchLaterRepositoryImpl());
+    }
+
     Get.put(
       RatingController(
         Get.find<RatingRepository>(tag: tag),
         mediaId,
         mediaType,
+        addToWatchedUseCase: AddToWatchedUseCase(
+          watchedRepository: Get.find<WatchedRepository>(),
+          watchLaterRepository: Get.find<WatchLaterRepository>(),
+        ),
       ),
       tag: tag,
     );

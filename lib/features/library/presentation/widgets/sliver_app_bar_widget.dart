@@ -43,30 +43,23 @@ class LibrarySliverAppBarWidget extends StatelessWidget {
         ),
         centerTitle: false,
       ),
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(48),
-        child: Container(
-          decoration: const BoxDecoration(
-            border: Border(bottom: BorderSide(color: Colors.transparent)),
-          ),
-          child: TabBar(
-            dividerColor: Colors.transparent,
-            indicatorColor: Colors.red,
-            indicatorWeight: 3,
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.white38,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            labelStyle: GoogleFonts.poppins(
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
-              letterSpacing: 1,
-            ),
-            tabs: const [
-              Tab(text: 'WATCHLIST'),
-              Tab(text: 'RATED'),
-            ],
-          ),
+      bottom: TabBar(
+        dividerColor: Colors.transparent,
+        indicatorColor: Colors.red,
+        indicatorWeight: 3,
+        labelColor: Colors.white,
+        unselectedLabelColor: Colors.white38,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        labelStyle: GoogleFonts.poppins(
+          fontWeight: FontWeight.bold,
+          fontSize: 13,
+          letterSpacing: 1,
         ),
+        tabs: const [
+          Tab(text: 'WATCH LATER'),
+          Tab(text: 'WATCHED'),
+          Tab(text: 'RATED'),
+        ],
       ),
     );
   }

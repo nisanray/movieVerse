@@ -96,7 +96,7 @@ class MediaDetails {
   String get fullPosterPath => 'https://image.tmdb.org/t/p/w500$posterPath';
   String get fullBackdropPath => 'https://image.tmdb.org/t/p/original$backdropPath';
 
-  /// Converts detailed model back to simple Media entity for watchlist persistence.
+  /// Converts detailed model back to simple Media entity for watch later persistence.
   Media toMedia() {
     return Media(
       id: id,

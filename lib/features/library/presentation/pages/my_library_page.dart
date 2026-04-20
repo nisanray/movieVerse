@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../watchlist/presentation/controllers/watchlist_controller.dart';
+import '../../../watch_later/presentation/controllers/watch_later_controller.dart';
+import '../../../watched/presentation/controllers/watched_controller.dart';
 import '../../../ratings/presentation/controllers/my_ratings_controller.dart';
 import '../widgets/sliver_app_bar_widget.dart';
-import '../widgets/watchlist_tab_widget.dart';
+import '../widgets/watch_later_tab_widget.dart';
+import '../widgets/watched_tab_widget.dart';
 import '../widgets/ratings_tab_widget.dart';
 
 class MyLibraryPage extends StatelessWidget {
@@ -11,12 +13,13 @@ class MyLibraryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Ensure both controllers are available
-    final watchlistController = Get.find<WatchlistController>();
+    // Ensure all controllers are available
+    final watchLaterController = Get.find<WatchLaterController>();
+    final watchedController = Get.find<WatchedController>();
     final ratingsController = Get.find<MyRatingsController>();
 
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         backgroundColor: Colors.black,
         body: Stack(
@@ -43,7 +46,8 @@ class MyLibraryPage extends StatelessWidget {
               },
               body: TabBarView(
                 children: [
-                  WatchlistTabWidget(controller: watchlistController),
+                  WatchLaterTabWidget(controller: watchLaterController),
+                  WatchedTabWidget(controller: watchedController),
                   RatingsTabWidget(controller: ratingsController),
                 ],
               ),

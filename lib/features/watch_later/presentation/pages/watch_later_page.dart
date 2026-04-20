@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../controllers/watchlist_controller.dart';
+import '../controllers/watch_later_controller.dart';
 import '../../../media_discovery/presentation/widgets/media_card.dart';
 import '../widgets/empty_state_widget.dart';
 
-class WatchlistPage extends GetView<WatchlistController> {
-  const WatchlistPage({super.key});
+class WatchLaterPage extends GetView<WatchLaterController> {
+  const WatchLaterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class WatchlistPage extends GetView<WatchlistController> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(
-          'My Watchlist',
+          'Watch Later',
           style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -31,7 +31,7 @@ class WatchlistPage extends GetView<WatchlistController> {
         ),
       ),
       body: controller.obx(
-        (watchlist) => GridView.builder(
+        (watchLaterList) => GridView.builder(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top + 70,
             left: 16,
@@ -44,9 +44,9 @@ class WatchlistPage extends GetView<WatchlistController> {
             crossAxisSpacing: 16,
             mainAxisSpacing: 16,
           ),
-          itemCount: watchlist!.length,
+          itemCount: watchLaterList!.length,
           itemBuilder: (context, index) {
-            return MediaCard(media: watchlist[index])
+            return MediaCard(media: watchLaterList[index])
                 .animate(delay: (index * 100).ms)
                 .fadeIn(duration: 500.ms)
                 .slideY(begin: 0.2, end: 0, curve: Curves.easeOut);

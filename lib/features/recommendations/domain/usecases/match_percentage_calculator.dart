@@ -18,7 +18,7 @@ class MatchPercentageCalculator {
     if (matches == 0) return 65; // Neutral match for unfamiliar genres
 
     // Normalize score. Average genre score of 3.0 (5-star signal) = 100%
-    // Average score of 1.0 (Watchlist signal) = 85%
+    // Average score of 1.0 (Watch later signal) = 85%
     // Average score of 0.0 = 50%
     double avgScore = totalScore / matches;
     

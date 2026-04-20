@@ -25,7 +25,7 @@ class EmptyStateWidget extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              isGuest ? 'Sync Required' : 'Your Watchlist is Empty',
+              isGuest ? 'Sync Required' : 'Your Watch Later is Empty',
               style: GoogleFonts.poppins(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -35,8 +35,8 @@ class EmptyStateWidget extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               isGuest
-                  ? 'Sign in to sync your watchlist across devices and never lose your favorites.'
-                  : 'Start adding movies and shows to keep track of them!',
+                  ? 'Sign in to sync your watch later list across devices and never lose your favorites.'
+                  : 'Start adding movies and shows to watch them later!',
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(color: Colors.white60, fontSize: 14),
             ),

@@ -2,17 +2,25 @@ import '../../../media_discovery/domain/entities/media.dart';
 import '../../../ratings/domain/entities/rating_entity.dart';
 
 class CalculateRecommendationsUseCase {
-  /// Calculates genre scores based on watchlist and ratings
+  /// Calculates genre scores based on watch later, watched lists, and ratings
   Map<int, double> calculateGenreScores({
-    required List<Media> watchlist,
+    required List<Media> watchLaterList,
+    required List<Media> watchedList,
     required List<RatingEntity> ratings,
   }) {
     final Map<int, double> tempScores = {};
 
-    // Watchlist Influence (Base interest)
-    for (var media in watchlist) {
+    // Watch later Influence (Base interest - Weight: 1.0)
+    for (var media in watchLaterList) {
       for (var genreId in media.genreIds) {
         tempScores[genreId] = (tempScores[genreId] ?? 0) + 1.0;
+      }
+    }
+
+    // Watched Influence (Confirmed interest - Weight: 1.5)
+    for (var media in watchedList) {
+      for (var genreId in media.genreIds) {
+        tempScores[genreId] = (tempScores[genreId] ?? 0) + 1.5;
       }
     }
 
@@ -49,10 +57,11 @@ class CalculateRecommendationsUseCase {
 
   /// Determines the best base media for recommendations
   ({int? mediaId, String mediaType, String title}) determineBestBaseMedia({
-    required List<Media> watchlist,
+    required List<Media> watchLaterList,
+    required List<Media> watchedList,
     required List<RatingEntity> ratings,
   }) {
-    // Priority: Highest Rated Recent Movie > Last Watchlist Item
+    // Priority: Highest Rated Recent Movie > Last Watched Item > Last Watch Later Item
     RatingEntity? bestRatedRecent;
     try {
       bestRatedRecent = ratings.firstWhere((r) => r.rating >= 4.0);
@@ -66,8 +75,15 @@ class CalculateRecommendationsUseCase {
         mediaType: bestRatedRecent.mediaType,
         title: "Highly Rated",
       );
-    } else if (watchlist.isNotEmpty) {
-      final lastMedia = watchlist.last;
+    } else if (watchedList.isNotEmpty) {
+      final lastMedia = watchedList.last;
+      return (
+        mediaId: lastMedia.id,
+        mediaType: lastMedia.isMovie ? 'movie' : 'tv',
+        title: lastMedia.title,
+      );
+    } else if (watchLaterList.isNotEmpty) {
+      final lastMedia = watchLaterList.last;
       return (
         mediaId: lastMedia.id,
         mediaType: lastMedia.isMovie ? 'movie' : 'tv',

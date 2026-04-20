@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../media_discovery/domain/entities/media.dart';
-import '../../domain/repositories/watchlist_repository.dart';
+import '../../domain/repositories/watch_later_repository.dart';
 
-class WatchlistRepositoryImpl implements WatchlistRepository {
+class WatchLaterRepositoryImpl implements WatchLaterRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
-  Future<void> addToWatchlist(String userId, Media media) async {
+  Future<void> addToWatchLater(String userId, Media media) async {
     try {
       await _firestore
           .collection('users')
           .doc(userId)
-          .collection('watchlist')
+          .collection('watch_later')
           .doc(media.id.toString())
           .set(media.toMap());
     } catch (e) {
@@ -20,12 +20,12 @@ class WatchlistRepositoryImpl implements WatchlistRepository {
   }
 
   @override
-  Future<void> removeFromWatchlist(String userId, int mediaId) async {
+  Future<void> removeFromWatchLater(String userId, int mediaId) async {
     try {
       await _firestore
           .collection('users')
           .doc(userId)
-          .collection('watchlist')
+          .collection('watch_later')
           .doc(mediaId.toString())
           .delete();
     } catch (e) {
@@ -34,11 +34,11 @@ class WatchlistRepositoryImpl implements WatchlistRepository {
   }
 
   @override
-  Stream<List<Media>> getWatchlist(String userId) {
+  Stream<List<Media>> getWatchLater(String userId) {
     return _firestore
         .collection('users')
         .doc(userId)
-        .collection('watchlist')
+        .collection('watch_later')
         .orderBy('addedAt', descending: true)
         .snapshots()
         .map((snapshot) {
@@ -47,12 +47,12 @@ class WatchlistRepositoryImpl implements WatchlistRepository {
   }
 
   @override
-  Future<bool> isInWatchlist(String userId, int mediaId) async {
+  Future<bool> isInWatchLater(String userId, int mediaId) async {
     try {
       final doc = await _firestore
           .collection('users')
           .doc(userId)
-          .collection('watchlist')
+          .collection('watch_later')
           .doc(mediaId.toString())
           .get();
       return doc.exists;

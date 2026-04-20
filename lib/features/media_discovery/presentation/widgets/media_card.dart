@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/navigation/app_routes.dart';
 import '../../domain/entities/media.dart';
+import '../../../watched/presentation/controllers/watched_controller.dart';
 import '../../../recommendations/presentation/controllers/recommendations_controller.dart';
 
 class MediaCard extends StatelessWidget {
@@ -15,6 +16,8 @@ class MediaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final watchedController = Get.find<WatchedController>();
+
     return GestureDetector(
       onTap: () {
         final args = {'id': media.id, 'type': media.isMovie ? 'movie' : 'tv'};
@@ -152,7 +155,12 @@ class MediaCard extends StatelessWidget {
               // Personal Match % Badge
               // Only show in discovery/recommendations, not in library/ratings tabs
               if (Get.isRegistered<RecommendationsController>() &&
-                  Get.currentRoute != '/my-library')
+                  ![
+                    '/my-library',
+                    '/watch-later',
+                    '/watched',
+                    '/my-ratings',
+                  ].contains(Get.currentRoute))
                 Positioned(
                   top: 8,
                   right: 8,
@@ -191,6 +199,33 @@ class MediaCard extends StatelessWidget {
                     },
                   ),
                 ),
+
+              // Watched Badge (Top Left)
+              Obx(() {
+                final isWatched = watchedController.isWatched(media.id);
+                if (!isWatched) return const SizedBox.shrink();
+
+                return Positioned(
+                  top: 8,
+                  left: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.7),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.greenAccent.withOpacity(0.5),
+                        width: 1,
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.check_rounded,
+                      color: Colors.greenAccent,
+                      size: 12,
+                    ),
+                  ).animate().fadeIn().scale(),
+                );
+              }),
             ],
           ),
         ),

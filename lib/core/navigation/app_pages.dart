@@ -72,7 +72,7 @@ class AppPages {
       binding: AuthBinding(),
     ),
     GetPage(
-      name: AppRoutes.watchlist,
+      name: AppRoutes.watchLater,
       page: () => const MyLibraryPage(),
       binding: LibraryBinding(),
       transition: Transition.cupertino,

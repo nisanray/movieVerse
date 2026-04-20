@@ -4,13 +4,22 @@ import '../../domain/repositories/rating_repository.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../../../core/utils/snackbar_utils.dart';
 
+import '../../../watched/domain/usecases/add_to_watched_use_case.dart';
+import '../../../media_discovery/domain/entities/media.dart';
+
 class RatingController extends GetxController {
   final RatingRepository _repository;
+  final AddToWatchedUseCase? _addToWatchedUseCase; // Optional for compatibility
   final int mediaId;
   final String mediaType;
   final AuthController _authController = Get.find<AuthController>();
 
-  RatingController(this._repository, this.mediaId, this.mediaType);
+  RatingController(
+    this._repository,
+    this.mediaId,
+    this.mediaType, {
+    AddToWatchedUseCase? addToWatchedUseCase,
+  }) : _addToWatchedUseCase = addToWatchedUseCase;
 
   final RxDouble currentRating = 0.0.obs;
   final RxBool isLoading = false.obs;
@@ -68,6 +77,22 @@ class RatingController extends GetxController {
 
       await _repository.saveRating(ratingEntity);
       currentRating.value = rating;
+
+      // Auto-mark as Watched
+      if (_addToWatchedUseCase != null) {
+        final media = Media(
+          id: mediaId,
+          title: title ?? 'Unknown',
+          posterPath: posterPath ?? '',
+          backdropPath: '',
+          overview: '',
+          voteAverage: 0,
+          releaseDate: '',
+          isMovie: mediaType == 'movie',
+          genreIds: genreIds,
+        );
+        await _addToWatchedUseCase!.execute(user.uid, media);
+      }
       
       SnackbarUtils.success(
         title: 'Rating Saved',

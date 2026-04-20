@@ -3,7 +3,8 @@ import '../../domain/repositories/recommendations_repository.dart';
 import '../../domain/usecases/calculate_recommendations_usecase.dart';
 import '../../domain/usecases/match_percentage_calculator.dart';
 import '../../../media_discovery/domain/entities/media.dart';
-import '../../../watchlist/presentation/controllers/watchlist_controller.dart';
+import '../../../watch_later/presentation/controllers/watch_later_controller.dart';
+import '../../../watched/presentation/controllers/watched_controller.dart';
 import '../../../ratings/domain/repositories/rating_repository.dart';
 import '../../../ratings/domain/entities/rating_entity.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
@@ -12,8 +13,9 @@ class RecommendationsController extends GetxController
     with StateMixin<Map<String, List<Media>>> {
   final RecommendationsRepository _repository;
   final RatingRepository _ratingRepository;
-  final WatchlistController _watchlistController =
-      Get.find<WatchlistController>();
+  final WatchLaterController _watchLaterController =
+      Get.find<WatchLaterController>();
+  final WatchedController _watchedController = Get.find<WatchedController>();
   final AuthController _authController = Get.find<AuthController>();
   final CalculateRecommendationsUseCase _calculateRecommendationsUseCase =
       CalculateRecommendationsUseCase();
@@ -34,8 +36,9 @@ class RecommendationsController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    // Reactively refresh when watchlist changes
-    ever(_watchlistController.watchlistIds, (_) => fetchRecommendations());
+    // Reactively refresh when watch later or watched lists change
+    ever(_watchLaterController.watchLaterIds, (_) => fetchRecommendations());
+    ever(_watchedController.watchedIds, (_) => fetchRecommendations());
     fetchRecommendations();
   }
 
@@ -48,11 +51,12 @@ class RecommendationsController extends GetxController
   }
 
   Future<void> fetchRecommendations() async {
-    final watchlist = _watchlistController.state ?? [];
+    final watchLaterList = _watchLaterController.state ?? [];
+    final watchedList = _watchedController.state ?? [];
     final user = _authController.user.value;
 
     // We need at least something to recommend from
-    if (watchlist.isEmpty && user == null) {
+    if (watchLaterList.isEmpty && watchedList.isEmpty && user == null) {
       change({}, status: RxStatus.empty());
       return;
     }
@@ -67,7 +71,8 @@ class RecommendationsController extends GetxController
 
       // 2. Calculate Weighted Genre Scores using use case
       final tempScores = _calculateRecommendationsUseCase.calculateGenreScores(
-        watchlist: watchlist,
+        watchLaterList: watchLaterList,
+        watchedList: watchedList,
         ratings: ratings.cast<RatingEntity>(),
       );
 
@@ -90,7 +95,8 @@ class RecommendationsController extends GetxController
 
       // 4. Fetch Similar Content based on the best signal using use case
       final baseMedia = _calculateRecommendationsUseCase.determineBestBaseMedia(
-        watchlist: watchlist,
+        watchLaterList: watchLaterList,
+        watchedList: watchedList,
         ratings: ratings.cast<RatingEntity>(),
       );
 

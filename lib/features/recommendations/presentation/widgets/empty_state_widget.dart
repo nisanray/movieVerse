@@ -28,7 +28,7 @@ class EmptyStateWidget extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Add movies and shows to your watchlist to unlock personalized recommendations.',
+              'Add movies and shows to your watch later list to unlock personalized recommendations.',
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(color: Colors.white54, fontSize: 16),
             ),

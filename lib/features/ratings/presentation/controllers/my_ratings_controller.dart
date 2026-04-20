@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:get/get.dart';
 import '../../domain/repositories/rating_repository.dart';
 import '../../domain/entities/rating_entity.dart';
@@ -15,33 +16,47 @@ class MyRatingsController extends GetxController {
   final RxList<RatingEntity> userRatings = <RatingEntity>[].obs;
   final RxBool isLoading = false.obs;
   final RxMap<int, Media> _mediaCache = <int, Media>{}.obs;
+  StreamSubscription? _ratingsSubscription;
 
   @override
   void onInit() {
     super.onInit();
-    fetchRatings();
+    ever(_authController.user, (_) => _listenToRatings());
+    _listenToRatings();
   }
 
-  Future<void> fetchRatings() async {
+  void _listenToRatings() {
+    _ratingsSubscription?.cancel();
+    
     final user = _authController.user.value;
-    if (user == null) return;
-
-    try {
-      isLoading.value = true;
-      final ratings = await _repository.getAllUserRatings(user.uid);
-      userRatings.assignAll(ratings);
-
-      // Fetch missing media details for ratings without title/poster
-      for (final rating in ratings) {
-        if (rating.title == null || rating.posterPath == null) {
-          await _fetchMissingMediaDetails(rating);
-        }
-      }
-    } catch (e) {
-      // Error handling
-    } finally {
-      isLoading.value = false;
+    if (user == null) {
+      userRatings.clear();
+      return;
     }
+
+    isLoading.value = true;
+    _ratingsSubscription = _repository.watchAllUserRatings(user.uid).listen(
+      (ratings) async {
+        userRatings.assignAll(ratings);
+        isLoading.value = false;
+
+        // Fetch missing media details for ratings without title/poster
+        for (final rating in ratings) {
+          if (rating.title == null || rating.posterPath == null) {
+            await _fetchMissingMediaDetails(rating);
+          }
+        }
+      },
+      onError: (e) {
+        isLoading.value = false;
+      },
+    );
+  }
+
+  @override
+  void onClose() {
+    _ratingsSubscription?.cancel();
+    super.onClose();
   }
 
   Future<void> _fetchMissingMediaDetails(RatingEntity rating) async {

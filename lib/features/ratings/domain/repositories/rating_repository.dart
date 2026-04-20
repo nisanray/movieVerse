@@ -4,4 +4,5 @@ abstract class RatingRepository {
   Future<void> saveRating(RatingEntity rating);
   Future<RatingEntity?> getUserRating(String uid, int mediaId);
   Future<List<RatingEntity>> getAllUserRatings(String uid);
+  Stream<List<RatingEntity>> watchAllUserRatings(String uid);
 }

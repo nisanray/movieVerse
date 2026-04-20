@@ -52,4 +52,16 @@ class RatingRepositoryImpl implements RatingRepository {
         .map((doc) => RatingModel.fromFirestore(doc.data()))
         .toList();
   }
+
+  @override
+  Stream<List<RatingEntity>> watchAllUserRatings(String uid) {
+    return _firestore
+        .collection(_collection)
+        .where('uid', isEqualTo: uid)
+        .orderBy('updatedAt', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => RatingModel.fromFirestore(doc.data()))
+            .toList());
+  }
 }
