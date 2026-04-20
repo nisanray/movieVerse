@@ -20,6 +20,7 @@ class MediaDetailsModel extends MediaDetails {
     super.numberOfEpisodes,
     super.tagline,
     super.status,
+    super.watchProviders,
   });
 
   factory MediaDetailsModel.fromJson(
