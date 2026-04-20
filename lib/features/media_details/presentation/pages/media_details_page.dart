@@ -17,6 +17,7 @@ import '../widgets/title_section_widget.dart';
 import '../../../../features/ratings/presentation/controllers/rating_controller.dart';
 import '../../../../features/ratings/presentation/widgets/star_rating_widget.dart';
 import '../controllers/media_details_controller.dart';
+import '../../../watchlist/presentation/controllers/watchlist_controller.dart';
 
 class MediaDetailsPage extends StatelessWidget {
   const MediaDetailsPage({super.key});
@@ -152,7 +153,10 @@ class MediaDetailsPage extends StatelessWidget {
   ) {
     return CustomScrollView(
       slivers: [
-        SliverAppBarWidget(details: details),
+        SliverAppBarWidget(
+          details: details,
+          actions: [_buildWatchlistButton(details), const SizedBox(width: 8)],
+        ),
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.all(20),
@@ -201,5 +205,34 @@ class MediaDetailsPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Widget _buildWatchlistButton(MediaDetails details) {
+    if (!Get.isRegistered<WatchlistController>()) {
+      return const SizedBox.shrink();
+    }
+
+    final WatchlistController watchlistController =
+        Get.find<WatchlistController>();
+
+    return Obx(() {
+      final isInWatchlist = watchlistController.isInWatchlist(details.id);
+      return IconButton(
+        icon: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.5),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            isInWatchlist
+                ? Icons.bookmark_added_rounded
+                : Icons.bookmark_add_outlined,
+            color: isInWatchlist ? Colors.red : Colors.white,
+          ),
+        ),
+        onPressed: () => watchlistController.toggleWatchlist(details.toMedia()),
+      );
+    });
   }
 }

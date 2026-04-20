@@ -20,6 +20,7 @@ abstract class MediaRemoteDataSource {
     String? countryCode,
     String? sortBy,
   });
+  Future<MediaModel?> getMediaDetails(int mediaId, String mediaType);
 }
 
 class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
@@ -88,7 +89,9 @@ class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
     if (response.data != null && response.data is List) {
       final List results = response.data;
       // Maps ISO code to English Name
-      return { for (var item in results) item['iso_3166_1'] : item['english_name'] };
+      return {
+        for (var item in results) item['iso_3166_1']: item['english_name'],
+      };
     }
     return {};
   }
@@ -105,8 +108,9 @@ class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
       'sort_by': sortBy ?? 'popularity.desc',
       if (genreId != null) 'with_genres': genreId.toString(),
       if (countryCode != null) 'with_origin_country': countryCode,
-      if (year != null) 
-        type == 'movie' ? 'primary_release_year' : 'first_air_date_year': year.toString(),
+      if (year != null)
+        type == 'movie' ? 'primary_release_year' : 'first_air_date_year': year
+            .toString(),
     };
 
     final response = await apiClient.getData(
@@ -122,5 +126,14 @@ class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
       return results.map((json) => MediaModel.fromJson(json)).toList();
     }
     return [];
+  }
+
+  @override
+  Future<MediaModel?> getMediaDetails(int mediaId, String mediaType) async {
+    final response = await apiClient.getData('/$mediaType/$mediaId');
+    if (response.data != null) {
+      return MediaModel.fromJson(response.data);
+    }
+    return null;
   }
 }

@@ -69,4 +69,9 @@ class MediaRepositoryImpl implements MediaRepository {
       sortBy: sortBy,
     );
   }
+
+  @override
+  Future<Media?> getMediaDetails(int mediaId, String mediaType) async {
+    return await remoteDataSource.getMediaDetails(mediaId, mediaType);
+  }
 }

@@ -150,7 +150,9 @@ class MediaCard extends StatelessWidget {
                 ),
               ),
               // Personal Match % Badge
-              if (Get.isRegistered<RecommendationsController>())
+              // Only show in discovery/recommendations, not in library/ratings tabs
+              if (Get.isRegistered<RecommendationsController>() &&
+                  Get.currentRoute != '/my-library')
                 Positioned(
                   top: 8,
                   right: 8,
@@ -158,7 +160,10 @@ class MediaCard extends StatelessWidget {
                     builder: (recController) {
                       final match = recController.getMatchPercentage(media);
                       return Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.7),
                           borderRadius: BorderRadius.circular(8),

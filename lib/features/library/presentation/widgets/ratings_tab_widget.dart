@@ -44,7 +44,7 @@ class RatingsTabWidget extends StatelessWidget {
                   MediaCard(media: media),
                   Positioned(
                     top: 8,
-                    right: 8,
+                    left: 8,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 6,

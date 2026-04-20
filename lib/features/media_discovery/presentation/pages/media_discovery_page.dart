@@ -42,22 +42,42 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
                 ), // Space for floating header
 
                 if (isSearching || isFilteringByGenre)
-                  // Results Grid (Search or Genre Filter)
-                  _buildSearchResultsGrid()
-                else ...[
+                // Results Grid (Search or Genre Filter)
+                ...[
+                  if (isFilteringByGenre)
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(24, 32, 24, 8),
+                        child: Obx(
+                          () => Text(
+                            controller.selectedGenre.value.name,
+                            style: GoogleFonts.poppins(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  _buildSearchResultsGrid(),
+                ] else ...[
                   // Discovery View (Default)
                   SliverToBoxAdapter(child: _buildHeroSection()),
 
                   // Smart Recommendations Section (New "For You" Hub)
                   GetBuilder<RecommendationsController>(
-                    init: Get.isRegistered<RecommendationsController>() 
-                        ? Get.find<RecommendationsController>() 
+                    init: Get.isRegistered<RecommendationsController>()
+                        ? Get.find<RecommendationsController>()
                         : null,
                     builder: (recController) {
                       return recController.obx(
                         (data) {
-                          if (data == null || data.isEmpty) return const SliverToBoxAdapter(child: SizedBox.shrink());
-                          
+                          if (data == null || data.isEmpty)
+                            return const SliverToBoxAdapter(
+                              child: SizedBox.shrink(),
+                            );
+
                           return SliverList(
                             delegate: SliverChildListDelegate([
                               if (data['personalized']?.isNotEmpty ?? false)
@@ -67,15 +87,21 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
                                 ),
                               if (data['similar']?.isNotEmpty ?? false)
                                 _buildMediaSection(
-                                  title: 'Because you liked ${recController.baseMediaTitle.value}',
+                                  title:
+                                      'Because you liked ${recController.baseMediaTitle.value}',
                                   items: data['similar'] ?? [],
                                 ),
                             ]),
                           );
                         },
-                        onLoading: const SliverToBoxAdapter(child: SizedBox.shrink()),
-                        onEmpty: const SliverToBoxAdapter(child: SizedBox.shrink()),
-                        onError: (_) => const SliverToBoxAdapter(child: SizedBox.shrink()),
+                        onLoading: const SliverToBoxAdapter(
+                          child: SizedBox.shrink(),
+                        ),
+                        onEmpty: const SliverToBoxAdapter(
+                          child: SizedBox.shrink(),
+                        ),
+                        onError: (_) =>
+                            const SliverToBoxAdapter(child: SizedBox.shrink()),
                       );
                     },
                   ),
@@ -108,35 +134,46 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
           const DiscoveryHeader(),
         ],
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 70), // Avoid bottom nav overlap
-        child: FloatingActionButton(
-          onPressed: () => Get.toNamed(AppRoutes.aiScout),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          child: Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFE50914), Color(0xFF0F0C29)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.red.withOpacity(0.3),
-                  blurRadius: 15,
-                  spreadRadius: 2,
+      floatingActionButton:
+          Padding(
+            padding: const EdgeInsets.only(
+              bottom: 70,
+            ), // Avoid bottom nav overlap
+            child: FloatingActionButton(
+              onPressed: () => Get.toNamed(AppRoutes.aiScout),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              child: Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFE50914), Color(0xFF0F0C29)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.red.withOpacity(0.3),
+                      blurRadius: 15,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                  border: Border.all(color: Colors.white.withOpacity(0.1)),
                 ),
-              ],
-              border: Border.all(color: Colors.white.withOpacity(0.1)),
+                child: const Icon(
+                  Icons.auto_awesome_rounded,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
             ),
-            child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 28),
+          ).animate().scale(
+            delay: const Duration(seconds: 1),
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.elasticOut,
           ),
-        ),
-      ).animate().scale(delay: const Duration(seconds: 1), duration: const Duration(milliseconds: 500), curve: Curves.elasticOut),
     );
   }
 

@@ -5,6 +5,7 @@ import '../../domain/usecases/match_percentage_calculator.dart';
 import '../../../media_discovery/domain/entities/media.dart';
 import '../../../watchlist/presentation/controllers/watchlist_controller.dart';
 import '../../../ratings/domain/repositories/rating_repository.dart';
+import '../../../ratings/domain/entities/rating_entity.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 
 class RecommendationsController extends GetxController
@@ -67,7 +68,7 @@ class RecommendationsController extends GetxController
       // 2. Calculate Weighted Genre Scores using use case
       final tempScores = _calculateRecommendationsUseCase.calculateGenreScores(
         watchlist: watchlist,
-        ratings: ratings,
+        ratings: ratings.cast<RatingEntity>(),
       );
 
       // Store in observable map for Match % calculations
@@ -90,7 +91,7 @@ class RecommendationsController extends GetxController
       // 4. Fetch Similar Content based on the best signal using use case
       final baseMedia = _calculateRecommendationsUseCase.determineBestBaseMedia(
         watchlist: watchlist,
-        ratings: ratings,
+        ratings: ratings.cast<RatingEntity>(),
       );
 
       baseMediaTitle.value = baseMedia.title;
@@ -107,8 +108,8 @@ class RecommendationsController extends GetxController
       basedOnMediaRecs.assignAll(mediaRecs);
 
       change({
-        'genre': genreRecs,
-        'media': mediaRecs,
+        'personalized': genreRecs,
+        'similar': mediaRecs,
       }, status: RxStatus.success());
     } catch (e) {
       change(null, status: RxStatus.error(e.toString()));

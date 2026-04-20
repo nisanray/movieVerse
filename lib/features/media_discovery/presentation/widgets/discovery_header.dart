@@ -56,12 +56,12 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
                             ],
                           ),
                           const SizedBox(height: 10),
-                          // Tertiary Row: Genre Chips
-                          _buildGenreList(),
                         ],
                       ),
                     ),
                   ),
+                  // Genre Chips - Always visible
+                  _buildGenreList(),
                 ],
               ),
             ),

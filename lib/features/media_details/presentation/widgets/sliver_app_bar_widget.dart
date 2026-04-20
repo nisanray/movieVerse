@@ -4,15 +4,17 @@ import '../../domain/entities/media_details_entities.dart';
 
 class SliverAppBarWidget extends StatelessWidget {
   final MediaDetails details;
+  final List<Widget>? actions;
 
-  const SliverAppBarWidget({required this.details});
+  const SliverAppBarWidget({required this.details, this.actions});
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: 300,
+      expandedHeight: 400,
       pinned: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.black,
+      actions: actions,
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,

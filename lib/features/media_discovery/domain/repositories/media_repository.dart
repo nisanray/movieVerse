@@ -18,4 +18,5 @@ abstract class MediaRepository {
     String? countryCode,
     String? sortBy,
   });
+  Future<Media?> getMediaDetails(int mediaId, String mediaType);
 }

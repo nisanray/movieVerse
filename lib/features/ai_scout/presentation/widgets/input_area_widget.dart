@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../controllers/ai_scout_controller.dart';
 
 class InputAreaWidget extends StatelessWidget {
@@ -10,7 +9,7 @@ class InputAreaWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.3),
         border: Border(top: BorderSide(color: Colors.white.withOpacity(0.05))),
@@ -22,7 +21,7 @@ class InputAreaWidget extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
-                  vertical: 12,
+                  vertical: 4,
                 ),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.05),
@@ -39,24 +38,27 @@ class InputAreaWidget extends StatelessWidget {
                       fontSize: 14,
                     ),
                     border: InputBorder.none,
+                    contentPadding: EdgeInsets.zero,
                   ),
                   onSubmitted: (text) => controller.sendMessage(),
+                  onChanged: (_) {
+                    // Trigger rebuild when text changes
+                    (context as Element).markNeedsBuild();
+                  },
                 ),
               ),
             ),
-            const SizedBox(width: 12),
-            Obx(
-              () => IconButton(
-                icon: Icon(
-                  Icons.send_rounded,
-                  color: controller.textController.text.trim().isNotEmpty
-                      ? Colors.red
-                      : Colors.white.withOpacity(0.3),
-                ),
-                onPressed: controller.textController.text.trim().isNotEmpty
-                    ? () => controller.sendMessage()
-                    : null,
+            const SizedBox(width: 8),
+            IconButton(
+              icon: Icon(
+                Icons.send_rounded,
+                color: controller.textController.text.trim().isNotEmpty
+                    ? Colors.red
+                    : Colors.white.withOpacity(0.3),
               ),
+              onPressed: controller.textController.text.trim().isNotEmpty
+                  ? () => controller.sendMessage()
+                  : null,
             ),
           ],
         ),
