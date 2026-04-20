@@ -47,3 +47,4 @@ app.*.map.json
 # Env variables
 .env
 project-rules.md
+TODO.md

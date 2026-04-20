@@ -179,7 +179,6 @@ class MediaDetailsPage extends StatelessWidget {
                 CastListWidget(details: details),
                 const SizedBox(height: 32),
                 WatchProvidersWidget(details: details),
-                const SizedBox(height: 32),
                 TrailerSectionWidget(controller: controller),
                 const SizedBox(height: 24),
                 SimilarMediaWidget(controller: controller),
