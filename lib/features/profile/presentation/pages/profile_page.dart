@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/navigation/app_routes.dart';
-import '../../../auth/domain/entities/user_entity.dart';
 import '../controllers/profile_controller.dart';
 import '../widgets/glass_icon_widget.dart';
 import '../widgets/avatar_widget.dart';
@@ -145,23 +144,6 @@ class ProfilePage extends GetView<ProfileController> {
                   padding: const EdgeInsets.all(24),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
-                      const SectionTitleWidget(title: 'COLLECTIONS'),
-                      GlassTileWidget(
-                        icon: Icons.bookmark_outline_rounded,
-                        title: 'Watch Later',
-                        onTap: () => Get.toNamed(AppRoutes.watchLater),
-                      ),
-                      GlassTileWidget(
-                        icon: Icons.visibility_outlined,
-                        title: 'Watched',
-                        onTap: () => Get.toNamed(AppRoutes.watchLater), // Both point to Library with tabs
-                      ),
-                      GlassTileWidget(
-                        icon: Icons.star_outline_rounded,
-                        title: 'My Ratings',
-                        onTap: () => Get.toNamed(AppRoutes.myRatings),
-                      ),
-                      const SizedBox(height: 32),
                       const SectionTitleWidget(title: 'ACCOUNT'),
                       GlassTileWidget(
                         icon: Icons.person_outline,
