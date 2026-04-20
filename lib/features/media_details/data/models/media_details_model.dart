@@ -26,6 +26,7 @@ class MediaDetailsModel extends MediaDetails {
     Map<String, dynamic> json, {
     List<CastModel> cast = const [],
     List<VideoModel> videos = const [],
+    Map<String, List<WatchProviderModel>>? watchProviders,
     required bool isMovie,
   }) {
     final genreList = (json['genres'] as List?) ?? [];
@@ -48,6 +49,7 @@ class MediaDetailsModel extends MediaDetails {
       numberOfEpisodes: json['number_of_episodes'],
       tagline: json['tagline'],
       status: json['status'],
+      watchProviders: watchProviders,
     );
   }
 }

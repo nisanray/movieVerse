@@ -17,10 +17,10 @@ This roadmap outlines the strategic phases for evolving Movie Verse into a premi
 - [ ] **Dynamic Theming**: Use `palette_generator` to adapt UI colors to movie posters.
 
 ## 📺 Phase 3: Content Enrichment
-- [ ] **Streaming Providers**: Add "Where to Watch" section in `MovieDetails`.
+- [x] **Streaming Providers**: Add "Where to Watch" section in `MovieDetails`.
 - [x] **TV Show Support**: Extended discovery logic to include TV Series (unified Media entity).
 - [ ] **Offline Viewing**: Complete the `lib/features/downloads` module for offline access.
-- [ ] **Enhanced Trailer Player**: Full-screen mode, playback quality options, picture-in-picture, related trailers.
+- [x] **Enhanced Trailer Player**: Full-screen mode, playback quality options, picture-in-picture, related trailers.
 
 ## 🤝 Phase 4: Social & Community
 - [ ] **Social Sharing**: Share to social media, friend recommendations.

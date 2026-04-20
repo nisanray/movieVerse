@@ -249,3 +249,29 @@ Enhance the YouTube trailer player with advanced features including full-screen 
     - ✅ Custom playback controls (replay/forward)
     - ✅ Related videos section
     - ✅ Multiple video support (switch between trailers, teasers, clips)
+
+## [2026-04-20] - Streaming Providers ("Where to Watch") Integration
+
+### Goal
+Solve the core user problem of "where can I actually watch this?" by integrating the TMDB Watch Providers API to show streaming, rental, and purchase options on the Media Details page.
+
+### Technical Implementation Details
+1.  **Domain & Data Layer Overhaul**
+    - Created `WatchProvider` entity and mapping model.
+    - Updated `MediaDetailsRemoteDataSource` to fetch `/${type}/${id}/watch/providers` in parallel using `Future.wait`.
+    - Implemented parsing logic for the "US" region default, categorization into `flatrate` (Stream), `rent`, and `buy` buckets.
+2.  **Premium UI Component: WatchProvidersWidget**
+    - Built a dedicated widget with auto-hiding logic for empty categories.
+    - Implemented glassmorphic iconography with `CachedNetworkImage` and rounded rect containers.
+    - Standardized typography using Poppins semi-bold for headers and white60 for sub-categories.
+3.  **Integration**
+    - Injected the list into `MediaDetailsPage` layout between Cast and Trailers.
+    - Ensured null-safety across the entire pipeline.
+
+### Current Status
+- ✅ **Where to Watch** section live on Media Details.
+- ✅ Support for Stream, Rent, and Buy categories.
+- ✅ Default US region mapping.
+
+**Next Priority: Dynamic Theming**
+- Implement `palette_generator` to adapt UI accents to movie poster colors.

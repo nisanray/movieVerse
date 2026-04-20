@@ -34,6 +34,24 @@ class Video {
   });
 }
 
+class WatchProvider {
+  final int providerId;
+  final String providerName;
+  final String? logoPath;
+  final int displayPriority;
+
+  WatchProvider({
+    required this.providerId,
+    required this.providerName,
+    this.logoPath,
+    required this.displayPriority,
+  });
+
+  String get logoUrl => logoPath != null
+      ? 'https://image.tmdb.org/t/p/w200$logoPath'
+      : 'https://ui-avatars.com/api/?name=$providerName&background=random';
+}
+
 class MediaDetails {
   final int id;
   final String title;
@@ -52,6 +70,7 @@ class MediaDetails {
   final int? numberOfEpisodes;
   final String? tagline;
   final String? status;
+  final Map<String, List<WatchProvider>>? watchProviders;
 
   MediaDetails({
     required this.id,
@@ -71,6 +90,7 @@ class MediaDetails {
     this.numberOfEpisodes,
     this.tagline,
     this.status,
+    this.watchProviders,
   });
 
   String get fullPosterPath => 'https://image.tmdb.org/t/p/w500$posterPath';

@@ -23,24 +23,50 @@ class MediaDetailsRemoteDataSourceImpl implements MediaDetailsRemoteDataSource {
     final bool isMovie = type == 'movie';
     final String basePath = '/$type/$id';
 
-    // Fetch Details, Credits, and Videos in parallel
+    // Fetch Details, Credits, Videos, and Watch Providers in parallel
     final results = await Future.wait([
       apiClient.getData(basePath),
       apiClient.getData('$basePath/credits'),
       apiClient.getData('$basePath/videos'),
+      apiClient.getData('$basePath/watch/providers'),
     ]);
 
     final detailsJson = results[0].data;
     final castJson = results[1].data['cast'] as List;
     final videoJson = results[2].data['results'] as List;
+    final providersJson = results[3].data['results'] as Map<String, dynamic>;
 
     final cast = castJson.map((c) => CastModel.fromJson(c)).toList();
     final videos = videoJson.map((v) => VideoModel.fromJson(v)).toList();
+
+    // Map watch providers for US region
+    Map<String, List<WatchProviderModel>>? watchProviders;
+    if (providersJson.containsKey('US')) {
+      final usData = providersJson['US'] as Map<String, dynamic>;
+      watchProviders = {};
+      
+      if (usData.containsKey('flatrate')) {
+        watchProviders['flatrate'] = (usData['flatrate'] as List)
+            .map((p) => WatchProviderModel.fromJson(p))
+            .toList();
+      }
+      if (usData.containsKey('rent')) {
+        watchProviders['rent'] = (usData['rent'] as List)
+            .map((p) => WatchProviderModel.fromJson(p))
+            .toList();
+      }
+      if (usData.containsKey('buy')) {
+        watchProviders['buy'] = (usData['buy'] as List)
+            .map((p) => WatchProviderModel.fromJson(p))
+            .toList();
+      }
+    }
 
     return MediaDetailsModel.fromJson(
       detailsJson,
       cast: cast,
       videos: videos,
+      watchProviders: watchProviders,
       isMovie: isMovie,
     );
   }

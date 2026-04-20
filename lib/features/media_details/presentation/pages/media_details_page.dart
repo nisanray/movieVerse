@@ -10,6 +10,7 @@ import '../widgets/similar_media_widget.dart';
 import '../widgets/info_chips_widget.dart';
 import '../widgets/overview_widget.dart';
 import '../widgets/cast_list_widget.dart';
+import '../widgets/watch_providers_widget.dart';
 import '../widgets/trailer_section_widget.dart';
 import '../widgets/sliver_app_bar_widget.dart';
 import '../widgets/title_section_widget.dart';
@@ -167,6 +168,8 @@ class MediaDetailsPage extends StatelessWidget {
                 OverviewWidget(details: details),
                 const SizedBox(height: 32),
                 CastListWidget(details: details),
+                const SizedBox(height: 32),
+                WatchProvidersWidget(details: details),
                 const SizedBox(height: 32),
                 TrailerSectionWidget(controller: controller),
                 const SizedBox(height: 24),

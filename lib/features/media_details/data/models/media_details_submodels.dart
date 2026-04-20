@@ -39,3 +39,21 @@ class VideoModel extends Video {
 
   String get youtubeUrl => 'https://www.youtube.com/watch?v=$key';
 }
+
+class WatchProviderModel extends WatchProvider {
+  WatchProviderModel({
+    required super.providerId,
+    required super.providerName,
+    super.logoPath,
+    required super.displayPriority,
+  });
+
+  factory WatchProviderModel.fromJson(Map<String, dynamic> json) {
+    return WatchProviderModel(
+      providerId: json['provider_id'] ?? 0,
+      providerName: json['provider_name'] ?? '',
+      logoPath: json['logo_path'],
+      displayPriority: json['display_priority'] ?? 0,
+    );
+  }
+}
