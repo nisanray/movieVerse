@@ -8,12 +8,14 @@ class ActorDiscoveryController extends GetxController with StateMixin<List<Media
   ActorDiscoveryController(this._getMediaByActorUseCase);
 
   final RxString actorName = ''.obs;
+  final RxString profileUrl = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
     final int? actorId = Get.arguments['id'];
     actorName.value = Get.arguments['name'] ?? 'Actor';
+    profileUrl.value = Get.arguments['profileUrl'] ?? '';
 
     if (actorId != null) {
       fetchMediaByActor(actorId);

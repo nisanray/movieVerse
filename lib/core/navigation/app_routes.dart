@@ -11,4 +11,5 @@ abstract class AppRoutes {
   static const String watchLater = '/watch-later';
   static const String myRatings = '/my-ratings';
   static const String aiScout = '/ai-scout';
+  static const String actorDiscovery = '/actor-discovery';
 }

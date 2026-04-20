@@ -7,16 +7,16 @@ import '../controllers/ai_scout_controller.dart';
 class AiScoutAppBarWidget extends StatelessWidget {
   final AiScoutController controller;
 
-  const AiScoutAppBarWidget({required this.controller});
+  const AiScoutAppBarWidget({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.3),
+        color: Colors.black.withAlpha(77),
         border: Border(
-          bottom: BorderSide(color: Colors.white.withOpacity(0.05)),
+          bottom: BorderSide(color: Colors.white.withAlpha(13)),
         ),
       ),
       child: ClipRRect(
@@ -32,9 +32,9 @@ class AiScoutAppBarWidget extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.2),
+                  color: Colors.red.withAlpha(51),
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.red.withOpacity(0.5)),
+                  border: Border.all(color: Colors.red.withAlpha(128)),
                 ),
                 child: const Icon(Icons.auto_awesome_rounded, color: Colors.red, size: 20),
               ),
@@ -65,7 +65,7 @@ class AiScoutAppBarWidget extends StatelessWidget {
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.delete_sweep_rounded, color: Colors.white.withOpacity(0.5)),
+                icon: Icon(Icons.delete_sweep_rounded, color: Colors.white.withAlpha(128)),
                 onPressed: () => _showClearDialog(context),
                 tooltip: 'Clear History',
               ),

@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/ai_scout_controller.dart';

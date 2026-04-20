@@ -18,6 +18,8 @@ import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/recommendations/presentation/bindings/recommendations_binding.dart';
 import '../../features/ai_scout/presentation/bindings/ai_scout_binding.dart';
 import '../../features/ai_scout/presentation/pages/ai_scout_page.dart';
+import '../../features/actor_discovery/presentation/bindings/actor_discovery_binding.dart';
+import '../../features/actor_discovery/presentation/pages/actor_discovery_page.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -42,10 +44,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.mediaDetails,
       page: () => const MediaDetailsPage(),
-      bindings: [
-        MediaDetailsBinding(),
-        RecommendationsBinding(),
-      ],
+      bindings: [MediaDetailsBinding(), RecommendationsBinding()],
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
@@ -87,6 +86,12 @@ class AppPages {
       name: AppRoutes.aiScout,
       page: () => const AiScoutPage(),
       binding: AiScoutBinding(),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: AppRoutes.actorDiscovery,
+      page: () => const ActorDiscoveryPage(),
+      binding: ActorDiscoveryBinding(),
       transition: Transition.rightToLeftWithFade,
     ),
   ];

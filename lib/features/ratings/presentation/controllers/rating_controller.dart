@@ -91,7 +91,7 @@ class RatingController extends GetxController {
           isMovie: mediaType == 'movie',
           genreIds: genreIds,
         );
-        await _addToWatchedUseCase!.execute(user.uid, media);
+        await _addToWatchedUseCase.execute(user.uid, media);
       }
       
       SnackbarUtils.success(
