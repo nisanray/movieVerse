@@ -38,15 +38,21 @@ class RecommendationsPage extends GetView<RecommendationsController> {
                 slivers: [
                   const HeaderWidget(),
 
-                  // Section 1: Personalized Picks
+                  // Section 1: Top Picks / Trending
                   if (data?['personalized']?.isNotEmpty ?? false) ...[
                     SectionTitleWidget(
-                      title: 'Personalized Picks',
-                      icon: Icons.auto_awesome_rounded,
+                      title: controller.isPersonalized.value 
+                          ? 'Top Picks for You' 
+                          : 'Trending for You',
+                      icon: controller.isPersonalized.value 
+                          ? Icons.auto_awesome_rounded 
+                          : Icons.trending_up_rounded,
                       action: TextButton(
                         onPressed: () => Get.to(
                           () => RecommendationsListPage(
-                            title: 'Personalized Picks',
+                            title: controller.isPersonalized.value 
+                                ? 'Top Picks for You' 
+                                : 'Trending for You',
                             items: data?['personalized'] ?? [],
                           ),
                         ),
@@ -60,50 +66,52 @@ class RecommendationsPage extends GetView<RecommendationsController> {
                         ),
                       ),
                     ),
-                  ],
-                  SliverPadding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 16,
-                    ),
-                    sliver: SliverGrid(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.7,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                          ),
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final personalized = data?['personalized'] ?? [];
-                          if (index >= personalized.length)
-                            return const SizedBox.shrink();
-                          final media = personalized[index];
-                          return MediaCard(media: media)
-                              .animate()
-                              .fadeIn(delay: (index * 50).ms)
-                              .scale(begin: const Offset(0.9, 0.9));
-                        },
-                        childCount: (data?['personalized']?.length ?? 0) > 4
-                            ? 4
-                            : (data?['personalized']?.length ?? 0),
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
+                      sliver: SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.7,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                            ),
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final personalized = data?['personalized'] ?? [];
+                            if (index >= personalized.length)
+                              return const SizedBox.shrink();
+                            final media = personalized[index];
+                            return MediaCard(media: media)
+                                .animate()
+                                .fadeIn(delay: (index * 50).ms)
+                                .scale(begin: const Offset(0.9, 0.9));
+                          },
+                          childCount: (data?['personalized']?.length ?? 0) > 4
+                              ? 4
+                              : (data?['personalized']?.length ?? 0),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
 
                   // Section 2: Because you liked...
                   if (data?['similar']?.isNotEmpty ?? false) ...[
                     SectionTitleWidget(
-                      title:
-                          'Because you liked ${controller.baseMediaTitle.value}',
+                      title: controller.baseMediaTitle.value.isEmpty 
+                          ? 'Similar Discoveries'
+                          : 'Because you liked ${controller.baseMediaTitle.value}',
                       icon: Icons.favorite_rounded,
                       isMarquee: true,
                       action: TextButton(
                         onPressed: () => Get.to(
                           () => RecommendationsListPage(
-                            title:
-                                'Because you liked ${controller.baseMediaTitle.value}',
+                            title: controller.baseMediaTitle.value.isEmpty 
+                                ? 'Similar Discoveries'
+                                : 'Because you liked ${controller.baseMediaTitle.value}',
                             items: data?['similar'] ?? [],
                           ),
                         ),

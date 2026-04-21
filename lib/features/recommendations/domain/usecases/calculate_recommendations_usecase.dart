@@ -1,4 +1,4 @@
-﻿import '../../../../core/domain/entities/media.dart';
+import '../../../../core/domain/entities/media.dart';
 import '../../../ratings/domain/entities/rating_entity.dart';
 
 class CalculateRecommendationsUseCase {
@@ -43,16 +43,24 @@ class CalculateRecommendationsUseCase {
     return tempScores;
   }
 
-  /// Gets top genres from genre scores
+  /// Gets top genres from genre scores. 
+  /// If no positive interests are found, returns a set of default "trending" genres.
   List<int> getTopGenres(Map<int, double> genreScores, {int limit = 3}) {
     final sortedGenres = genreScores.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
 
-    return sortedGenres
-        .where((e) => e.value > 0) // Only positive interests
+    final top = sortedGenres
+        .where((e) => e.value > 0)
         .take(limit)
         .map((e) => e.key)
         .toList();
+
+    // Fallback to broadly popular genres (Action, Comedy, Drama) if profile is empty
+    if (top.isEmpty) {
+      return [28, 35, 18];
+    }
+
+    return top;
   }
 
   /// Determines the best base media for recommendations

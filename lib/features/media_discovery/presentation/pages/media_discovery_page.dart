@@ -1,4 +1,4 @@
-﻿import 'dart:ui';
+import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,8 +37,10 @@ class MediaDiscoveryPage extends GetView<MediaDiscoveryController> {
             return CustomScrollView(
               controller: controller.scrollController,
               slivers: [
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: 96),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 120 + MediaQuery.of(context).padding.top,
+                  ),
                 ), // Space for floating header
 
                 if (isSearching || isFilteringByGenre)

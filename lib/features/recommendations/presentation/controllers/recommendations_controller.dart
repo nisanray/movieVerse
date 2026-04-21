@@ -1,4 +1,5 @@
-﻿import 'package:get/get.dart';
+import 'dart:async';
+import 'package:get/get.dart';
 import '../../domain/repositories/recommendations_repository.dart';
 import '../../domain/usecases/calculate_recommendations_usecase.dart';
 import '../../domain/usecases/match_percentage_calculator.dart';
@@ -13,14 +14,18 @@ class RecommendationsController extends GetxController
     with StateMixin<Map<String, List<Media>>> {
   final RecommendationsRepository _repository;
   final RatingRepository _ratingRepository;
+  
   final WatchLaterController _watchLaterController =
       Get.find<WatchLaterController>();
   final WatchedController _watchedController = Get.find<WatchedController>();
   final AuthController _authController = Get.find<AuthController>();
+  
   final CalculateRecommendationsUseCase _calculateRecommendationsUseCase =
       CalculateRecommendationsUseCase();
   final MatchPercentageCalculator _matchPercentageCalculator =
       MatchPercentageCalculator();
+
+  StreamSubscription? _ratingsSubscription;
 
   RecommendationsController(this._repository, this._ratingRepository);
 
@@ -33,13 +38,41 @@ class RecommendationsController extends GetxController
   // Personal Taste Profile for Match % calculations
   final RxMap<int, double> genreScores = <int, double>{}.obs;
 
+  // Track if current results are personalized or fallback trendings
+  final RxBool isPersonalized = false.obs;
+
   @override
   void onInit() {
     super.onInit();
-    // Reactively refresh when watch later or watched lists change
+    
+    // 1. Sync with Auth State (Fixes race condition on app opening)
+    ever(_authController.user, (user) {
+      if (user != null) {
+        _listenToRatings(user.uid);
+      } else {
+        _ratingsSubscription?.cancel();
+        fetchRecommendations();
+      }
+    });
+
+    // 2. Sync with Watchlist & History
     ever(_watchLaterController.watchLaterIds, (_) => fetchRecommendations());
     ever(_watchedController.watchedIds, (_) => fetchRecommendations());
-    fetchRecommendations();
+    
+    // Initial setup based on current auth state
+    if (_authController.user.value != null) {
+      _listenToRatings(_authController.user.value!.uid);
+    } else {
+      fetchRecommendations();
+    }
+  }
+
+  /// Sets up real-time observation of user ratings
+  void _listenToRatings(String uid) {
+    _ratingsSubscription?.cancel();
+    _ratingsSubscription = _ratingRepository.watchAllUserRatings(uid).listen((_) {
+      fetchRecommendations();
+    });
   }
 
   /// Calculates a personalized match percentage (0-100) for a given media item.
@@ -55,49 +88,43 @@ class RecommendationsController extends GetxController
     final watchedList = _watchedController.state ?? [];
     final user = _authController.user.value;
 
-    // We need at least something to recommend from
-    if (watchLaterList.isEmpty && watchedList.isEmpty && user == null) {
-      change({}, status: RxStatus.empty());
-      return;
-    }
-
     try {
       change(null, status: RxStatus.loading());
 
       // 1. Fetch User Ratings for Weighted Preferences
       final ratings = user != null
           ? await _ratingRepository.getAllUserRatings(user.uid)
-          : [];
+          : <RatingEntity>[];
 
-      // 2. Calculate Weighted Genre Scores using use case
+      // 2. Calculate Weighted Genre Scores
       final tempScores = _calculateRecommendationsUseCase.calculateGenreScores(
         watchLaterList: watchLaterList,
         watchedList: watchedList,
-        ratings: ratings.cast<RatingEntity>(),
+        ratings: ratings,
       );
 
       // Store in observable map for Match % calculations
       genreScores.assignAll(tempScores);
+      
+      // Determine if we have enough data for personalization
+      isPersonalized.value = tempScores.values.any((score) => score > 0);
 
-      // Get top genres using use case
+      // Get top genres (with robust fallback logic in the use case)
       final topGenres = _calculateRecommendationsUseCase.getTopGenres(
         tempScores,
       );
 
       // 3. Fetch Recommendations
-      List<Media> genreRecs = [];
-      if (topGenres.isNotEmpty) {
-        genreRecs = await _repository.getRecommendationsByGenres(
-          topGenres,
-          'movie',
-        );
-      }
+      List<Media> genreRecs = await _repository.getRecommendationsByGenres(
+        topGenres,
+        'movie',
+      );
 
-      // 4. Fetch Similar Content based on the best signal using use case
+      // 4. Fetch Similar Content
       final baseMedia = _calculateRecommendationsUseCase.determineBestBaseMedia(
         watchLaterList: watchLaterList,
         watchedList: watchedList,
-        ratings: ratings.cast<RatingEntity>(),
+        ratings: ratings,
       );
 
       baseMediaTitle.value = baseMedia.title;
@@ -113,13 +140,23 @@ class RecommendationsController extends GetxController
       genreRecommendations.assignAll(genreRecs);
       basedOnMediaRecs.assignAll(mediaRecs);
 
-      change({
-        'personalized': genreRecs,
-        'similar': mediaRecs,
-      }, status: RxStatus.success());
+      if (genreRecs.isEmpty && mediaRecs.isEmpty) {
+        change({}, status: RxStatus.empty());
+      } else {
+        change({
+          'personalized': genreRecs,
+          'similar': mediaRecs,
+        }, status: RxStatus.success());
+      }
     } catch (e) {
       change(null, status: RxStatus.error(e.toString()));
     }
+  }
+
+  @override
+  void onClose() {
+    _ratingsSubscription?.cancel();
+    super.onClose();
   }
 }
 

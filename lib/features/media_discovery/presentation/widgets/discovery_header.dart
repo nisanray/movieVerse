@@ -46,7 +46,7 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
                       height: controller.isHeaderShrunk.value ? 0 : null,
                       child: Column(
                         children: [
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 4),
                           // Secondary Row: Segmented Toggle
                           Row(
                             children: [
@@ -55,11 +55,11 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
                               _buildSegmentButton('tv', 'TV Shows'),
                             ],
                           ),
-                          const SizedBox(height: 10),
                         ],
                       ),
                     ),
                   ),
+                  const SizedBox(height: 8),
                   // Genre Chips - Always visible
                   _buildGenreList(),
                 ],
@@ -223,10 +223,19 @@ class DiscoveryHeader extends GetView<MediaDiscoveryController> {
               AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 height: 3,
-                width: isSelected ? (type == 'movie' ? 50 : 75) : 0,
+                width: isSelected ? (type == 'movie' ? 40 : 65) : 0,
+                curve: Curves.easeOutCubic,
                 decoration: BoxDecoration(
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(2),
+                  boxShadow: [
+                    if (isSelected)
+                      BoxShadow(
+                        color: Colors.red.withOpacity(0.4),
+                        blurRadius: 4,
+                        offset: const Offset(0, 1),
+                      ),
+                  ],
                 ),
               ),
             ],
