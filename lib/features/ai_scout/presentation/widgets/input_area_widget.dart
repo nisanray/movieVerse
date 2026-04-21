@@ -31,6 +31,9 @@ class InputAreaWidget extends StatelessWidget {
                 child: TextField(
                   controller: controller.textController,
                   style: const TextStyle(color: Colors.white, fontSize: 14),
+                  keyboardType: TextInputType.multiline,
+                  minLines: 1,
+                  maxLines: 5,
                   decoration: InputDecoration(
                     hintText: 'Ask Scout about movies...',
                     hintStyle: TextStyle(
@@ -38,11 +41,10 @@ class InputAreaWidget extends StatelessWidget {
                       fontSize: 14,
                     ),
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.zero,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 8),
                   ),
-                  onSubmitted: (text) => controller.sendMessage(),
                   onChanged: (_) {
-                    // Trigger rebuild when text changes
+                    // Trigger rebuild when text changes to update send button color
                     (context as Element).markNeedsBuild();
                   },
                 ),
