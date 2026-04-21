@@ -72,9 +72,75 @@ To learn more about the project's strategy and technical requirements, explore t
 
 ---
 
-## 📸 Screenshots
+## 📸 Screen Gallery
 
-*(Screenshots will be here after implementation)*
+### 🚀 Onboarding & Login
+<table width="100%">
+  <tr>
+    <td align="left" width="33.33%">Onboarding<br><img src="screenshots/onboarding_screen.jpg" width="100%" /></td>
+    <td align="left" width="33.33%">Login<br><img src="screenshots/login_screen.jpg" width="100%" /></td>
+    <td width="33.33%"></td>
+  </tr>
+</table>
+
+### 🎬 Media Discovery Engine
+<table width="100%">
+  <tr>
+    <td align="left" width="33.33%">Movies (Home)<br><img src="screenshots/discovery_movie_picks.jpg" width="100%" /></td>
+    <td align="left" width="33.33%">TV Shows (Home)<br><img src="screenshots/discovery_tv_picks.jpg" width="100%" /></td>
+    <td align="left" width="33.33%">Discovery Filters<br><img src="screenshots/discovery_filters.jpg" width="100%" /></td>
+  </tr>
+</table>
+
+### 🤖 AI Movie Scout
+<table width="100%">
+  <tr>
+    <td align="left" width="33.33%">Conversational Search<br><img src="screenshots/ai_scout_chat.jpg" width="100%" /></td>
+    <td align="left" width="33.33%">Multi-lingual Support<br><img src="screenshots/ai_scout_bangla.jpg" width="100%" /></td>
+    <td width="33.33%"></td>
+  </tr>
+</table>
+
+### ✨ Intelligent Recommendations
+<table width="100%">
+  <tr>
+    <td align="left" width="33.33%">For You Dashboard<br><img src="screenshots/for_you_screen.jpg" width="100%" /></td>
+    <td align="left" width="33.33%">Personalized Feed<br><img src="screenshots/for_you_scroll.jpg" width="100%" /></td>
+    <td width="33.33%"></td>
+  </tr>
+</table>
+
+### 🔍 Detailed Insights
+<table width="100%">
+  <tr>
+    <td align="left" width="33.33%">Media Overview<br><img src="screenshots/media_details_overview.jpg" width="100%" /></td>
+    <td align="left" width="33.33%">Cast & Where to Watch<br><img src="screenshots/media_details_cast_watch.jpg" width="100%" /></td>
+    <td align="left" width="33.33%">Similar Content<br><img src="screenshots/media_details_similar.jpg" width="100%" /></td>
+  </tr>
+</table>
+
+### 🎭 Discovery Feeds & Actors
+<table width="100%">
+  <tr>
+    <td align="left" width="33.33%">Movie Discovery Feed<br><img src="screenshots/discovery_scroll.jpg" width="100%" /></td>
+    <td align="left" width="33.33%">TV Discovery Feed<br><img src="screenshots/discovery_tv_scroll.jpg" width="100%" /></td>
+    <td align="left" width="33.33%">Actor Discovery<br><img src="screenshots/actor_discovery.jpg" width="100%" /></td>
+  </tr>
+</table>
+
+### 📖 Library & Profile
+<table width="100%">
+  <tr>
+    <td align="left" width="33.33%">Watch Later<br><img src="screenshots/library_screen.jpg" width="100%" /></td>
+    <td align="left" width="33.33%">Watched Collection<br><img src="screenshots/library_watched.jpg" width="100%" /></td>
+    <td align="left" width="33.33%">My Ratings<br><img src="screenshots/library_rated.jpg" width="100%" /></td>
+  </tr>
+  <tr>
+    <td align="left" width="33.33%">User Profile<br><img src="screenshots/profile_screen.jpg" width="100%" /></td>
+    <td align="left" width="33.33%">Edit Profile Settings<br><img src="screenshots/edit_profile.jpg" width="100%" /></td>
+    <td width="33.33%"></td>
+  </tr>
+</table>
 
 ---
 
