@@ -1,4 +1,4 @@
-﻿import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../../core/domain/entities/media.dart';
 import '../../domain/entities/media_details_entities.dart';
@@ -87,8 +87,14 @@ class MediaDetailsController extends GetxController
   /// Changes the currently playing video.
   void changeVideo(int index) {
     if (index >= 0 && index < allVideos.length) {
+      final String videoKey = allVideos[index].key;
       currentVideoIndex.value = index;
-      _initializePlayer(allVideos[index].key);
+
+      if (youtubeController != null) {
+        youtubeController!.load(videoKey);
+      } else {
+        _initializePlayer(videoKey);
+      }
     }
   }
 
